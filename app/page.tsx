@@ -1,6 +1,5 @@
 "use client";
 
-// app/page.jsx
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
@@ -16,24 +15,7 @@ import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
 import WhatsAppButton from "./components/WhatsAppButton";
 
-async function fetchProducts() {
-  const base = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
-  try {
-    const res = await fetch(`${base}/api/products`, {
-      // Don't cache, always get fresh in dev
-      cache: "no-store",
-    });
-    if (!res.ok) return [];
-    return await res.json();
-  } catch (err) {
-    console.error("Failed to fetch products:", err);
-    return [];
-  }
-}
-
-export default async function HomePage() {
-  const products = await fetchProducts();
-
+export default function HomePage() {
   return (
     <>
       <Header />
@@ -41,8 +23,7 @@ export default async function HomePage() {
         <Hero />
         <Services />
         <About />
-        {/* pass products into Products component */}
-        <Products initialProducts={products} />
+        <Products />
         <Process />
         <Portfolio />
         <Testimonials />

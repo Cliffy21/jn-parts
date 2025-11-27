@@ -20,6 +20,9 @@ def create_app():
     bcrypt.init_app(app)
     migrate.init_app(app, db)
 
+    # Import models so migrations detect them
+    from . import models
+
     # Register routes
     app.register_blueprint(public_bp)
     app.register_blueprint(admin_auth_bp, url_prefix="/admin/api")
