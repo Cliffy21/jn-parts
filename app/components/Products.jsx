@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const categoryLabels = {
   engine: "Engine Parts",
@@ -10,34 +10,8 @@ const categoryLabels = {
 };
 
 export default function Products({ initialProducts = [] }) {
-  const [allProducts, setAllProducts] = useState(initialProducts);
+  const [allProducts] = useState(initialProducts);
   const [activeCategory, setActiveCategory] = useState("all");
-  const [loading, setLoading] = useState(!initialProducts.length);
-  const [error, setError] = useState(null);
-
-  // Optional client-side refresh
-  useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_API_BASE_URL;
-    if (!base) return;
-
-    async function load() {
-      try {
-        setLoading(true);
-        const res = await fetch(`${base}/api/products`);
-        if (!res.ok) throw new Error("Failed to load products");
-        const data = await res.json();
-        setAllProducts(data);
-      } catch (err) {
-        console.error(err);
-        if (!allProducts.length) setError("Failed to load products.");
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // derive categories from data
   const dynamicCategories = Array.from(
@@ -87,13 +61,6 @@ export default function Products({ initialProducts = [] }) {
           ))}
         </div>
 
-        {loading && (
-          <p className="text-center text-gray-400">Loading products…</p>
-        )}
-        {error && !loading && (
-          <p className="text-center text-red-400">{error}</p>
-        )}
-
         {/* Grid */}
         <div className="mt-4 grid md:grid-cols-2 lg:grid-cols-3 gap-7">
           {visibleProducts.map((p) => (
@@ -103,7 +70,6 @@ export default function Products({ initialProducts = [] }) {
             >
               <div className="w-full h-40 bg-gray-800 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
                 {p.image_url ? (
-                  // just simple <img> – you can swap to next/image later
                   <img
                     src={p.image_url}
                     alt={p.name}
@@ -146,7 +112,7 @@ export default function Products({ initialProducts = [] }) {
               </div>
             </div>
           ))}
-          {!loading && !visibleProducts.length && (
+          {visibleProducts.length === 0 && (
             <p className="col-span-full text-center text-gray-400">
               No products available yet.
             </p>

@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
@@ -15,7 +13,29 @@ import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
 import WhatsAppButton from "./components/WhatsAppButton";
 
-export default function HomePage() {
+async function fetchProducts() {
+  const base = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
+
+  try {
+    const res = await fetch(`${base}/api/products`, {
+      cache: "no-store", // always fetch fresh data
+    });
+
+    if (!res.ok) {
+      console.error("Failed to fetch products");
+      return [];
+    }
+
+    return await res.json();
+  } catch (e) {
+    console.error("Network error fetching products:", e);
+    return [];
+  }
+}
+
+export default async function HomePage() {
+  const products = await fetchProducts();
+
   return (
     <>
       <Header />
@@ -23,7 +43,10 @@ export default function HomePage() {
         <Hero />
         <Services />
         <About />
-        <Products />
+
+        {/* 🔥 FIX: pass products here */}
+        <Products initialProducts={products} />
+
         <Process />
         <Portfolio />
         <Testimonials />
@@ -31,6 +54,7 @@ export default function HomePage() {
         <Benefits />
         <Contact />
       </main>
+
       <Footer />
       <BackToTop />
       <WhatsAppButton />

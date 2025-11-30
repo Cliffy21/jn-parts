@@ -21,6 +21,20 @@ def get_products():
         }
         for p in products
     ])
+# app/routes/public.py
+@public_bp.get("/api/testimonials")
+def get_testimonials():
+    items = Testimonial.query.order_by(Testimonial.created_at.desc()).all()
+    return jsonify([
+        {
+            "id": t.id,
+            "name": t.name,
+            "location": t.location,
+            "rating": t.rating,
+            "message": t.message,
+        }
+        for t in items
+    ])
 
 
 @public_bp.post("/api/contact")

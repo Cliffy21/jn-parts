@@ -11,8 +11,8 @@ app = create_app()
 
 
 def create_admin():
-    email = os.getenv("ADMIN_DEFAULT_EMAIL", "admin@example.com").lower()
-    password = os.getenv("ADMIN_DEFAULT_PASSWORD", "ChangeMe123!")
+    email = os.getenv("ADMIN_DEFAULT_EMAIL", "josephmairu@gmail.com").lower()
+    password = os.getenv("ADMIN_DEFAULT_PASSWORD", "JoseMairu28")
 
     with app.app_context():
         existing = User.query.filter_by(email=email).first()

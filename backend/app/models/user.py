@@ -1,6 +1,11 @@
 from datetime import datetime
 from app.extensions import db, bcrypt
 
+# maybe add convenience:
+def is_admin(self):
+    return self.role in ("admin", "superadmin")
+
+
 class User(db.Model):
     __tablename__ = "users"
 
