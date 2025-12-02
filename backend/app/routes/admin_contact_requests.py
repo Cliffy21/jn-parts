@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from app.extensions import db
-from app.models.contact import ContactRequest
+from app.models.contact_requests import ContactRequest
 from app.utils.security import admin_required
 
 admin_contact_bp = Blueprint("admin_contact", __name__)

@@ -4,11 +4,18 @@ export const API_BASE =
 
 export function getAdminToken(): string | null {
   if (typeof window === "undefined") return null;
-  return localStorage.getItem("admin_token");
+  const token = localStorage.getItem("admin_token");
+  // Return null for empty strings or null values
+  return token && token.trim() ? token : null;
 }
 
 export function setAdminToken(token: string) {
   if (typeof window === "undefined") return;
+  if (!token || !token.trim()) {
+    // Don't store empty tokens
+    localStorage.removeItem("admin_token");
+    return;
+  }
   localStorage.setItem("admin_token", token);
 }
 
@@ -17,7 +24,12 @@ export function clearAdminToken() {
   localStorage.removeItem("admin_token");
 }
 
-// 🚀 FIXED TYPE ERROR HERE:
+/**
+ * Fetch wrapper for admin API endpoints
+ * - Automatically adds JWT token from localStorage
+ * - Handles auth errors by clearing token and redirecting
+ * - Logs errors for debugging
+ */
 export async function adminFetch(path: string, options: RequestInit = {}) {
   const token = getAdminToken();
 
@@ -27,8 +39,13 @@ export async function adminFetch(path: string, options: RequestInit = {}) {
     ...(options.headers as Record<string, string>),
   };
 
+  // Only add Authorization header if we have a valid token
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
+  } else {
+    console.warn(
+      `[adminFetch] No valid token found for ${path}. Request may fail with 401/422.`
+    );
   }
 
   const res = await fetch(`${API_BASE}${path}`, {
@@ -36,8 +53,23 @@ export async function adminFetch(path: string, options: RequestInit = {}) {
     headers,
   });
 
+  // Handle auth failures
   if (res.status === 401 || res.status === 403) {
-    throw new Error("unauthorized");
+    // Clear invalid token and redirect to login
+    clearAdminToken();
+    if (typeof window !== "undefined") {
+      window.location.href = "/admin/login";
+    }
+    throw new Error("Session expired. Please log in again.");
+  }
+
+  // Log 422 errors for debugging
+  if (res.status === 422) {
+    const body = await res.clone().json().catch(() => ({}));
+    console.error(
+      `[adminFetch] 422 Unprocessable Entity on ${path}:`,
+      body
+    );
   }
 
   return res;
