@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function ImageUploader({ value, onChange }: any) {
   const [uploading, setUploading] = useState(false);
-
+  
   async function uploadImage(e: any) {
     const file = e.target.files[0];
     const formData = new FormData();
