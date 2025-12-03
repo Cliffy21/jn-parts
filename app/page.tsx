@@ -10,9 +10,12 @@ import FAQ from "./components/FAQ";
 import Benefits from "./components/Benefits";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import BackToTop from "./components/BackToTop";
 import WhatsAppButton from "./components/WhatsAppButton";
 
+// ============================================
+// COMMENTED OUT: Backend fetch for products
+// ============================================
+/*
 async function fetchProducts() {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
@@ -32,9 +35,13 @@ async function fetchProducts() {
     return [];
   }
 }
+*/
+// ============================================
 
-export default async function HomePage() {
-  const products = await fetchProducts();
+// CHANGED: Removed async since we're no longer fetching data
+export default function HomePage() {
+  // COMMENTED OUT: Was fetching products from backend
+  // const products = await fetchProducts();
 
   return (
     <>
@@ -44,8 +51,8 @@ export default async function HomePage() {
         <Services />
         <About />
 
-        {/* 🔥 FIX: pass products here */}
-        <Products initialProducts={products} />
+        {/* CHANGED: Products now uses internal mock data, no props needed */}
+        <Products />
 
         <Process />
         <Portfolio />
@@ -56,7 +63,7 @@ export default async function HomePage() {
       </main>
 
       <Footer />
-      <BackToTop />
+     
       <WhatsAppButton />
     </>
   );
