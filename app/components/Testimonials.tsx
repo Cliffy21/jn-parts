@@ -274,7 +274,7 @@ export default function Testimonials() {
 
                   {/* Quote */}
                   <blockquote className="text-xl md:text-2xl text-gray-200 leading-relaxed max-w-2xl mb-8">
-                    "{testimonial.text}"
+                    &ldquo;{testimonial.text}&rdquo;
                   </blockquote>
 
                   {/* Author */}

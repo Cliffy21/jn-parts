@@ -9,6 +9,12 @@ export function useInViewAnimation(options = {}) {
   } = options;
 
   useEffect(() => {
+    const element = ref.current;
+
+    if (!element) {
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -24,14 +30,10 @@ export function useInViewAnimation(options = {}) {
       }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+    observer.observe(element);
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+      observer.unobserve(element);
     };
   }, [animation, threshold, rootMargin]);
 

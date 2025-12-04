@@ -21,8 +21,19 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const uploadResult = await cloudinary.uploader.upload_stream({
-      folder: "jncaraccessories",
+    const uploadResult = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: "jncaraccessories" },
+        (error, result) => {
+          if (error || !result) {
+            reject(error);
+          } else {
+            resolve(result);
+          }
+        }
+      );
+
+      stream.end(buffer);
     });
 
     return NextResponse.json(uploadResult);

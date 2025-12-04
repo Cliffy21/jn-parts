@@ -6,7 +6,7 @@ export default function WhatsAppButton() {
       href="https://wa.me/254741509156"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-24 right-4 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-110 z-40 group animate-bounce-slow"
+      className="fixed safe-fixed-bottom safe-fixed-right w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#25D366] flex items-center justify-center shadow-lg hover:shadow-2xl hover:scale-110 z-40 group animate-bounce-slow"
       aria-label="Chat on WhatsApp"
     >
       {/* Real WhatsApp Icon */}

@@ -87,7 +87,7 @@ export default function Header() {
         id="header"
         role="banner"
         aria-label="Main navigation"
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${
+        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-out max-w-full ${
           visible ? "translate-y-0" : "-translate-y-full"
         }`}
       >
@@ -110,12 +110,12 @@ export default function Header() {
           )}
 
           {/* FIXED: Added proper width constraints and flex behavior */}
-          <nav className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center relative">
+          <nav className="w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-3 flex items-center justify-between gap-3 relative overflow-x-clip">
             {/* Logo with premium hover effect */}
             {/* FIXED: Added flex-shrink-0 and max-width constraints */}
             <button 
               onClick={() => scrollToSection("home")}
-              className="relative overflow-hidden rounded-xl cursor-pointer group z-10 flex-shrink-0"
+              className="relative overflow-hidden rounded-xl cursor-pointer group z-10 flex-shrink-0 max-w-[55%]"
               aria-label="JN Parts & Accessories - Go to home"
             >
               {/* Glow effect on hover */}
@@ -125,9 +125,9 @@ export default function Header() {
               <Image 
                 src="/1.png" 
                 alt="JN Parts & Accessories - Premium Automotive Parts" 
-                width={200} 
-                height={100}
-                className="h-10 sm:h-12 lg:h-16 w-auto max-w-[150px] sm:max-w-[200px] lg:max-w-[280px] relative z-10 transition-all duration-500 group-hover:scale-110 drop-shadow-2xl object-contain"
+                width={160} 
+                height={80}
+                className="h-9 sm:h-11 lg:h-16 w-auto max-w-full sm:max-w-[200px] lg:max-w-[260px] relative z-10 transition-all duration-500 group-hover:scale-110 drop-shadow-2xl object-contain"
                 priority
               />
               

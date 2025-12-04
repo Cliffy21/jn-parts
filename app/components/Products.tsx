@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useInViewAnimation } from "@/app/hooks/useInViewAnimation";
 
 const categoryLabels: Record<string, string> = {
@@ -223,10 +224,11 @@ export default function Products() {
                   {/* Image */}
                   <div className="relative aspect-[4/3] bg-gray-800 overflow-hidden">
                     {product.image_url ? (
-                      <img
+                      <Image
                         src={product.image_url}
                         alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
@@ -360,7 +362,7 @@ export default function Products() {
               onClick={scrollToContact}
               className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white font-semibold rounded-xl hover:shadow-lg hover:shadow-red-500/25 transition-shadow"
             >
-              Can't find what you need?
+              Can&apos;t find what you need?
               <svg
                 className="w-5 h-5"
                 fill="none"
