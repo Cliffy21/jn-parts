@@ -30,6 +30,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/components/Hero.jsx", "app/components/About.jsx"  ],
+, "app/components/Hero.jsx", "app/components/About.jsx", "app/components/Contact.jsx"  ],
   "exclude": ["node_modules"]
 }

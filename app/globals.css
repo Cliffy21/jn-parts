@@ -2,6 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Utilities used by components to avoid inline styles */
+.delay-1s {
+  animation-delay: 1s;
+}
+
+.no-border {
+  border: 0 !important;
+}
+
+/* Header and mobile menu animation utilities */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in-right {
+  animation: slideInRight 0.5s ease-out forwards;
+}
+
+.anim-duration-3s {
+  animation-duration: 3s !important;
+}
+
+.anim-duration-4s {
+  animation-duration: 4s !important;
+}
+
+.anim-delay-1s {
+  animation-delay: 1s !important;
+}
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;

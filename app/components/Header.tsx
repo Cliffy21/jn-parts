@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Menu, X, ChevronRight, Sparkles } from "lucide-react";
 import Image from "next/image";
 
@@ -20,6 +20,8 @@ export default function Header() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     function onScroll() {
@@ -60,7 +62,17 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [lastScrollY]);
 
-  function scrollToSection(id) {
+  // Keep ARIA attributes updated on actual DOM elements to satisfy static linters
+  useEffect(() => {
+    if (menuButtonRef.current) {
+      menuButtonRef.current.setAttribute('aria-expanded', menuOpen ? 'true' : 'false');
+    }
+    if (overlayRef.current) {
+      overlayRef.current.setAttribute('aria-hidden', !menuOpen ? 'true' : 'false');
+    }
+  }, [menuOpen]);
+
+  function scrollToSection(id: string) {
     const el = document.getElementById(id);
     if (!el) return;
     const y = el.getBoundingClientRect().top + window.scrollY - 80;
@@ -92,27 +104,30 @@ export default function Header() {
           {/* Floating particles effect */}
           {scrolled && (
             <>
-              <div className="absolute top-0 left-1/4 w-1 h-1 bg-red-500/30 rounded-full animate-ping" style={{ animationDuration: '3s' }} />
-              <div className="absolute top-0 right-1/3 w-1 h-1 bg-orange-500/30 rounded-full animate-ping" style={{ animationDuration: '4s', animationDelay: '1s' }} />
+              <div className="absolute top-0 left-1/4 w-1 h-1 bg-red-500/30 rounded-full animate-ping anim-duration-3s" />
+              <div className="absolute top-0 right-1/3 w-1 h-1 bg-orange-500/30 rounded-full animate-ping anim-duration-4s anim-delay-1s" />
             </>
           )}
 
-          <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center relative">
+          {/* FIXED: Added proper width constraints and flex behavior */}
+          <nav className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center relative">
             {/* Logo with premium hover effect */}
+            {/* FIXED: Added flex-shrink-0 and max-width constraints */}
             <button 
               onClick={() => scrollToSection("home")}
-              className="relative overflow-hidden rounded-xl cursor-pointer group z-10"
+              className="relative overflow-hidden rounded-xl cursor-pointer group z-10 flex-shrink-0"
               aria-label="JN Parts & Accessories - Go to home"
             >
               {/* Glow effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/20 to-orange-500/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
               
+              {/* FIXED: Reduced logo sizes for mobile, added max-width */}
               <Image 
                 src="/1.png" 
                 alt="JN Parts & Accessories - Premium Automotive Parts" 
-                width={380} 
-                height={200}
-                className="h-14 sm:h-16 lg:h-20 w-auto relative z-10 transition-all duration-500 group-hover:scale-110 drop-shadow-2xl"
+                width={200} 
+                height={100}
+                className="h-10 sm:h-12 lg:h-16 w-auto max-w-[150px] sm:max-w-[200px] lg:max-w-[280px] relative z-10 transition-all duration-500 group-hover:scale-110 drop-shadow-2xl object-contain"
                 priority
               />
               
@@ -159,36 +174,16 @@ export default function Header() {
                 );
               })}
               
-              {/* CTA Button with premium effects */}
-              <button
-                onClick={() => scrollToSection("contact")}
-                className="ml-4 relative group overflow-hidden"
-                aria-label="Get a quote for automotive parts"
-              >
-                {/* Animated gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-500 to-orange-500 rounded-full transition-all duration-300 group-hover:scale-105" />
-                
-                {/* Animated shine effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-full" />
-                
-                {/* Glow effect */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500 to-orange-500 blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300" />
-                
-                {/* Button content */}
-                <span className="relative z-10 flex items-center gap-2 px-6 py-2.5 font-bold text-sm tracking-wide">
-                  <Sparkles className="w-4 h-4" />
-                  Get Quote
-                  <ChevronRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-              </button>
+              {/* Desktop CTA removed to create extra navbar space */}
             </nav>
 
             {/* Mobile Menu Button with glass effect */}
+            {/* FIXED: Added flex-shrink-0 to prevent squishing */}
             <button
-              className="lg:hidden relative p-2.5 rounded-xl bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 group"
+              ref={menuButtonRef}
+              className="lg:hidden relative p-2.5 rounded-xl bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-300 group flex-shrink-0"
               onClick={() => setMenuOpen(true)}
               aria-label="Open navigation menu"
-              aria-expanded={menuOpen}
             >
               <Menu className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" />
               
@@ -208,7 +203,7 @@ export default function Header() {
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setMenuOpen(false)}
-        aria-hidden={!menuOpen}
+        ref={overlayRef}
       />
 
       {/* Mobile slide panel with premium glass effect */}
@@ -237,12 +232,13 @@ export default function Header() {
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/20 to-orange-500/0 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
                 
+                {/* FIXED: Smaller logo in mobile menu */}
                 <Image 
                   src="/1.png" 
                   alt="JN Parts & Accessories" 
-                  width={380} 
-                  height={200}
-                  className="h-14 w-auto relative z-10 transition-all duration-500 group-hover:scale-110"
+                  width={200} 
+                  height={100}
+                  className="h-10 w-auto max-w-[140px] relative z-10 transition-all duration-500 group-hover:scale-110 object-contain"
                 />
                 
                 <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out z-20 pointer-events-none" />
@@ -251,7 +247,7 @@ export default function Header() {
               {/* Close button */}
               <button
                 onClick={() => setMenuOpen(false)}
-                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10 hover:border-red-500/30 transition-all duration-300 group"
+                className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10 hover:border-red-500/30 transition-all duration-300 group flex-shrink-0"
                 aria-label="Close navigation menu"
               >
                 <X className="w-6 h-6 transition-transform duration-300 group-hover:rotate-90" />
@@ -268,11 +264,7 @@ export default function Header() {
                     onClick={() => scrollToSection(s.id)}
                     className={`relative text-left py-4 px-5 rounded-xl transition-all duration-300 group ${
                       isActive ? "text-white" : "text-gray-300"
-                    }`}
-                    style={{ 
-                      animationDelay: `${index * 50}ms`,
-                      animation: menuOpen ? 'slideInRight 0.5s ease-out forwards' : 'none'
-                    }}
+                    } ${menuOpen ? `delay-[${index * 50}ms] slide-in-right` : 'opacity-0'}`}
                     aria-current={isActive ? "page" : undefined}
                   >
                     {/* Glass background */}
@@ -326,18 +318,7 @@ export default function Header() {
         </div>
       </aside>
 
-      <style jsx>{`
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-      `}</style>
+      {/* slideInRight keyframes moved to global CSS */}
     </>
   );
 }

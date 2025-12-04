@@ -8,16 +8,16 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  
+  // Replace these with your actual business details
   const businessInfo = {
-    name: "JN Car Parts & Accessories",
-    address: "Kirinyaga road, Nairobi, Kenya", 
-    phone: "+254 741 509 156", 
-    email: "info@jnparts.com",
-    hours: "Mon-Fri: 8AM-6PM, Sat: 9AM-5PM", 
+    name: "JN Parts & Accessories",
+    address: "Kirinyaga road, Nairobi, Kenya", // Replace with your actual address
+    phone: "+254 741 509 156", // Replace with your actual phone
+    email: "jncarparts301@gmail.com", // Replace with your actual email
+    hours: "Mon-Fri: 8AM-6PM, Sat: 9AM-5PM", // Replace with your actual hours
     coordinates: {
-      lat: -1.2900, 
-      lng: 36.8200  
+      lat: -1.281939, // Replace with your actual latitude
+      lng: 36.830821  // Replace with your actual longitude
     }
   };
 
@@ -39,23 +39,44 @@ export default function Contact() {
       message: formData.get("message") as string,
     };
 
-    const base = process.env.NEXT_PUBLIC_API_BASE_URL;
-    if (!base) {
-      setError("Backend API not configured.");
+     // Basic validation
+    if (!data.name || !data.email || !data.message) {
+      setError("Please fill in all required fields.");
       return;
     }
 
     try {
       setSubmitting(true);
-      const res = await fetch(`${base}/api/contact`, {
+      
+      // Send email using Web3Forms (free email service)
+      const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+          subject: `New Quote Request from ${data.name}`,
+          from_name: "JN Parts Website",
+          to_email: "jncarparts301@gmail.com",
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          vehicle_model: data.vehicle_model,
+          message: data.message,
+        })
       });
-      if (!res.ok) throw new Error("Failed to send message");
-      setShowSuccess(true);
-      form.reset();
-      setTimeout(() => setShowSuccess(false), 5000);
+
+      const result = await response.json();
+      
+      if (result.success) {
+        setShowSuccess(true);
+        form.reset();
+        setTimeout(() => setShowSuccess(false), 5000);
+      } else {
+        throw new Error(result.message || "Failed to send message");
+      }
     } catch (err) {
       console.error(err);
       setError("Failed to send message. Please try again.");
@@ -73,7 +94,7 @@ export default function Contact() {
       {/* Background Effects */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-0 w-96 h-96 bg-red-500/10 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-500/10 rounded-full blur-[120px] animate-pulse delay-1s" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -89,7 +110,7 @@ export default function Contact() {
             </span>
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Come see our premium collection or reach out online. We're here to help transform your ride.
+            Come see our premium collection or reach out online. We&apos;re here to help transform your ride.
           </p>
         </div>
 
@@ -228,12 +249,11 @@ export default function Contact() {
                     src={mapEmbedUrl}
                     width="100%"
                     height="100%"
-                    style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     title="JN Parts & Accessories Location - Find us on Google Maps"
-                    className="grayscale hover:grayscale-0 transition-all duration-500"
+                    className="grayscale hover:grayscale-0 transition-all duration-500 no-border"
                   />
                   
                   <button
@@ -308,7 +328,7 @@ export default function Contact() {
               <CheckCircle className="w-6 h-6" />
               <div>
                 <p className="font-bold">Message Sent Successfully!</p>
-                <p className="text-sm text-emerald-100">We'll get back to you soon.</p>
+                <p className="text-sm text-emerald-100">We&apos;ll get back to you soon.</p>
               </div>
             </div>
           </div>
