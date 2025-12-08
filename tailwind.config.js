@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '475px',
+      },
       keyframes: {
         float: {
           "0%, 100%": { transform: "translateY(0px)" },

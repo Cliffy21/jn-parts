@@ -168,55 +168,52 @@ export default function Products() {
     <section
       ref={sectionRef}
       id="products"
-      className="relative py-16 sm:py-20 md:py-24 px-4 bg-black"
+      className="relative py-12 sm:py-16 md:py-20 lg:py-24 px-3 sm:px-4 md:px-6 bg-black overflow-x-hidden"
     >
       {/* Subtle top border */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
 
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <div
-          className={`text-center mb-8 sm:mb-12 transition-all duration-700 ${
+          className={`text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12 transition-all duration-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <span className="inline-block text-xs sm:text-sm tracking-[0.2em] text-red-400 uppercase font-medium mb-3">
-            Shop
-          </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-3 md:mb-4 leading-tight px-2">
             Our{" "}
             <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
               Products
             </span>
           </h2>
-          <p className="text-gray-500 text-sm sm:text-base max-w-md mx-auto px-4">
+          <p className="text-gray-500 text-xs sm:text-sm md:text-base max-w-md mx-auto px-4">
             Premium vehicle parts and accessories
           </p>
         </div>
 
         {/* Filter Tabs - Horizontally scrollable on mobile */}
         <div
-          className={`mb-6 sm:mb-10 transition-all duration-700 delay-100 ${
+          className={`mb-6 sm:mb-8 md:mb-10 lg:mb-12 transition-all duration-700 delay-100 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
           <div
             ref={filterScrollRef}
-            className="flex overflow-x-auto pb-2 sm:pb-0 sm:justify-center gap-2 sm:gap-3 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0"
+            className="flex overflow-x-auto pb-2 sm:pb-0 sm:justify-center gap-2 sm:gap-2.5 md:gap-3 scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0 snap-x snap-mandatory"
           >
             {filters.map((cat) => (
               <button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`flex-shrink-0 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 whitespace-nowrap ${
+                className={`flex-shrink-0 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-full text-[11px] xs:text-xs sm:text-sm font-medium transition-all duration-300 whitespace-nowrap min-h-[36px] sm:min-h-[40px] flex items-center justify-center ${
                   activeCategory === cat.id
                     ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/20"
                     : "bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-800"
-                }`}
+                } snap-start`}
               >
                 {cat.label}
                 <span
-                  className={`ml-1.5 sm:ml-2 text-[10px] sm:text-xs px-1.5 py-0.5 rounded-md ${
+                  className={`ml-1.5 sm:ml-2 text-[9px] xs:text-[10px] sm:text-xs px-1.5 py-0.5 rounded-md ${
                     activeCategory === cat.id ? "bg-white/20" : "bg-gray-800"
                   }`}
                 >
@@ -234,11 +231,11 @@ export default function Products() {
           }`}
         >
           {visibleProducts.length > 0 ? (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6">
               {visibleProducts.map((product, idx) => (
                 <div
                   key={product.id}
-                  className={`group bg-gray-900/50 rounded-xl sm:rounded-2xl border border-gray-800/50 overflow-hidden hover:border-red-500/30 transition-all duration-500 ${
+                  className={`group bg-gray-900/50 rounded-lg sm:rounded-xl md:rounded-2xl border border-gray-800/50 overflow-hidden hover:border-red-500/30 transition-all duration-500 w-full ${
                     isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                   }`}
                   style={{ transitionDelay: `${idx * 50 + 300}ms` }}
@@ -278,8 +275,8 @@ export default function Products() {
 
                     {/* Category Badge - Mobile optimized */}
                     {product.category && (
-                      <div className="absolute top-2 left-2 sm:top-3 sm:left-3">
-                        <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 text-[10px] sm:text-xs font-medium bg-black/70 backdrop-blur-sm rounded-full text-gray-300 border border-white/10">
+                      <div className="absolute top-1.5 left-1.5 sm:top-2 md:top-3 left-2 sm:left-3 z-10">
+                        <span className="px-1.5 py-0.5 sm:px-2 md:px-2.5 sm:py-0.5 md:py-1 text-[9px] xs:text-[10px] sm:text-xs font-medium bg-black/80 backdrop-blur-sm rounded-full text-gray-300 border border-white/10">
                           {categoryLabels[product.category] || product.category}
                         </span>
                       </div>
@@ -297,36 +294,36 @@ export default function Products() {
                   </div>
 
                   {/* Content */}
-                  <div className="p-3 sm:p-4">
-                    <h3 className="text-sm sm:text-base font-semibold text-white mb-1 line-clamp-1">
+                  <div className="p-2 sm:p-3 md:p-4">
+                    <h3 className="text-xs xs:text-sm sm:text-base font-semibold text-white mb-1 line-clamp-1 leading-tight">
                       {product.name}
                     </h3>
                     
                     {/* Description - Hidden on smallest screens */}
-                    <p className="hidden sm:block text-gray-500 text-xs sm:text-sm mb-3 line-clamp-2">
+                    <p className="hidden sm:block text-gray-500 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2 leading-relaxed">
                       {product.description}
                     </p>
 
                     {/* Price & Action */}
-                    <div className="flex items-center justify-between">
-                      <div>
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex-1 min-w-0">
                         {product.price ? (
-                          <p className="text-base sm:text-lg font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+                          <p className="text-sm xs:text-base sm:text-lg font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent truncate">
                             KES {product.price.toLocaleString()}
                           </p>
                         ) : (
-                          <p className="text-xs sm:text-sm text-gray-400">Request price</p>
+                          <p className="text-[10px] xs:text-xs sm:text-sm text-gray-400 truncate">Request price</p>
                         )}
                       </div>
                       
                       {/* Inquire button - Always visible on mobile */}
                       <button
                         onClick={scrollToContact}
-                        className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300"
+                        className="flex-shrink-0 w-7 h-7 xs:w-8 xs:h-8 sm:w-9 sm:h-9 rounded-lg bg-red-500/10 flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white transition-colors duration-300 touch-manipulation"
                         aria-label="Inquire about product"
                       >
                         <svg
-                          className="w-4 h-4 sm:w-5 sm:h-5"
+                          className="w-3.5 h-3.5 xs:w-4 xs:h-4 sm:w-5 sm:h-5"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -346,10 +343,10 @@ export default function Products() {
             </div>
           ) : (
             // Empty State
-            <div className="text-center py-12 sm:py-20">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gray-900 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+            <div className="text-center py-10 sm:py-16 md:py-20 px-4">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-gray-900 flex items-center justify-center mx-auto mb-3 sm:mb-4 md:mb-6">
                 <svg
-                  className="w-8 h-8 sm:w-10 sm:h-10 text-gray-700"
+                  className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-gray-700"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -362,8 +359,8 @@ export default function Products() {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">No products found</h3>
-              <p className="text-gray-500 text-sm sm:text-base max-w-md mx-auto px-4">
+              <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-2">No products found</h3>
+              <p className="text-gray-500 text-xs sm:text-sm md:text-base max-w-md mx-auto">
                 {activeCategory === "all"
                   ? "No products available yet."
                   : "No products in this category."}
@@ -371,7 +368,7 @@ export default function Products() {
               {activeCategory !== "all" && (
                 <button
                   onClick={() => setActiveCategory("all")}
-                  className="mt-4 sm:mt-6 px-5 sm:px-6 py-2.5 sm:py-3 bg-gray-900 text-white text-sm rounded-xl hover:bg-gray-800 transition-colors"
+                  className="mt-4 sm:mt-5 md:mt-6 px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 bg-gray-900 text-white text-xs sm:text-sm rounded-xl hover:bg-gray-800 transition-colors min-h-[40px] touch-manipulation"
                 >
                   View All
                 </button>
@@ -383,18 +380,18 @@ export default function Products() {
         {/* CTA */}
         {visibleProducts.length > 0 && (
           <div
-            className={`text-center mt-8 sm:mt-12 transition-all duration-700 delay-500 ${
+            className={`text-center mt-6 sm:mt-8 md:mt-10 lg:mt-12 transition-all duration-700 delay-500 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
             <button
               onClick={scrollToContact}
-              className="group inline-flex items-center gap-2 px-5 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white text-sm sm:text-base font-semibold rounded-xl hover:shadow-lg hover:shadow-red-500/25 transition-all"
+              className="group inline-flex items-center gap-2 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs sm:text-sm md:text-base font-semibold rounded-lg sm:rounded-xl hover:shadow-lg hover:shadow-red-500/25 transition-all min-h-[44px] touch-manipulation"
             >
               <span className="hidden sm:inline">Can&apos;t find what you need?</span>
               <span className="sm:hidden">Need something else?</span>
               <svg
-                className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform"
+                className="w-3.5 h-3.5 sm:w-4 sm:h-4 md:w-5 md:h-5 group-hover:translate-x-1 transition-transform flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -419,6 +416,12 @@ export default function Products() {
         }
         .scrollbar-hide::-webkit-scrollbar {
           display: none;
+        }
+        .snap-x {
+          scroll-snap-type: x mandatory;
+        }
+        .snap-start {
+          scroll-snap-align: start;
         }
       `}</style>
     </section>
