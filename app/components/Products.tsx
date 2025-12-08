@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useInViewAnimation } from "@/app/hooks/useInViewAnimation";
+import { getOptimizedImageUrl } from "@/lib/cloudinary";
 
 const categoryLabels: Record<string, string> = {
   engine: "Engine Parts",
@@ -225,10 +226,11 @@ export default function Products() {
                   <div className="relative aspect-[4/3] bg-gray-800 overflow-hidden">
                     {product.image_url ? (
                       <Image
-                        src={product.image_url}
+                        src={getOptimizedImageUrl(product.image_url, 800, 600)}
                         alt={product.name}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">

@@ -1,439 +1,424 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import { useInViewAnimation } from "@/app/hooks/useInViewAnimation";
-
-// COMMENTED OUT: Backend API base URL
-// const base = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5000";
 
 interface PortfolioItem {
   _id: string;
   title: string;
   color: string;
   images: string[];
-  description?: string;
-  createdAt?: string;
+  description: string;
 }
 
-// ============================================
-// MOCK DATA - Replace with your Cloudinary URLs
-// ============================================
-const mockPortfolioItems: PortfolioItem[] = [
+const portfolioData: PortfolioItem[] = [
   {
     _id: "1",
     title: "Matte Black BMW M4",
     color: "black",
     images: [
+      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80",
       "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
-      "https://images.unsplash.com/photo-1556189250-72ba954cfc2b?w=800&q=80",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
+      "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=800&q=80",
     ],
     description: "Full matte black wrap with gloss black accents",
-    createdAt: "2024-01-15",
   },
   {
     _id: "2",
-    title: "Racing Red Porsche 911",
+    title: "Racing Red Ferrari 488",
     color: "red",
     images: [
+      "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80",
+      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80",
       "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80",
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
     ],
     description: "Gloss racing red with carbon fiber details",
-    createdAt: "2024-02-20",
   },
   {
     _id: "3",
-    title: "Midnight Blue Mercedes AMG",
+    title: "Midnight Blue Porsche 911",
     color: "blue",
     images: [
-      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=800&q=80",
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
+      "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80",
+      "https://images.unsplash.com/photo-1611859266238-4b98091d9d9b?w=800&q=80",
     ],
     description: "Deep midnight blue metallic finish",
-    createdAt: "2024-03-10",
   },
   {
     _id: "4",
-    title: "Pearl White Audi RS7",
+    title: "Pearl White Mercedes AMG",
     color: "white",
     images: [
-      "https://images.unsplash.com/photo-1606611013016-969c19ba27bb?w=800&q=80",
-      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80",
+      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
+      "https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&q=80",
     ],
     description: "Satin pearl white with chrome delete",
-    createdAt: "2024-03-25",
   },
   {
     _id: "5",
-    title: "Nardo Gray Lamborghini",
+    title: "Nardo Gray Audi RS7",
     color: "gray",
+    images: [
+      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80",
+      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80",
+    ],
+    description: "Iconic Nardo gray with matte finish",
+  },
+  {
+    _id: "6",
+    title: "Sunset Orange Lamborghini",
+    color: "orange",
     images: [
       "https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80",
       "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=800&q=80",
       "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
     ],
-    description: "Iconic Nardo gray with matte finish",
-    createdAt: "2024-04-05",
-  },
-  {
-    _id: "6",
-    title: "Electric Purple McLaren",
-    color: "purple",
-    images: [
-      "https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=800&q=80",
-      "https://images.unsplash.com/photo-1616455579100-2ceaa4eb2d37?w=800&q=80",
-    ],
-    description: "Vibrant electric purple color shift wrap",
-    createdAt: "2024-04-18",
+    description: "Stunning sunset orange metallic wrap",
   },
   {
     _id: "7",
     title: "British Racing Green Jaguar",
     color: "green",
     images: [
-      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80",
-      "https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&q=80",
+      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
+      "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=800&q=80",
+      "https://images.unsplash.com/photo-1504215680853-026ed2a45def?w=800&q=80",
     ],
     description: "Classic British racing green restoration",
-    createdAt: "2024-05-02",
   },
   {
     _id: "8",
-    title: "Sunset Orange Ferrari",
-    color: "orange",
+    title: "Velocity Yellow Corvette",
+    color: "yellow",
     images: [
-      "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80",
-      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80",
-      "https://images.unsplash.com/photo-1546614042-7df3c8c3c68e?w=800&q=80",
+      "https://images.unsplash.com/photo-1547744152-14d985cb937f?w=800&q=80",
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80",
+      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
     ],
-    description: "Stunning sunset orange metallic wrap",
-    createdAt: "2024-05-15",
+    description: "Vibrant velocity yellow with racing stripes",
   },
 ];
-// ============================================
 
-const accentColors: Record<string, { bg: string; border: string; text: string }> = {
-  red: { bg: "bg-red-500", border: "border-red-500", text: "text-red-500" },
-  blue: { bg: "bg-blue-500", border: "border-blue-500", text: "text-blue-500" },
-  purple: { bg: "bg-purple-500", border: "border-purple-500", text: "text-purple-500" },
-  green: { bg: "bg-green-500", border: "border-green-500", text: "text-green-500" },
+const colorStyles: Record<string, { bg: string; border: string; text: string }> = {
+  red: { bg: "bg-red-500", border: "border-red-500", text: "text-red-400" },
+  blue: { bg: "bg-blue-500", border: "border-blue-500", text: "text-blue-400" },
+  green: { bg: "bg-emerald-500", border: "border-emerald-500", text: "text-emerald-400" },
   gray: { bg: "bg-gray-400", border: "border-gray-400", text: "text-gray-400" },
-  silver: { bg: "bg-gray-400", border: "border-gray-400", text: "text-gray-400" },
-  black: { bg: "bg-neutral-600", border: "border-neutral-600", text: "text-neutral-400" },
-  white: { bg: "bg-slate-300", border: "border-slate-300", text: "text-slate-300" },
-  orange: { bg: "bg-orange-500", border: "border-orange-500", text: "text-orange-500" },
-  yellow: { bg: "bg-yellow-500", border: "border-yellow-500", text: "text-yellow-500" },
-  pink: { bg: "bg-pink-500", border: "border-pink-500", text: "text-pink-500" },
-  default: { bg: "bg-red-500", border: "border-red-500", text: "text-red-500" },
+  black: { bg: "bg-neutral-500", border: "border-neutral-500", text: "text-neutral-400" },
+  white: { bg: "bg-slate-200", border: "border-slate-200", text: "text-slate-300" },
+  orange: { bg: "bg-orange-500", border: "border-orange-500", text: "text-orange-400" },
+  yellow: { bg: "bg-yellow-400", border: "border-yellow-400", text: "text-yellow-400" },
 };
 
-const getAccentColor = (color: string) => {
-  const normalizedColor = color?.toLowerCase() || "default";
-  return accentColors[normalizedColor] || accentColors.default;
+const getColorStyle = (color: string) => {
+  return colorStyles[color.toLowerCase()] || colorStyles.red;
 };
 
 export default function Portfolio() {
-  const [items, setItems] = useState<PortfolioItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [selected, setSelected] = useState<PortfolioItem | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
-  
-  const titleRef = useInViewAnimation({ animation: "animate-fadeInUp" });
-  const gridRef = useInViewAnimation({ animation: "animate-fadeInUp" });
+  const [isVisible, setIsVisible] = useState(false);
+  const [filter, setFilter] = useState("all");
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const filters = ["all", "black", "red", "blue", "white", "gray", "orange", "green", "yellow"];
+
+  const filteredItems = filter === "all"
+    ? portfolioData
+    : portfolioData.filter((item) => item.color.toLowerCase() === filter);
 
   useEffect(() => {
-    // ============================================
-    // COMMENTED OUT: Original backend fetch
-    // ============================================
-    /*
-    const fetchPortfolio = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`${base}/api/portfolio`);
-        
-        if (!response.ok) {
-          throw new Error("Failed to fetch portfolio");
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
         }
-        
-        const data = await response.json();
-        setItems(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Something went wrong");
-      } finally {
-        setLoading(false);
-      }
-    };
+      },
+      { threshold: 0.1 }
+    );
 
-    fetchPortfolio();
-    */
-    // ============================================
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
 
-    // USING MOCK DATA INSTEAD
-    const loadMockData = () => {
-      try {
-        setLoading(true);
-        // Simulate a small delay like a real API call
-        setTimeout(() => {
-          setItems(mockPortfolioItems);
-          setLoading(false);
-        }, 500);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Something went wrong");
-        setLoading(false);
-      }
-    };
-
-    loadMockData();
+    return () => observer.disconnect();
   }, []);
 
   const openModal = (item: PortfolioItem) => {
     setSelected(item);
     setActiveImageIndex(0);
+    document.body.style.overflow = "hidden";
   };
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setSelected(null);
     setActiveImageIndex(0);
-  };
+    document.body.style.overflow = "auto";
+  }, []);
 
-  const nextImage = () => {
+  const nextImage = useCallback(() => {
     if (selected) {
       setActiveImageIndex((prev) => (prev + 1) % selected.images.length);
     }
-  };
+  }, [selected]);
 
-  const prevImage = () => {
+  const prevImage = useCallback(() => {
     if (selected) {
       setActiveImageIndex((prev) => (prev - 1 + selected.images.length) % selected.images.length);
     }
-  };
+  }, [selected]);
 
-  // Loading state
-  if (loading) {
-    return (
-      <section id="portfolio" className="py-24 px-4 bg-black">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!selected) return;
+      if (e.key === "Escape") closeModal();
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "ArrowLeft") prevImage();
+    };
 
-            <h2 className="text-4xl sm:text-5xl font-bold text-white">
-              Recent Transformations
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {[...Array(8)].map((_, idx) => (
-              <div
-                key={idx}
-                className="aspect-[3/4] rounded-2xl bg-gray-800 animate-pulse"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // Error state
-  if (error) {
-    return (
-      <section id="portfolio" className="py-24 px-4 bg-black">
-        <div className="max-w-6xl mx-auto text-center">
-
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-            Recent Transformations
-          </h2>
-          <p className="text-gray-500">Unable to load portfolio. Please try again later.</p>
-        </div>
-      </section>
-    );
-  }
-
-  // Empty state
-  if (items.length === 0) {
-    return (
-      <section id="portfolio" className="py-24 px-4 bg-black">
-        <div className="max-w-6xl mx-auto text-center">
-        
-          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-            Recent Transformations
-          </h2>
-          <p className="text-gray-500">No portfolio items available yet.</p>
-        </div>
-      </section>
-    );
-  }
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selected, closeModal, nextImage, prevImage]);
 
   return (
-    <section id="portfolio" className="py-24 px-4 bg-black">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        {/* REMOVED opacity-0 - was causing content to disappear */}
-        <div ref={titleRef} className="text-center mb-16">
+    <section
+      ref={sectionRef}
+      id="portfolio"
+      className="relative py-24 sm:py-32 px-4 bg-black overflow-hidden"
+    >
+      {/* Subtle accent line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
 
-          <h2 className="text-4xl sm:text-5xl font-bold text-white">
-            Recent Transformations
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div
+          className={`text-center mb-12 sm:mb-16 transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+        
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+            Recent{" "}
+            <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+              Transformations
+            </span>
           </h2>
-          <p className="mt-4 text-gray-500 max-w-lg mx-auto">
+          <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">
             Showcasing our premium wrap and customization projects
           </p>
         </div>
 
-        {/* Grid */}
-        {/* REMOVED opacity-0 - was causing content to disappear */}
+        {/* Filter Tabs */}
         <div
-          ref={gridRef}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
+          className={`flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-14 transition-all duration-700 delay-100 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
         >
-          {items.map((item) => {
-            const accent = getAccentColor(item.color);
+          {filters.map((f) => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 capitalize ${
+                filter === f
+                  ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/20"
+                  : "bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-800"
+              }`}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+
+        {/* Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6">
+          {filteredItems.map((item, idx) => {
+            const accent = getColorStyle(item.color);
+            const isLarge = idx === 0 || idx === 5;
+
             return (
-              <button
+              <div
                 key={item._id}
-                onClick={() => openModal(item)}
-                className="group relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-black"
+                className={`${isLarge ? "md:col-span-2 md:row-span-2" : ""} transition-all duration-500 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
+                }`}
+                style={{ transitionDelay: `${idx * 80 + 200}ms` }}
               >
-                <Image
-                  src={item.images[0]}
-                  alt={item.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
+                <button
+                  onClick={() => openModal(item)}
+                  className={`group relative w-full ${
+                    isLarge ? "aspect-square md:aspect-[4/5]" : "aspect-[4/5]"
+                  } rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-black`}
+                >
+                  <Image
+                    src={item.images[0]}
+                    alt={item.title}
+                    fill
+                    className="object-cover transition-all duration-700 group-hover:scale-110"
+                    sizes={isLarge ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
+                  />
 
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
 
-                {/* Badge */}
-                <div className="absolute top-4 left-4">
-                  <span
-                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-black/50 backdrop-blur-sm ${accent.text}`}
-                  >
-                    <span className={`w-2 h-2 rounded-full ${accent.bg}`} />
-                    {item.color}
-                  </span>
-                </div>
+                  {/* Color Badge */}
+                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-10">
+                    <span
+                      className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium bg-black/60 backdrop-blur-md ${accent.text} border border-white/10 capitalize`}
+                    >
+                      <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${accent.bg}`} />
+                      {item.color}
+                    </span>
+                  </div>
 
-                {/* Expand Icon */}
-                <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110">
-                  <svg
-                    className="w-4 h-4 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
-                    />
-                  </svg>
-                </div>
+                  {/* Image count badge */}
+                  <div className="absolute top-3 sm:top-4 right-3 sm:right-4 z-10">
+                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-black/60 backdrop-blur-md text-white/80 border border-white/10">
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
+                      {item.images.length}
+                    </span>
+                  </div>
 
-                {/* Content */}
-                <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <h3 className="text-lg font-semibold text-white mb-1 group-hover:translate-y-0 translate-y-2 transition-transform duration-300">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
-                    {item.images.length} photo{item.images.length !== 1 ? "s" : ""}
-                  </p>
-                </div>
-              </button>
+                  {/* Hover expand icon */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center transform scale-50 group-hover:scale-100 transition-transform duration-300 border border-white/20">
+                      <svg
+                        className="w-6 h-6 sm:w-7 sm:h-7 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1.5}
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 md:p-6">
+                    <h3
+                      className={`${
+                        isLarge ? "text-lg sm:text-xl md:text-2xl" : "text-sm sm:text-base md:text-lg"
+                      } font-bold text-white mb-1 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300`}
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      className={`${
+                        isLarge ? "text-sm" : "text-xs sm:text-sm"
+                      } text-gray-400 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-75 line-clamp-2`}
+                    >
+                      {item.description}
+                    </p>
+                  </div>
+                </button>
+              </div>
             );
           })}
+        </div>
+
+        {/* No results */}
+        {filteredItems.length === 0 && (
+          <div className="text-center py-16">
+            <p className="text-gray-500">No projects found for this color.</p>
+          </div>
+        )}
+
+        {/* View all CTA */}
+        <div
+          className={`mt-12 sm:mt-16 text-center transition-all duration-700 delay-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          <button className="group inline-flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-red-400 transition-colors duration-300">
+            <span>View all projects</span>
+            <svg
+              className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </button>
         </div>
       </div>
 
       {/* Modal */}
       {selected && (
         <div
-          className="fixed inset-0 bg-black/95 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/98 backdrop-blur-xl z-50 flex items-center justify-center p-4 sm:p-6"
           onClick={closeModal}
-          style={{ animation: "fadeIn 0.2s ease-out" }}
         >
-          <div
-            className="w-full max-w-5xl"
-            onClick={(e) => e.stopPropagation()}
-            style={{ animation: "scaleIn 0.3s ease-out" }}
-          >
+          <div className="w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
             {/* Modal Header */}
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-start justify-between mb-4 sm:mb-6">
               <div>
-                <h3 className="text-2xl font-bold text-white">{selected.title}</h3>
-                <p className="text-gray-500 text-sm mt-1">
-                  {selected.description || "Professional wrap installation by JN Parts & Accessories"}
-                </p>
+                <div className="flex items-center gap-3 mb-2">
+                  <span
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-white/10 ${
+                      getColorStyle(selected.color).text
+                    } capitalize`}
+                  >
+                    <span className={`w-2 h-2 rounded-full ${getColorStyle(selected.color).bg}`} />
+                    {selected.color}
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">{selected.title}</h3>
+                <p className="text-gray-500 text-sm sm:text-base mt-1 max-w-xl">{selected.description}</p>
               </div>
               <button
                 onClick={closeModal}
-                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors flex-shrink-0 ml-4"
               >
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
 
             {/* Main Image */}
-            <div className="relative aspect-video rounded-2xl overflow-hidden bg-gray-900 mb-4">
+            <div className="relative aspect-[16/10] sm:aspect-video rounded-2xl sm:rounded-3xl overflow-hidden bg-gray-900 mb-4">
               <Image
                 src={selected.images[activeImageIndex]}
                 alt={`${selected.title} - Image ${activeImageIndex + 1}`}
                 fill
                 className="object-cover"
                 key={activeImageIndex}
+                sizes="(max-width: 768px) 100vw, 90vw"
+                priority
               />
 
-              {/* Navigation Arrows - only show if more than 1 image */}
+              {/* Navigation Arrows */}
               {selected.images.length > 1 && (
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center transition-colors"
+                    className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-md flex items-center justify-center transition-all hover:scale-110 border border-white/10"
                   >
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 19l-7-7 7-7"
-                      />
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm flex items-center justify-center transition-colors"
+                    className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-md flex items-center justify-center transition-all hover:scale-110 border border-white/10"
                   >
-                    <svg
-                      className="w-6 h-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </button>
                 </>
@@ -441,7 +426,7 @@ export default function Portfolio() {
 
               {/* Image Counter */}
               {selected.images.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-black/50 backdrop-blur-sm">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
                   <span className="text-white text-sm font-medium">
                     {activeImageIndex + 1} / {selected.images.length}
                   </span>
@@ -449,19 +434,19 @@ export default function Portfolio() {
               )}
             </div>
 
-            {/* Thumbnails - only show if more than 1 image */}
+            {/* Thumbnails */}
             {selected.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-3">
+              <div className="flex gap-3 justify-center">
                 {selected.images.map((img, idx) => {
-                  const accent = getAccentColor(selected.color);
+                  const accent = getColorStyle(selected.color);
                   return (
                     <button
                       key={idx}
                       onClick={() => setActiveImageIndex(idx)}
-                      className={`relative aspect-video rounded-xl overflow-hidden transition-all duration-200 ${
+                      className={`relative w-20 h-14 sm:w-28 sm:h-20 rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 ${
                         activeImageIndex === idx
-                          ? `ring-2 ${accent.border} ring-offset-2 ring-offset-black`
-                          : "opacity-50 hover:opacity-100"
+                          ? `ring-2 ${accent.border} ring-offset-2 ring-offset-black scale-105`
+                          : "opacity-50 hover:opacity-100 hover:scale-105"
                       }`}
                     >
                       <Image
@@ -469,37 +454,29 @@ export default function Portfolio() {
                         alt={`${selected.title} thumbnail ${idx + 1}`}
                         fill
                         className="object-cover"
+                        sizes="120px"
                       />
                     </button>
                   );
                 })}
               </div>
             )}
+
+            {/* Keyboard hint */}
+            <div className="hidden sm:flex justify-center gap-4 mt-6 text-gray-600 text-xs">
+              <span className="flex items-center gap-1">
+                <kbd className="px-2 py-1 rounded bg-white/10 text-gray-400">←</kbd>
+                <kbd className="px-2 py-1 rounded bg-white/10 text-gray-400">→</kbd>
+                Navigate
+              </span>
+              <span className="flex items-center gap-1">
+                <kbd className="px-2 py-1 rounded bg-white/10 text-gray-400">Esc</kbd>
+                Close
+              </span>
+            </div>
           </div>
         </div>
       )}
-
-      <style jsx>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.95) translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-          }
-        }
-      `}</style>
     </section>
   );
 }

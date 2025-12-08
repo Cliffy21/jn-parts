@@ -124,11 +124,11 @@ export default function Footer() {
             <div className="flex gap-3">
               <a
                 href="https://www.tiktok.com/@jn_parts_accesories?_r=1&_d=el5bciacmkkj6j&sec_uid=MS4wLjABAAAAlGis07agjJdlbhtcL6lb7FRrHNxZ-JbbZTudT07luZRBr7mDi7FIq_8WNpzvblom&share_author_id=7562451803967636491&sharer_language=en&source=h5_m&u_code=f02009ejjc3d9k&timestamp=1764701164&user_id=7562451803967636491&sec_user_id=MS4wLjABAAAAlGis07agjJdlbhtcL6lb7FRrHNxZ-JbbZTudT07luZRBr7mDi7FIq_8WNpzvblom&item_author_type=1&utm_source=more&utm_campaign=client_share&utm_medium=android&share_iid=7577600691825411896&share_link_id=8f51d3c9-e11e-4b55-8e99-6bacd9a9e638&share_app_id=1233&ugbiz_name=ACCOUNT&ug_btm=b8727%2Cb7360&social_share_type=5&enable_checksum=1"
-                aria-label="Tiktok"
+                aria-label="TikTok"
                 className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-gray-500 hover:bg-red-500/20 hover:text-red-400 transition-all duration-200"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
                 </svg>
               </a>
               <a
