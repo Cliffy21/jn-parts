@@ -44,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="canonical" href="https://jncaraccessories.com" />
       </head>
+    
       <body className="bg-black text-white overflow-x-hidden antialiased">
         {children}
         <Analytics />
