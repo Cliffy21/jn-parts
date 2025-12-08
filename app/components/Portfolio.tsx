@@ -147,16 +147,26 @@ export default function Portfolio() {
     return () => observer.disconnect();
   }, []);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (selected) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selected]);
+
   const openModal = (item: PortfolioItem) => {
     setSelected(item);
     setActiveImageIndex(0);
-    document.body.style.overflow = "hidden";
   };
 
   const closeModal = useCallback(() => {
     setSelected(null);
     setActiveImageIndex(0);
-    document.body.style.overflow = "auto";
   }, []);
 
   const nextImage = useCallback(() => {
