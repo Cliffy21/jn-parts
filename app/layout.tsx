@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata: Metadata = {
   title: "JN Car Accessories | Premium Car Wraps, PPF & Detailing",
@@ -45,6 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-black text-white overflow-x-hidden antialiased">
         {children}
+        <Analytics />
       </body>
     </html>
   );
