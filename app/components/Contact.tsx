@@ -226,9 +226,9 @@ export default function Contact() {
                       </>
                     ) : (
                       <>
-                        <Sparkles className="w-5 h-5" />
+                       
                         Request Free Quote
-                        <Car className="w-5 h-5" />
+                       
                       </>
                     )}
                   </span>

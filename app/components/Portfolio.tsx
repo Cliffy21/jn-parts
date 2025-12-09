@@ -11,18 +11,23 @@ interface PortfolioItem {
   description: string;
 }
 
+// Portfolio data organized by color - Each car is correctly categorized by its actual color
 const portfolioData: PortfolioItem[] = [
+  // BLACK CARS
   {
     _id: "1",
     title: "Matte Black BMW M4",
     color: "black",
     images: [
-      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80",
-      "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
-      "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=800&q=80",
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765322264/mazda_xehbwl.jpg",
+      
+      "https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&q=80",
+      
     ],
     description: "Full matte black wrap with gloss black accents",
   },
+  
+  // RED CARS
   {
     _id: "2",
     title: "Racing Red Ferrari 488",
@@ -30,32 +35,40 @@ const portfolioData: PortfolioItem[] = [
     images: [
       "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80",
       "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80",
+      "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=800&q=80",
+      "",
     ],
     description: "Gloss racing red with carbon fiber details",
   },
+  
+  // BLUE CARS
   {
     _id: "3",
     title: "Midnight Blue Porsche 911",
     color: "blue",
     images: [
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
-      "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80",
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765322264/mazda2_gdtq4p.jpg",
+      "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=800&q=80 "  ,
       "https://images.unsplash.com/photo-1611859266238-4b98091d9d9b?w=800&q=80",
     ],
     description: "Deep midnight blue metallic finish",
   },
+  
+  // WHITE CARS
   {
     _id: "4",
     title: "Pearl White Mercedes AMG",
     color: "white",
     images: [
       "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80",
-      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
-      "https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&q=80",
+     
+      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80",
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
     ],
     description: "Satin pearl white with chrome delete",
   },
+  
+  // GRAY CARS
   {
     _id: "5",
     title: "Nardo Gray Audi RS7",
@@ -67,6 +80,8 @@ const portfolioData: PortfolioItem[] = [
     ],
     description: "Iconic Nardo gray with matte finish",
   },
+  
+  // ORANGE CARS
   {
     _id: "6",
     title: "Sunset Orange Lamborghini",
@@ -78,6 +93,8 @@ const portfolioData: PortfolioItem[] = [
     ],
     description: "Stunning sunset orange metallic wrap",
   },
+  
+  // GREEN CARS
   {
     _id: "7",
     title: "British Racing Green Jaguar",
@@ -89,6 +106,8 @@ const portfolioData: PortfolioItem[] = [
     ],
     description: "Classic British racing green restoration",
   },
+  
+  // YELLOW CARS
   {
     _id: "8",
     title: "Velocity Yellow Corvette",
@@ -97,6 +116,7 @@ const portfolioData: PortfolioItem[] = [
       "https://images.unsplash.com/photo-1547744152-14d985cb937f?w=800&q=80",
       "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80",
       "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
     ],
     description: "Vibrant velocity yellow with racing stripes",
   },
@@ -124,11 +144,41 @@ export default function Portfolio() {
   const [filter, setFilter] = useState("all");
   const sectionRef = useRef<HTMLElement>(null);
 
-  const filters = ["all", "black", "red", "blue", "white", "gray", "orange", "green", "yellow"];
+  // Group items by color for accurate filtering
+  const itemsByColor = portfolioData.reduce((acc, item) => {
+    const color = item.color.toLowerCase().trim();
+    if (!acc[color]) {
+      acc[color] = [];
+    }
+    acc[color].push(item);
+    return acc;
+  }, {} as Record<string, PortfolioItem[]>);
 
-  const filteredItems = filter === "all"
-    ? portfolioData
-    : portfolioData.filter((item) => item.color.toLowerCase() === filter);
+  // Get available colors with counts (only colors that have items)
+  const availableColors = Object.keys(itemsByColor).filter(
+    (color) => itemsByColor[color] && itemsByColor[color].length > 0
+  );
+
+  // Order colors consistently
+  const colorOrder = ["black", "red", "blue", "white", "gray", "orange", "green", "yellow"];
+  const orderedColors = colorOrder.filter((color) => availableColors.includes(color));
+
+  // Build filters array with "all" first, then ordered colors
+  const filters = [
+    { id: "all", label: "All", count: portfolioData.length, color: null },
+    ...orderedColors.map((color) => ({
+      id: color,
+      label: color.charAt(0).toUpperCase() + color.slice(1),
+      count: itemsByColor[color].length,
+      color: color,
+    })),
+  ];
+
+  // Filter items - case-insensitive and trimmed for accuracy
+  const filteredItems =
+    filter === "all"
+      ? portfolioData
+      : portfolioData.filter((item) => item.color.toLowerCase().trim() === filter.toLowerCase().trim());
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -221,25 +271,59 @@ export default function Portfolio() {
           </p>
         </div>
 
-        {/* Filter Tabs */}
+        {/* Filter Tabs with Color Indicators */}
         <div
           className={`flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-14 transition-all duration-700 delay-100 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          {filters.map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 capitalize ${
-                filter === f
-                  ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/20"
-                  : "bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-800"
-              }`}
-            >
-              {f}
-            </button>
-          ))}
+          {filters.map((filterOption) => {
+            const isActive = filter === filterOption.id;
+            const colorStyle = filterOption.color ? getColorStyle(filterOption.color) : null;
+
+            // Determine background class based on active state and filter type
+            let bgClass = "";
+            if (isActive) {
+              if (filterOption.id === "all") {
+                bgClass = "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/20";
+              } else {
+                // Use the color's background for active color filters
+                bgClass = `${colorStyle?.bg || "bg-gray-600"} text-white shadow-lg`;
+              }
+            } else {
+              bgClass = "bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-800";
+            }
+
+            return (
+              <button
+                key={filterOption.id}
+                onClick={() => setFilter(filterOption.id)}
+                className={`group flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 min-h-[40px] ${bgClass}`}
+                aria-label={`Filter by ${filterOption.label} (${filterOption.count} items)`}
+              >
+                {/* Color indicator dot - only show for color filters, not "all" */}
+                {filterOption.color && (
+                  <span
+                    className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
+                      isActive
+                        ? "bg-white"
+                        : colorStyle?.bg || "bg-gray-600"
+                    } transition-colors duration-300`}
+                  />
+                )}
+                <span className="capitalize">{filterOption.label}</span>
+                <span
+                  className={`px-2 py-0.5 rounded-md text-[10px] font-semibold flex-shrink-0 ${
+                    isActive
+                      ? "bg-white/20 text-white"
+                      : "bg-gray-800 text-gray-500"
+                  }`}
+                >
+                  {filterOption.count}
+                </span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Grid */}
