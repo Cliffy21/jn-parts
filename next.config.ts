@@ -1,6 +1,12 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   output: "standalone",
+
+  // Vercel is expecting build artifacts in `Next.js/`
+  // (e.g. `/vercel/path0/Next.js/routes-manifest.json`).
+  // Align Next.js build output directory with that expectation.
+  distDir: "Next.js",
 
   images: {
     remotePatterns: [
@@ -27,4 +33,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

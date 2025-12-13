@@ -58,7 +58,7 @@ const mockProducts: Product[] = [
     category: "exterior",
     description: "6000K LED headlight bulbs. Plug and play.",
     price: 8500,
-    image_url: "https://images.unsplash.com/photo-1489824904134-891ab64532f1?w=800&q=80",
+    image_url: "https://res.cloudinary.com/dgumz7yur/image/upload/v1765666779/LED_light_otfwce.jpg",
   },
   {
     id: "6",

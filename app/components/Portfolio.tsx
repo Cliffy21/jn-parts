@@ -16,13 +16,12 @@ const portfolioData: PortfolioItem[] = [
   // BLACK CARS
   {
     _id: "1",
-    title: "Matte Black BMW M4",
+    title: "Matte Black Mazda cx8",
     color: "black",
     images: [
       "https://res.cloudinary.com/dgumz7yur/image/upload/v1765322264/mazda_xehbwl.jpg",
-      
-      "https://images.unsplash.com/photo-1563720360172-67b8f3dce741?w=800&q=80",
-      
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765666781/matte_balack_mazda_rze14w.jpg",
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765666800/matte_black_grku0w.jpg",
     ],
     description: "Full matte black wrap with gloss black accents",
   },
@@ -44,11 +43,10 @@ const portfolioData: PortfolioItem[] = [
   // BLUE CARS
   {
     _id: "3",
-    title: "Midnight Blue Porsche 911",
+    title: "Midnight Blue Mazda CX8",
     color: "blue",
     images: [
-      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765322264/mazda2_gdtq4p.jpg",
-      "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=800&q=80 "  ,
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765666747/midnight_nn0hf6.jpg "  ,
       "https://images.unsplash.com/photo-1611859266238-4b98091d9d9b?w=800&q=80",
     ],
     description: "Deep midnight blue metallic finish",
@@ -57,11 +55,12 @@ const portfolioData: PortfolioItem[] = [
   // WHITE CARS
   {
     _id: "4",
-    title: "Pearl White Mercedes AMG",
+    title: "Pearl White Mazda CX8",
     color: "white",
     images: [
       "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80",
-     
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765322264/mazda2_gdtq4p.jpg",
+      
       "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80",
       "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
     ],
@@ -75,7 +74,7 @@ const portfolioData: PortfolioItem[] = [
     color: "gray",
     images: [
       "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80",
-      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765666783/gray_mazda_qf5li6.jpg",
       "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80",
     ],
     description: "Iconic Nardo gray with matte finish",
@@ -113,9 +112,9 @@ const portfolioData: PortfolioItem[] = [
     title: "Velocity Yellow Corvette",
     color: "yellow",
     images: [
-      "https://images.unsplash.com/photo-1547744152-14d985cb937f?w=800&q=80",
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765666783/yellow_mazda_kqxayy.jpg",
       "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80",
-      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+     
       "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
     ],
     description: "Vibrant velocity yellow with racing stripes",

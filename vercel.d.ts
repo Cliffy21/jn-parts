@@ -47,3 +47,4 @@ declare module "@vercel/speed-insights/next" {
   export function SpeedInsights(props: SpeedInsightsProps): null;
 }
 
+
