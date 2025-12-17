@@ -83,12 +83,12 @@ const portfolioData: PortfolioItem[] = [
   // ORANGE CARS
   {
     _id: "6",
-    title: "Sunset Orange Lamborghini",
+    title: "Sunset Orange Audi",
     color: "orange",
     images: [
-      "https://images.unsplash.com/photo-1621135802920-133df287f89c?w=800&q=80",
-      "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=800&q=80",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765978672/OR1_bpbhlo.jpg",
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765978672/OR2_vpcidt.jpg.jpg",
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765977028/sunset_orangeaudi_m6qxjl.jpg",
     ],
     description: "Stunning sunset orange metallic wrap",
   },
