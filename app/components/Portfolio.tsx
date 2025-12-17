@@ -86,8 +86,9 @@ const portfolioData: PortfolioItem[] = [
     title: "Sunset Orange Audi",
     color: "orange",
     images: [
-      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765978672/OR1_bpbhlo.jpg",
       "https://res.cloudinary.com/dgumz7yur/image/upload/v1765978672/OR2_vpcidt.jpg.jpg",
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765978672/OR1_bpbhlo.jpg",
+     
       "https://res.cloudinary.com/dgumz7yur/image/upload/v1765977028/sunset_orangeaudi_m6qxjl.jpg",
     ],
     description: "Stunning sunset orange metallic wrap",
