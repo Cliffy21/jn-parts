@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useInViewAnimation } from "@/app/hooks/useInViewAnimation";
+import { Lens } from "@/components/ui/lens";
 
 export default function Services() {
   const titleRef = useInViewAnimation({ animation: "animate-fadeInUp" });
@@ -76,15 +77,18 @@ export default function Services() {
               }}
             >
               {/* Image */}
-              <div className="relative h-48 overflow-hidden">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-              </div>
+              <Lens zoomFactor={2.5} lensSize={180}>
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
+                </div>
+              </Lens>
               
               {/* Content */}
               <div className="p-6">

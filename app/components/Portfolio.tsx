@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
+import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
+import { Lens } from "@/components/ui/lens";
 
 interface PortfolioItem {
   _id: string;
@@ -58,7 +60,7 @@ const portfolioData: PortfolioItem[] = [
     title: "Pearl White Mazda CX8",
     color: "white",
     images: [
-      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80",
+      
       "https://res.cloudinary.com/dgumz7yur/image/upload/v1765322264/mazda2_gdtq4p.jpg",
       
       "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80",
@@ -74,26 +76,24 @@ const portfolioData: PortfolioItem[] = [
     color: "gray",
     images: [
       "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80",
+      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80",
       "https://res.cloudinary.com/dgumz7yur/image/upload/v1765666783/gray_mazda_qf5li6.jpg",
       "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80",
     ],
     description: "Iconic Nardo gray with matte finish",
   },
   
-  // ORANGE CARS
   {
     _id: "6",
-    title: "Sunset Orange Audi",
+    title: "Papaya Orange Ford Mustang",
     color: "orange",
     images: [
-      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765978672/OR2_vpcidt.jpg.jpg",
-      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765978672/OR1_bpbhlo.jpg",
-     
-      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765977028/sunset_orangeaudi_m6qxjl.jpg",
+      "https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=800&q=80", // Orange Mustang
+      "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=800&q=80", // Orange muscle car
+      "https://images.unsplash.com/photo-1547744152-14d985cb937f?w=800&q=80", // Classic orange car
     ],
-    description: "Stunning sunset orange metallic wrap",
+    description: "Papaya orange Ford Mustang GT with racing stripes",
   },
-  
   // GREEN CARS
   {
     _id: "7",
@@ -138,8 +138,6 @@ const getColorStyle = (color: string) => {
 };
 
 export default function Portfolio() {
-  const [selected, setSelected] = useState<PortfolioItem | null>(null);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [filter, setFilter] = useState("all");
   const sectionRef = useRef<HTMLElement>(null);
@@ -197,51 +195,44 @@ export default function Portfolio() {
     return () => observer.disconnect();
   }, []);
 
-  // Prevent body scroll when modal is open
-  useEffect(() => {
-    if (selected) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [selected]);
+  // Transform portfolio items into carousel cards
+  const carouselCards = filteredItems
+    .filter((item) => item.images.length > 0 && item.images[0]?.trim() !== "")
+    .map((item) => {
+      const mainImage = item.images[0]?.trim() || "";
+      const validImages = item.images.filter((img) => img?.trim() !== "");
 
-  const openModal = (item: PortfolioItem) => {
-    setSelected(item);
-    setActiveImageIndex(0);
-  };
+      return {
+        src: mainImage,
+        title: item.title,
+        category: item.color.charAt(0).toUpperCase() + item.color.slice(1),
+        content: (
+          <div className="space-y-4">
+            <p className="text-gray-300 text-base md:text-lg">{item.description}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+              {validImages.map((image, idx) => (
+                <Lens key={idx} zoomFactor={2} lensSize={200}>
+                  <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-800">
+                    <Image
+                      src={image.trim()}
+                      alt={`${item.title} - View ${idx + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                </Lens>
+              ))}
+            </div>
+          </div>
+        ),
+      };
+    });
 
-  const closeModal = useCallback(() => {
-    setSelected(null);
-    setActiveImageIndex(0);
-  }, []);
-
-  const nextImage = useCallback(() => {
-    if (selected) {
-      setActiveImageIndex((prev) => (prev + 1) % selected.images.length);
-    }
-  }, [selected]);
-
-  const prevImage = useCallback(() => {
-    if (selected) {
-      setActiveImageIndex((prev) => (prev - 1 + selected.images.length) % selected.images.length);
-    }
-  }, [selected]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!selected) return;
-      if (e.key === "Escape") closeModal();
-      if (e.key === "ArrowRight") nextImage();
-      if (e.key === "ArrowLeft") prevImage();
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selected, closeModal, nextImage, prevImage]);
+  // Create carousel items from cards
+  const carouselItems = carouselCards.map((card, index) => (
+    <Card key={index} card={card} index={index} layout={false} />
+  ));
 
   return (
     <section
@@ -326,110 +317,21 @@ export default function Portfolio() {
           })}
         </div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 lg:gap-6">
-          {filteredItems.map((item, idx) => {
-            const accent = getColorStyle(item.color);
-            const isLarge = idx === 0 || idx === 5;
-
-            return (
-              <div
-                key={item._id}
-                className={`${isLarge ? "md:col-span-2 md:row-span-2" : ""} transition-all duration-500 ${
-                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
-                }`}
-                style={{ transitionDelay: `${idx * 80 + 200}ms` }}
-              >
-                <button
-                  onClick={() => openModal(item)}
-                  className={`group relative w-full ${
-                    isLarge ? "aspect-square md:aspect-[4/5]" : "aspect-[4/5]"
-                  } rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-black`}
-                >
-                  <Image
-                    src={item.images[0]}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-all duration-700 group-hover:scale-110"
-                    sizes={isLarge ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
-                  />
-
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-70 group-hover:opacity-90 transition-opacity duration-500" />
-
-                  {/* Color Badge */}
-                  <div className="absolute top-3 sm:top-4 left-3 sm:left-4 z-10">
-                    <span
-                      className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-medium bg-black/60 backdrop-blur-md ${accent.text} border border-white/10 capitalize`}
-                    >
-                      <span className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${accent.bg}`} />
-                      {item.color}
-                    </span>
-                  </div>
-
-                  {/* Image count badge */}
-                  <div className="absolute top-3 sm:top-4 right-3 sm:right-4 z-10">
-                    <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10px] sm:text-xs font-medium bg-black/60 backdrop-blur-md text-white/80 border border-white/10">
-                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
-                      {item.images.length}
-                    </span>
-                  </div>
-
-                  {/* Hover expand icon */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center transform scale-50 group-hover:scale-100 transition-transform duration-300 border border-white/20">
-                      <svg
-                        className="w-6 h-6 sm:w-7 sm:h-7 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={1.5}
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5 md:p-6">
-                    <h3
-                      className={`${
-                        isLarge ? "text-lg sm:text-xl md:text-2xl" : "text-sm sm:text-base md:text-lg"
-                      } font-bold text-white mb-1 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300`}
-                    >
-                      {item.title}
-                    </h3>
-                    <p
-                      className={`${
-                        isLarge ? "text-sm" : "text-xs sm:text-sm"
-                      } text-gray-400 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 delay-75 line-clamp-2`}
-                    >
-                      {item.description}
-                    </p>
-                  </div>
-                </button>
-              </div>
-            );
-          })}
+        {/* Carousel */}
+        <div
+          className={`transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
+          {carouselItems.length > 0 ? (
+            <Carousel items={carouselItems} />
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-gray-500">No projects found for this color.</p>
+            </div>
+          )}
         </div>
 
-        {/* No results */}
-        {filteredItems.length === 0 && (
-          <div className="text-center py-16">
-            <p className="text-gray-500">No projects found for this color.</p>
-          </div>
-        )}
 
         {/* View all CTA */}
         <div
@@ -451,126 +353,6 @@ export default function Portfolio() {
         </div>
       </div>
 
-      {/* Modal */}
-      {selected && (
-        <div
-          className="fixed inset-0 bg-black/98 backdrop-blur-xl z-50 flex items-center justify-center p-4 sm:p-6"
-          onClick={closeModal}
-        >
-          <div className="w-full max-w-6xl" onClick={(e) => e.stopPropagation()}>
-            {/* Modal Header */}
-            <div className="flex items-start justify-between mb-4 sm:mb-6">
-              <div>
-                <div className="flex items-center gap-3 mb-2">
-                  <span
-                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-white/10 ${
-                      getColorStyle(selected.color).text
-                    } capitalize`}
-                  >
-                    <span className={`w-2 h-2 rounded-full ${getColorStyle(selected.color).bg}`} />
-                    {selected.color}
-                  </span>
-                </div>
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">{selected.title}</h3>
-                <p className="text-gray-500 text-sm sm:text-base mt-1 max-w-xl">{selected.description}</p>
-              </div>
-              <button
-                onClick={closeModal}
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors flex-shrink-0 ml-4"
-              >
-                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Main Image */}
-            <div className="relative aspect-[16/10] sm:aspect-video rounded-2xl sm:rounded-3xl overflow-hidden bg-gray-900 mb-4">
-              <Image
-                src={selected.images[activeImageIndex]}
-                alt={`${selected.title} - Image ${activeImageIndex + 1}`}
-                fill
-                className="object-cover"
-                key={activeImageIndex}
-                sizes="(max-width: 768px) 100vw, 90vw"
-                priority
-              />
-
-              {/* Navigation Arrows */}
-              {selected.images.length > 1 && (
-                <>
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-md flex items-center justify-center transition-all hover:scale-110 border border-white/10"
-                  >
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-14 sm:h-14 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-md flex items-center justify-center transition-all hover:scale-110 border border-white/10"
-                  >
-                    <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                </>
-              )}
-
-              {/* Image Counter */}
-              {selected.images.length > 1 && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/10">
-                  <span className="text-white text-sm font-medium">
-                    {activeImageIndex + 1} / {selected.images.length}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Thumbnails */}
-            {selected.images.length > 1 && (
-              <div className="flex gap-3 justify-center">
-                {selected.images.map((img, idx) => {
-                  const accent = getColorStyle(selected.color);
-                  return (
-                    <button
-                      key={idx}
-                      onClick={() => setActiveImageIndex(idx)}
-                      className={`relative w-20 h-14 sm:w-28 sm:h-20 rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-300 ${
-                        activeImageIndex === idx
-                          ? `ring-2 ${accent.border} ring-offset-2 ring-offset-black scale-105`
-                          : "opacity-50 hover:opacity-100 hover:scale-105"
-                      }`}
-                    >
-                      <Image
-                        src={img}
-                        alt={`${selected.title} thumbnail ${idx + 1}`}
-                        fill
-                        className="object-cover"
-                        sizes="120px"
-                      />
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* Keyboard hint */}
-            <div className="hidden sm:flex justify-center gap-4 mt-6 text-gray-600 text-xs">
-              <span className="flex items-center gap-1">
-                <kbd className="px-2 py-1 rounded bg-white/10 text-gray-400">←</kbd>
-                <kbd className="px-2 py-1 rounded bg-white/10 text-gray-400">→</kbd>
-                Navigate
-              </span>
-              <span className="flex items-center gap-1">
-                <kbd className="px-2 py-1 rounded bg-white/10 text-gray-400">Esc</kbd>
-                Close
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }

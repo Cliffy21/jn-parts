@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { TracingBeam } from "@/components/ui/tracing-beam";
 
 const steps = [
   {
@@ -135,89 +136,69 @@ export default function Process() {
           </p>
         </div>
 
-        {/* Timeline connector - Desktop */}
-        <div className="hidden lg:block absolute top-[200px] left-[12.5%] right-[12.5%] h-px bg-gray-800">
-          <div
-            className={`h-full bg-gradient-to-r from-red-500/50 to-orange-500/50 transition-all duration-1000 ease-out ${
-              isVisible ? "w-full" : "w-0"
-            }`}
-          />
-        </div>
+        {/* Tracing Beam Timeline */}
+        <TracingBeam className="px-6">
+          <div className="max-w-2xl mx-auto antialiased pt-4 relative">
+            {steps.map((step, idx) => (
+              <div
+                key={step.title}
+                className={`mb-10 transition-all duration-500 ${
+                  isVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-10"
+                }`}
+                style={{ transitionDelay: `${idx * 100 + 200}ms` }}
+                onMouseEnter={() => setActiveStep(idx)}
+                onMouseLeave={() => setActiveStep(null)}
+              >
+                <div className="group">
+                  {/* Icon with number */}
+                  <div className="flex items-center gap-4 mb-4">
+                    <div
+                      className={`relative w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 ${
+                        activeStep === idx
+                          ? "bg-gradient-to-br from-red-500 to-orange-500 text-white scale-110 shadow-lg shadow-red-500/20"
+                          : "bg-gray-900 text-gray-400 border border-gray-800 group-hover:border-red-500/50"
+                      }`}
+                    >
+                      {step.icon}
+                      {/* Step number badge */}
+                      <div
+                        className={`absolute -top-1 -right-1 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
+                          activeStep === idx
+                            ? "bg-white text-red-500"
+                            : "bg-gray-800 text-gray-500 border border-gray-700"
+                        }`}
+                      >
+                        {idx + 1}
+                      </div>
+                    </div>
 
-        {/* Steps Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
-          {steps.map((step, idx) => (
-            <div
-              key={step.title}
-              className={`relative transition-all duration-500 ${
-                isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
-              }`}
-              style={{ transitionDelay: `${idx * 100 + 200}ms` }}
-              onMouseEnter={() => setActiveStep(idx)}
-              onMouseLeave={() => setActiveStep(null)}
-            >
-              {/* Card */}
-              <div className="group text-center lg:text-left">
-                {/* Icon with number */}
-                <div className="relative inline-flex items-center justify-center mb-6">
-                  {/* Icon circle */}
-                  <div
-                    className={`relative w-16 h-16 sm:w-18 sm:h-18 rounded-full flex items-center justify-center transition-all duration-300 ${
-                      activeStep === idx
-                        ? "bg-gradient-to-br from-red-500 to-orange-500 text-white scale-110 shadow-lg shadow-red-500/20"
-                        : "bg-gray-900 text-gray-400 border border-gray-800 group-hover:border-gray-700"
-                    }`}
-                  >
-                    {step.icon}
+                    {/* Title */}
+                    <h3
+                      className={`text-xl sm:text-2xl font-bold transition-colors duration-300 ${
+                        activeStep === idx ? "text-white" : "text-gray-200"
+                      }`}
+                    >
+                      {step.title}
+                    </h3>
                   </div>
 
-                  {/* Step number badge */}
-                  <div
-                    className={`absolute -top-1 -right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 ${
-                      activeStep === idx
-                        ? "bg-white text-red-500"
-                        : "bg-gray-800 text-gray-500 border border-gray-700"
-                    }`}
-                  >
-                    {idx + 1}
+                  {/* Description */}
+                  <div className="ml-[66px]">
+                    <p
+                      className={`text-base leading-relaxed transition-colors duration-300 ${
+                        activeStep === idx ? "text-gray-300" : "text-gray-500"
+                      }`}
+                    >
+                      {step.desc}
+                    </p>
                   </div>
                 </div>
-
-                {/* Title */}
-                <h3
-                  className={`text-lg sm:text-xl font-bold mb-2 transition-colors duration-300 ${
-                    activeStep === idx ? "text-white" : "text-gray-200"
-                  }`}
-                >
-                  {step.title}
-                </h3>
-
-                {/* Description */}
-                <p
-                  className={`text-sm leading-relaxed transition-colors duration-300 ${
-                    activeStep === idx ? "text-gray-300" : "text-gray-500"
-                  }`}
-                >
-                  {step.desc}
-                </p>
               </div>
-
-              {/* Mobile connector line */}
-              {idx < steps.length - 1 && (
-                <div className="sm:hidden flex justify-center my-6">
-                  <div className="w-px h-8 bg-gradient-to-b from-gray-700 to-gray-800" />
-                </div>
-              )}
-
-              {/* Tablet connector (2 col) */}
-              {idx < steps.length - 1 && idx % 2 === 0 && (
-                <div className="hidden sm:block lg:hidden absolute top-8 -right-4 w-8 h-px bg-gray-800" />
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        </TracingBeam>
 
         {/* Bottom CTA */}
         <div
