@@ -88,8 +88,6 @@ html {
   right: max(1rem, env(safe-area-inset-right));
 }
 
-
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -144,9 +142,13 @@ html {
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+  }
+  .maplibregl-popup-tip {
+    @apply hidden!;
+  }
 }
-
-
 
 @layer base {
   * {

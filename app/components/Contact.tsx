@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MapPin, Phone, Mail, Clock, Send, Sparkles, Navigation, CheckCircle, Car } from "lucide-react";
+import { Map, MapControls } from "@/components/ui/map";
 
 export default function Contact() {
   const [showSuccess, setShowSuccess] = useState(false);
@@ -20,9 +21,6 @@ export default function Contact() {
       lng: 36.830821  // Replace with your actual longitude
     }
   };
-
-  // Simple Google Maps embed (no API key needed)
-  const mapEmbedUrl = `https://www.google.com/maps?q=${businessInfo.coordinates.lat},${businessInfo.coordinates.lng}&hl=es;z=14&output=embed`;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -245,20 +243,16 @@ export default function Contact() {
               
               <div className="relative bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden hover:border-red-500/30 transition-all duration-500">
                 <div className="relative h-[400px] w-full">
-                  <iframe
-                    src={mapEmbedUrl}
-                    width="100%"
-                    height="100%"
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    title="JN Parts & Accessories Location - Find us on Google Maps"
-                    className="grayscale hover:grayscale-0 transition-all duration-500 no-border"
-                  />
+                  <Map 
+                    center={[businessInfo.coordinates.lng, businessInfo.coordinates.lat]} 
+                    zoom={14}
+                  >
+                    <MapControls />
+                  </Map>
                   
                   <button
                     onClick={openInGoogleMaps}
-                    className="absolute bottom-4 right-4 group/btn"
+                    className="absolute bottom-4 right-4 group/btn z-20"
                     aria-label="Open location in Google Maps"
                   >
                     <div className="relative">

@@ -1,16 +1,50 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useInViewAnimation } from "@/app/hooks/useInViewAnimation";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 export default function About() {
   const titleRef = useInViewAnimation({ animation: "animate-fadeInUp" });
   const contentRef = useInViewAnimation({ animation: "animate-fadeInUp" });
   const imageRef = useInViewAnimation({ animation: "animate-fadeInUp" });
   const statsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const statsSectionRef = useRef<HTMLDivElement>(null);
+  const [statsVisible, setStatsVisible] = useState(false);
 
+  // Intersection Observer for stats section visibility
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setStatsVisible(true);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "50px" }
+    );
+
+    const currentRef = statsSectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+      observer.disconnect();
+    };
+  }, []);
+
+  // Counter animation effect
+  useEffect(() => {
+    if (!statsVisible) return;
+
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -19,7 +53,7 @@ export default function About() {
             const target = Number(el.dataset.target || "0");
             const suffix = el.dataset.suffix || "";
             let current = 0;
-            const step = target / 50;
+            const step = target / 60;
             const timer = setInterval(() => {
               current += step;
               if (current >= target) {
@@ -28,7 +62,7 @@ export default function About() {
               } else {
                 el.textContent = Math.floor(current) + suffix;
               }
-            }, 30);
+            }, 25);
             obs.unobserve(el);
           }
         });
@@ -36,10 +70,16 @@ export default function About() {
       { threshold: 0.5 }
     );
 
-    statsRef.current.forEach((el) => el && obs.observe(el));
+    // Add delay to start animations sequentially
+    const timeout = setTimeout(() => {
+      statsRef.current.forEach((el) => el && obs.observe(el));
+    }, 200);
 
-    return () => obs.disconnect();
-  }, []);
+    return () => {
+      clearTimeout(timeout);
+      obs.disconnect();
+    };
+  }, [statsVisible]);
 
   const setRef = (el: HTMLDivElement | null, index: number) => {
     statsRef.current[index] = el;
@@ -180,25 +220,44 @@ export default function About() {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-20 grid grid-cols-3 gap-6">
+        <div
+          ref={statsSectionRef}
+          className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6"
+        >
           {stats.map((stat, idx) => (
-            <div
+            <Card
               key={idx}
-              className="relative group"
+              className={cn(
+                "relative group overflow-hidden border-gray-800/50 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-sm",
+                "transition-all duration-700 ease-out",
+                statsVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-8",
+                "hover:border-red-500/30 hover:shadow-xl hover:shadow-red-500/10"
+              )}
+              style={{
+                transitionDelay: `${idx * 150}ms`,
+              }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative text-center py-8 px-4 rounded-2xl border border-white/5 bg-gray-900/50">
+              <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-orange-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <CardContent className="relative text-center py-8 sm:py-10 px-6 sm:px-8">
                 <div
                   data-target={stat.value}
                   data-suffix={stat.suffix}
                   ref={(el) => setRef(el, idx)}
-                  className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent"
+                  className={cn(
+                    "text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black",
+                    "bg-gradient-to-r from-red-500 via-red-400 to-orange-500 bg-clip-text text-transparent",
+                    "tracking-tight leading-none"
+                  )}
                 >
                   0
                 </div>
-                <p className="text-gray-500 text-sm mt-2">{stat.label}</p>
-              </div>
-            </div>
+                <p className="text-gray-400 text-sm sm:text-base mt-4 font-medium">
+                  {stat.label}
+                </p>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
