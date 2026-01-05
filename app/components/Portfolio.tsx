@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
-import { Lens } from "@/components/ui/lens";
 
 interface PortfolioItem {
   _id: string;
@@ -207,21 +206,22 @@ export default function Portfolio() {
         title: item.title,
         category: item.color.charAt(0).toUpperCase() + item.color.slice(1),
         content: (
-          <div className="space-y-4">
-            <p className="text-gray-300 text-base md:text-lg">{item.description}</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          <div className="space-y-3 sm:space-y-4">
+            <p className="text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed">{item.description}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-4 sm:mt-6">
               {validImages.map((image, idx) => (
-                <Lens key={idx} zoomFactor={2} lensSize={200}>
-                  <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-800">
+                <div
+                  key={idx}
+                  className="relative aspect-video rounded-lg overflow-hidden bg-gray-800 w-full"
+                >
                     <Image
                       src={image.trim()}
                       alt={`${item.title} - View ${idx + 1}`}
                       fill
                       className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                   </div>
-                </Lens>
               ))}
             </div>
           </div>

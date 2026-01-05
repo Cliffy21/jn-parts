@@ -328,27 +328,13 @@ export default function Hero() {
               index === currentSlide
                 ? "w-8 bg-gradient-to-r from-red-500 to-orange-500"
                 : "w-1.5 bg-white/30 hover:bg-white/50"
-            }`}
+            }`}   
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
 
-      {/* Scroll Indicator */}
-      <div
-        className={`absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 z-10 transition-all duration-1000 delay-1000 ${
-          isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
-        }`}
-      >
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-[10px] sm:text-xs tracking-[0.2em] text-gray-500 uppercase">
-            Scroll
-          </span>
-          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-white/30 rounded-full flex justify-center items-start p-1">
-            <div className="w-1 h-2 sm:h-3 bg-gradient-to-b from-red-500 to-orange-500 rounded-full animate-bounce" />
-          </div>
-        </div>
-      </div>
+
 
       {/* Corner Accents */}
       <div className="absolute top-20 left-4 sm:left-8 w-16 sm:w-24 h-16 sm:h-24 border-l-2 border-t-2 border-red-500/20 pointer-events-none" />

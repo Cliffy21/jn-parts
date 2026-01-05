@@ -11,6 +11,7 @@ import Benefits from "./components/Benefits";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
+import ScrollProgressBeam from "./components/ScrollProgressBeam";
 
 // ============================================
 // COMMENTED OUT: Backend fetch for products
@@ -46,6 +47,7 @@ export default function HomePage() {
   return (
     <>
       <Header />
+      <ScrollProgressBeam />
       <main className="pt-20">
         <Hero />
         <Services />

@@ -211,27 +211,33 @@ export const Card = ({
               exit={{ opacity: 0 }}
               ref={containerRef}
               layoutId={layout ? `card-${card.title}` : undefined}
-              className="relative z-[60] mx-auto my-10 h-fit max-w-5xl rounded-3xl bg-white p-4 font-sans md:p-10 dark:bg-neutral-900"
+              className="relative z-[60] mx-auto my-2 sm:my-4 md:my-6 lg:my-10 h-fit max-w-5xl w-[92%] sm:w-[90%] md:w-full rounded-xl sm:rounded-2xl md:rounded-3xl bg-white dark:bg-neutral-900 font-sans overflow-hidden"
             >
+              {/* Close button - positioned absolutely to avoid overlap */}
               <button
-                className="sticky top-4 right-0 ml-auto flex h-8 w-8 items-center justify-center rounded-full bg-black dark:bg-white"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full bg-black/80 dark:bg-white/80 hover:bg-black dark:hover:bg-white transition-colors"
                 onClick={handleClose}
+                aria-label="Close"
               >
-                <IconX className="h-6 w-6 text-neutral-100 dark:text-neutral-900" />
+                <IconX className="h-5 w-5 sm:h-6 sm:w-6 text-white dark:text-black" />
               </button>
+              
+              {/* Content with proper padding */}
+              <div className="p-4 sm:p-6 md:p-8 lg:p-10 pt-12 sm:pt-14 md:pt-16">
               <motion.p
                 layoutId={layout ? `category-${card.title}` : undefined}
-                className="text-base font-medium text-black dark:text-white"
+                  className="text-sm sm:text-base font-medium text-black dark:text-white mb-2"
               >
                 {card.category}
               </motion.p>
               <motion.p
                 layoutId={layout ? `title-${card.title}` : undefined}
-                className="mt-4 text-2xl font-semibold text-neutral-700 md:text-5xl dark:text-white"
+                  className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-5xl font-semibold text-neutral-700 dark:text-white mb-4 sm:mb-6"
               >
                 {card.title}
               </motion.p>
-              <div className="py-10">{card.content}</div>
+                <div className="pt-2 sm:pt-4 md:pt-6">{card.content}</div>
+              </div>
             </motion.div>
           </div>
         )}
@@ -239,7 +245,7 @@ export const Card = ({
       <motion.button
         layoutId={layout ? `card-${card.title}` : undefined}
         onClick={handleOpen}
-        className="relative z-10 flex h-80 w-56 flex-col items-start justify-start overflow-hidden rounded-3xl bg-gray-100 md:h-[40rem] md:w-96 dark:bg-neutral-900"
+        className="relative z-10 flex h-72 w-52 sm:h-80 sm:w-56 md:h-[40rem] md:w-96 flex-col items-start justify-start overflow-hidden rounded-2xl sm:rounded-3xl bg-gray-100 dark:bg-neutral-900 flex-shrink-0"
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-gradient-to-b from-black/50 via-transparent to-transparent" />
         <div className="relative z-40 p-8">

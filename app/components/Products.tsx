@@ -140,7 +140,7 @@ export const mockProducts: Product[] = [
     category: "electronics",
     description: "Bird's eye view camera with parking sensors.",
     price: 25000,
-    image_url: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=800&q=80", // Car camera/parking view
+    image_url: "https://res.cloudinary.com/dgumz7yur/image/upload/v1767652210/laser_jets_g3ug1t.jpg", // Car camera/parking view
   },
   {
     id: "12",

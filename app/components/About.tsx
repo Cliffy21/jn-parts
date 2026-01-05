@@ -72,7 +72,7 @@ export default function About() {
 
     // Add delay to start animations sequentially
     const timeout = setTimeout(() => {
-      statsRef.current.forEach((el) => el && obs.observe(el));
+    statsRef.current.forEach((el) => el && obs.observe(el));
     }, 200);
 
     return () => {
@@ -228,7 +228,7 @@ export default function About() {
             <Card
               key={idx}
               className={cn(
-                "relative group overflow-hidden border-gray-800/50 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-sm",
+                "relative group overflow-hidden border-gray-800/50 bg-black backdrop-blur-sm",
                 "transition-all duration-700 ease-out",
                 statsVisible
                   ? "opacity-100 translate-y-0"
@@ -247,7 +247,7 @@ export default function About() {
                   ref={(el) => setRef(el, idx)}
                   className={cn(
                     "text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black",
-                    "bg-gradient-to-r from-red-500 via-red-400 to-orange-500 bg-clip-text text-transparent",
+                    "text-white",
                     "tracking-tight leading-none"
                   )}
                 >

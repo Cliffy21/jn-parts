@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useInViewAnimation } from "@/app/hooks/useInViewAnimation";
-import { Lens } from "@/components/ui/lens";
 
 export default function Services() {
   const titleRef = useInViewAnimation({ animation: "animate-fadeInUp" });
@@ -12,7 +11,7 @@ export default function Services() {
     {
       title: "Vehicle Wraps",
       desc: "Complete transformation with premium vinyl wraps in any color or finish",
-      image: "https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80",
+      image: "https://res.cloudinary.com/dgumz7yur/image/upload/v1767652210/wraps_xmlfow.jpg",
     },
     {
       title: "Paint Protection Films",
@@ -77,7 +76,6 @@ export default function Services() {
               }}
             >
               {/* Image */}
-              <Lens zoomFactor={2.5} lensSize={180}>
                 <div className="relative h-48 overflow-hidden">
                   <Image
                     src={service.image}
@@ -88,7 +86,6 @@ export default function Services() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
                 </div>
-              </Lens>
               
               {/* Content */}
               <div className="p-6">

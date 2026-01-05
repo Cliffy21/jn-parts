@@ -77,7 +77,7 @@ const getInitials = (name: string): string => {
     .slice(0, 2);
 };
 
-const StarRating = ({ rating }: { rating: number }) => {
+const StarRating = ({ rating, variant = "default" }: { rating: number; variant?: "default" | "white" }) => {
   return (
     <div className="flex gap-1">
       {Array.from({ length: 5 }).map((_, i) => (
@@ -85,7 +85,11 @@ const StarRating = ({ rating }: { rating: number }) => {
           key={i}
           className={cn(
             "w-4 h-4 sm:w-5 sm:h-5",
-            i < rating
+            variant === "white"
+              ? i < rating
+                ? "fill-white text-white"
+                : "fill-gray-400 text-gray-400"
+              : i < rating
               ? "fill-yellow-500 text-yellow-500"
               : "fill-gray-700 text-gray-700"
           )}
@@ -198,29 +202,29 @@ export default function Testimonials() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
             {/* Main Featured Card */}
             <div className="md:col-span-2">
-              <Card className="relative h-full min-h-[280px] sm:min-h-[320px] border-gray-800/50 bg-gradient-to-br from-gray-900 to-gray-950 overflow-hidden">
+              <Card className="relative h-full min-h-[280px] sm:min-h-[320px] border-white/20 bg-black overflow-hidden">
                 {/* Quote accent */}
                 <div className="absolute top-6 right-6 sm:top-8 sm:right-8 text-red-500/10">
                   <Quote className="w-16 h-16 sm:w-24 sm:h-24" />
                 </div>
 
                 <CardHeader className="relative z-10">
-                  <StarRating rating={currentTestimonial.rating} />
+                  <StarRating rating={currentTestimonial.rating} variant="white" />
                 </CardHeader>
 
                 <CardContent className="relative z-10 flex-1 flex flex-col">
-                  <blockquote className="text-lg sm:text-xl md:text-2xl text-white font-medium leading-relaxed flex-grow">
+                      <blockquote className="text-lg sm:text-xl md:text-2xl text-white font-medium leading-relaxed flex-grow">
                     &ldquo;{currentTestimonial.text}&rdquo;
-                  </blockquote>
+                      </blockquote>
                 </CardContent>
 
-                <CardFooter className="relative z-10 pt-6 border-t border-gray-800/50">
+                <CardFooter className="relative z-10 pt-6 border-t border-white/20">
                   <div className="flex items-center justify-between w-full">
-                    <div className="flex items-center gap-3 sm:gap-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center text-white font-semibold text-sm sm:text-base">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center text-white font-semibold text-sm sm:text-base">
                         {getInitials(currentTestimonial.name)}
-                      </div>
-                      <div>
+                          </div>
+                          <div>
                         <p className="text-white font-semibold text-sm sm:text-base">
                           {currentTestimonial.name}
                         </p>
@@ -238,7 +242,7 @@ export default function Testimonials() {
                         {currentTestimonial.vehicle}
                       </Badge>
                     )}
-                  </div>
+                </div>
                 </CardFooter>
               </Card>
             </div>
@@ -246,28 +250,28 @@ export default function Testimonials() {
             {/* Stats Cards */}
             <div className="flex flex-col gap-4 md:gap-6">
               {/* Rating Card */}
-              <Card className="flex-1 border-red-500/20 bg-gradient-to-br from-red-500/10 to-orange-500/5">
+              <Card className="flex-1 border-white/20 bg-white">
                 <CardContent className="p-6 sm:p-8 flex flex-col justify-center">
-                  <div className="text-4xl sm:text-5xl md:text-6xl font-black text-white mb-2">
-                    4.9
-                  </div>
+                <div className="text-4xl sm:text-5xl md:text-6xl font-black text-black mb-2">
+                  4.9
+                </div>
                   <div className="mb-3">
-                    <StarRating rating={5} />
-                  </div>
-                  <p className="text-gray-400 text-sm">Average rating from 200+ customers</p>
+                    <StarRating rating={5} variant="default" />
+                </div>
+                <p className="text-gray-600 text-sm">Average rating from 200+ customers</p>
                 </CardContent>
               </Card>
 
               {/* Trust Badge */}
-              <Card className="flex-1 border-gray-800/50 bg-gray-900/50">
+              <Card className="flex-1 border-white/20 bg-black">
                 <CardContent className="p-6 sm:p-8 flex flex-col justify-center">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center mb-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center mb-4">
                     <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                  </div>
+                </div>
                   <p className="text-white font-semibold text-base sm:text-lg">
                     Trusted Since 2010
                   </p>
-                  <p className="text-gray-500 text-sm mt-1">14+ years of excellence</p>
+                <p className="text-gray-500 text-sm mt-1">14+ years of excellence</p>
                 </CardContent>
               </Card>
             </div>
