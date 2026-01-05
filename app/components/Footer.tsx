@@ -155,7 +155,7 @@ export default function Footer() {
         <Separator className="mt-16 bg-white/5" />
         <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-600 text-xs">
-            © 2025 JN Parts & Accessories. All rights reserved.
+            © 2025 JN Parts & Accessories. All rights reserved.Developed by Dev_Manase
           </p>
           <div className="flex gap-6 text-xs text-gray-600">
             <a
