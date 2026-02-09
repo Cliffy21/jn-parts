@@ -1,319 +1,313 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { ChevronLeft, ChevronRight, Star, Quote, Shield, Car } from "lucide-react";
+import { ArrowLeft, ArrowRight, Star, Quote, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { motion, AnimatePresence } from "framer-motion";
 
+// --- Types ---
 interface Testimonial {
   _id: string;
   name: string;
+  role: string; // e.g., "Verified Owner"
   location: string;
   text: string;
   rating: number;
   vehicle?: string;
 }
 
+// --- Data ---
 const testimonials: Testimonial[] = [
   {
     _id: "1",
-    name: "James Mwangi",
+    name: "Walter Okoth",
+    role: "Verified Owner",
     location: "Nairobi",
-    text: "Incredible work on my BMW wrap! Attention to detail was outstanding.",
+    text: "Incredible work on my BMW wrap! The attention to detail around the edges was outstanding. It honestly looks like factory paint.",
     rating: 5,
-    vehicle: "BMW M4",
+    vehicle: "BMW M4 Competition",
   },
   {
     _id: "2",
-    name: "Sarah Wanjiku",
+    name: "Joseph Mairu",
+    role: "Regular Client",
     location: "Westlands",
-    text: "Full interior upgrade exceeded expectations. Premium quality throughout.",
+    text: "I was skeptical about sourcing parts locally, but JN Parts delivered genuine OEM components for my Mercedes faster than importing them myself.",
     rating: 5,
-    vehicle: "Mercedes GLE",
+    vehicle: "Mercedes GLE 450",
   },
   {
     _id: "3",
-    name: "David Ochieng",
+    name: "Kennedy Omondi",
+    role: "Car Enthusiast",
     location: "Mombasa",
-    text: "Best parts supplier in Kenya! Fast delivery and genuine products.",
+    text: "The custom exhaust installation has completely transformed the sound of my car. Professional service from start to finish.",
     rating: 5,
-    vehicle: "Toyota Land Cruiser",
+    vehicle: "Toyota Land Cruiser V8",
   },
   {
     _id: "4",
-    name: "Grace Njeri",
+    name: "Clifford Manase",
+    role: "Verified Owner",
     location: "Kileleshwa",
-    text: "The matte black wrap is stunning. Everyone asks where I got it done.",
+    text: "The matte black finish is stunning. I get compliments at every traffic light. Worth every shilling for this level of quality.",
     rating: 5,
-    vehicle: "Range Rover",
-  },
-  {
-    _id: "5",
-    name: "Michael Kimani",
-    location: "Karen",
-    text: "Professional service from start to finish. Fair prices, genuine parts.",
-    rating: 5,
-    vehicle: "Porsche 911",
-  },
-  {
-    _id: "6",
-    name: "Alice Akinyi",
-    location: "Kisumu",
-    text: "Custom exhaust and body kit transformed my car. Amazing results!",
-    rating: 5,
-    vehicle: "Subaru WRX",
+    vehicle: "Range Rover Sport",
   },
 ];
 
-const getInitials = (name: string): string => {
-  return name
-    .split(" ")
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-};
-
-const StarRating = ({ rating, variant = "default" }: { rating: number; variant?: "default" | "white" }) => {
-  return (
-    <div className="flex gap-1">
-      {Array.from({ length: 5 }).map((_, i) => (
-        <Star
-          key={i}
-          className={cn(
-            "w-4 h-4 sm:w-5 sm:h-5",
-            variant === "white"
-              ? i < rating
-                ? "fill-white text-white"
-                : "fill-gray-400 text-gray-400"
-              : i < rating
-              ? "fill-yellow-500 text-yellow-500"
-              : "fill-gray-700 text-gray-700"
-          )}
-        />
-      ))}
-    </div>
-  );
-};
+// --- Sub-components ---
+const StarRating = ({ rating }: { rating: number }) => (
+  <div className="flex gap-1">
+    {Array.from({ length: 5 }).map((_, i) => (
+      <Star
+        key={i}
+        className={cn(
+          "w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300",
+          i < rating ? "fill-red-500 text-red-500" : "fill-gray-800 text-gray-800"
+        )}
+      />
+    ))}
+  </div>
+);
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
+  const AUTOPLAY_DELAY = 6000;
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
+  // Navigation Logic
+  const paginate = useCallback((newDirection: number) => {
+    setDirection(newDirection);
+    setActiveIndex((prev) => {
+      let nextIndex = prev + newDirection;
+      if (nextIndex < 0) nextIndex = testimonials.length - 1;
+      if (nextIndex >= testimonials.length) nextIndex = 0;
+      return nextIndex;
+    });
   }, []);
 
-  const next = useCallback(() => {
-    setActiveIndex((prev) => (prev + 1) % testimonials.length);
-  }, []);
-
-  const prev = useCallback(() => {
-    setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  }, []);
-
+  // Auto-play Logic
   useEffect(() => {
     if (!isAutoPlaying) return;
-    const interval = setInterval(next, 4000);
+    const interval = setInterval(() => paginate(1), AUTOPLAY_DELAY);
     return () => clearInterval(interval);
-  }, [isAutoPlaying, next]);
+  }, [isAutoPlaying, paginate]);
 
-  const handleInteraction = (action: () => void) => {
-    setIsAutoPlaying(false);
-    action();
+  // Pause on hover
+  const handleMouseEnter = () => setIsAutoPlaying(false);
+  const handleMouseLeave = () => setIsAutoPlaying(true);
+
+  const current = testimonials[activeIndex];
+
+  // Animation Variants
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 50 : -50,
+      opacity: 0,
+      scale: 0.95,
+      filter: "blur(4px)",
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      filter: "blur(0px)",
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? 50 : -50,
+      opacity: 0,
+      scale: 0.95,
+      filter: "blur(4px)",
+    }),
   };
 
-  const currentTestimonial = testimonials[activeIndex];
-
   return (
-    <section
-      ref={sectionRef}
-      id="testimonials"
-      className="relative py-20 sm:py-28 px-4 bg-black overflow-hidden"
+    <section 
+      id="testimonials" 
+      className="relative py-24 bg-zinc-950 overflow-hidden"
     >
-      {/* Subtle top border */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
-
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div
-          className={cn(
-            "flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12 sm:mb-16 transition-all duration-700",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          )}
-        >
-          <div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mt-2">
-              Client{" "}
-              <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
-                Reviews
-              </span>
-            </h2>
-          </div>
-
-          {/* Navigation - Desktop */}
-          <div className="hidden sm:flex items-center gap-3">
-            <Button
-              onClick={() => handleInteraction(prev)}
-              variant="outline"
-              size="icon"
-              className="rounded-full border-gray-800 bg-black/50 hover:bg-white/5 hover:border-gray-700"
-              aria-label="Previous"
+      {/* Background Ambience */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-red-900/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-orange-900/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+      
+      <div className="container mx-auto px-4 md:px-8 relative z-10">
+        <div className="grid lg:grid-cols-12 gap-12 items-center">
+          
+          {/* --- LEFT COLUMN: Header & Stats --- */}
+          <div className="lg:col-span-5 flex flex-col justify-center text-left space-y-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
             >
-              <ChevronLeft className="h-5 w-5 text-gray-400" />
-            </Button>
-            <Button
-              onClick={() => handleInteraction(next)}
-              variant="outline"
-              size="icon"
-              className="rounded-full border-gray-800 bg-black/50 hover:bg-white/5 hover:border-gray-700"
-              aria-label="Next"
-            >
-              <ChevronRight className="h-5 w-5 text-gray-400" />
-            </Button>
-          </div>
-        </div>
+             
+              
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
+                Trusted by <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
+                  Enthusiasts.
+                </span>
+              </h2>
+              
+              <p className="text-lg text-gray-400 mt-6 leading-relaxed max-w-md">
+                Don't just take our word for it. Read what genuine car owners have to say about our premium parts and installation services.
+              </p>
+            </motion.div>
 
-        {/* Testimonials Grid */}
-        <div
-          className={cn(
-            "relative transition-all duration-700 delay-200",
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          )}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            {/* Main Featured Card */}
-            <div className="md:col-span-2">
-              <Card className="relative h-full min-h-[280px] sm:min-h-[320px] border-white/20 bg-black overflow-hidden">
-                {/* Quote accent */}
-                <div className="absolute top-6 right-6 sm:top-8 sm:right-8 text-red-500/10">
-                  <Quote className="w-16 h-16 sm:w-24 sm:h-24" />
+            {/* Trust Metrics */}
+            <div className="flex items-center gap-8 pt-4 border-t border-white/10">
+              <div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-bold text-white">4.9</span>
+                  <span className="text-gray-500">/5.0</span>
                 </div>
+                <p className="text-sm text-gray-400 mt-1">Google Reviews</p>
+              </div>
+              <div className="w-px h-12 bg-white/10" />
+              <div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-3xl font-bold text-white">2k+</span>
+                </div>
+                <p className="text-sm text-gray-400 mt-1">Happy Clients</p>
+              </div>
+            </div>
 
-                <CardHeader className="relative z-10">
-                  <StarRating rating={currentTestimonial.rating} variant="white" />
-                </CardHeader>
+            {/* Desktop Navigation Controls */}
+            <div className="hidden lg:flex gap-4 pt-4">
+              <Button
+                onClick={() => { setIsAutoPlaying(false); paginate(-1); }}
+                variant="outline"
+                size="icon"
+                className="w-14 h-14 rounded-full border-white/10 bg-white/5 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all duration-300"
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </Button>
+              <Button
+                onClick={() => { setIsAutoPlaying(false); paginate(1); }}
+                variant="outline"
+                size="icon"
+                className="w-14 h-14 rounded-full border-white/10 bg-white/5 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all duration-300"
+              >
+                <ArrowRight className="w-6 h-6" />
+              </Button>
+            </div>
+          </div>
 
-                <CardContent className="relative z-10 flex-1 flex flex-col">
-                      <blockquote className="text-lg sm:text-xl md:text-2xl text-white font-medium leading-relaxed flex-grow">
-                    &ldquo;{currentTestimonial.text}&rdquo;
+          {/* --- RIGHT COLUMN: The Active Card --- */}
+          <div 
+            className="lg:col-span-7 relative"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            {/* Decorative Quote Icon Behind */}
+            <div className="absolute -top-12 -left-8 text-white/[0.03] pointer-events-none select-none">
+              <Quote className="w-64 h-64 rotate-12 transform" />
+            </div>
+
+            <div className="relative min-h-[420px] md:min-h-[380px] w-full">
+              <AnimatePresence initial={false} custom={direction} mode="wait">
+                <motion.div
+                  key={activeIndex}
+                  custom={direction}
+                  variants={variants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    x: { type: "spring", stiffness: 300, damping: 30 },
+                    opacity: { duration: 0.2 },
+                    filter: { duration: 0.2 }
+                  }}
+                  className="absolute inset-0"
+                >
+                  <div className="h-full bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 flex flex-col justify-between shadow-2xl">
+                    
+                    {/* Card Content */}
+                    <div>
+                      <div className="flex justify-between items-start mb-8">
+                        <StarRating rating={current.rating} />
+                        {current.vehicle && (
+                          <Badge variant="secondary" className="bg-white/5 text-gray-300 hover:bg-white/10 border-white/5 font-normal tracking-wide">
+                            {current.vehicle}
+                          </Badge>
+                        )}
+                      </div>
+
+                      <blockquote className="text-xl md:text-2xl lg:text-3xl font-medium text-white leading-relaxed">
+                        "{current.text}"
                       </blockquote>
-                </CardContent>
+                    </div>
 
-                <CardFooter className="relative z-10 pt-6 border-t border-white/20">
-                  <div className="flex items-center justify-between w-full">
-                        <div className="flex items-center gap-3 sm:gap-4">
-                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center text-white font-semibold text-sm sm:text-base">
-                        {getInitials(currentTestimonial.name)}
-                          </div>
-                          <div>
-                        <p className="text-white font-semibold text-sm sm:text-base">
-                          {currentTestimonial.name}
-                        </p>
-                        <p className="text-gray-500 text-xs sm:text-sm">
-                          {currentTestimonial.location}
-                        </p>
+                    {/* Footer: User Info */}
+                    <div className="flex items-center gap-4 mt-8 pt-8 border-t border-white/5">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                        {current.name.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <h4 className="text-white font-semibold text-lg">{current.name}</h4>
+                          <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                          <span>{current.role}</span>
+                          <span className="w-1 h-1 rounded-full bg-gray-700" />
+                          <span>{current.location}</span>
+                        </div>
                       </div>
                     </div>
-                    {currentTestimonial.vehicle && (
-                      <Badge
-                        variant="outline"
-                        className="hidden sm:flex items-center gap-1.5 bg-white/5 border-gray-800 text-gray-400 hover:bg-white/10"
-                      >
-                        <Car className="w-3.5 h-3.5" />
-                        {currentTestimonial.vehicle}
-                      </Badge>
-                    )}
-                </div>
-                </CardFooter>
-              </Card>
+
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             </div>
 
-            {/* Stats Cards */}
-            <div className="flex flex-col gap-4 md:gap-6">
-              {/* Rating Card */}
-              <Card className="flex-1 border-white/20 bg-white">
-                <CardContent className="p-6 sm:p-8 flex flex-col justify-center">
-                <div className="text-4xl sm:text-5xl md:text-6xl font-black text-black mb-2">
-                  4.9
-                </div>
-                  <div className="mb-3">
-                    <StarRating rating={5} variant="default" />
-                </div>
-                <p className="text-gray-600 text-sm">Average rating from 200+ customers</p>
-                </CardContent>
-              </Card>
-
-              {/* Trust Badge */}
-              <Card className="flex-1 border-white/20 bg-black">
-                <CardContent className="p-6 sm:p-8 flex flex-col justify-center">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center mb-4">
-                    <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                </div>
-                  <p className="text-white font-semibold text-base sm:text-lg">
-                    Trusted Since 2010
-                  </p>
-                <p className="text-gray-500 text-sm mt-1">14+ years of excellence</p>
-                </CardContent>
-              </Card>
+            {/* Mobile Navigation & Progress */}
+            <div className="flex lg:hidden justify-between items-center mt-8">
+               <div className="flex gap-2">
+                  {testimonials.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => { setIsAutoPlaying(false); setActiveIndex(idx); }}
+                      className={cn(
+                        "h-1.5 rounded-full transition-all duration-300",
+                        idx === activeIndex 
+                          ? "w-8 bg-gradient-to-r from-red-500 to-orange-500" 
+                          : "w-2 bg-gray-800"
+                      )}
+                      aria-label={`Go to slide ${idx + 1}`}
+                    />
+                  ))}
+               </div>
+               <div className="flex gap-3">
+                 <Button onClick={() => paginate(-1)} size="icon" variant="ghost" className="text-white hover:bg-white/10">
+                   <ArrowLeft className="w-5 h-5" />
+                 </Button>
+                 <Button onClick={() => paginate(1)} size="icon" variant="ghost" className="text-white hover:bg-white/10">
+                   <ArrowRight className="w-5 h-5" />
+                 </Button>
+               </div>
             </div>
-          </div>
 
-          {/* Progress Dots */}
-          <div className="flex items-center justify-center gap-2 mt-8">
-            {testimonials.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => handleInteraction(() => setActiveIndex(idx))}
-                className={cn(
-                  "h-1.5 rounded-full transition-all duration-300",
-                  idx === activeIndex
-                    ? "w-8 bg-gradient-to-r from-red-500 to-orange-500"
-                    : "w-1.5 bg-gray-700 hover:bg-gray-600"
-                )}
-                aria-label={`Go to review ${idx + 1}`}
-              />
-            ))}
-          </div>
+            {/* Auto-play Progress Bar (Desktop) */}
+            <div className="hidden lg:block absolute -bottom-12 left-0 right-0 h-1 bg-gray-800 rounded-full overflow-hidden">
+               {isAutoPlaying && (
+                 <motion.div 
+                   key={activeIndex}
+                   initial={{ width: "0%" }}
+                   animate={{ width: "100%" }}
+                   transition={{ duration: AUTOPLAY_DELAY / 1000, ease: "linear" }}
+                   className="h-full bg-red-600"
+                 />
+               )}
+            </div>
 
-          {/* Mobile Navigation */}
-          <div className="flex sm:hidden items-center justify-center gap-3 mt-6">
-            <Button
-              onClick={() => handleInteraction(prev)}
-              variant="outline"
-              size="icon"
-              className="rounded-full border-gray-800 bg-black/50 hover:bg-white/5"
-              aria-label="Previous"
-            >
-              <ChevronLeft className="h-5 w-5 text-gray-400" />
-            </Button>
-            <Button
-              onClick={() => handleInteraction(next)}
-              variant="outline"
-              size="icon"
-              className="rounded-full border-gray-800 bg-black/50 hover:bg-white/5"
-              aria-label="Next"
-            >
-              <ChevronRight className="h-5 w-5 text-gray-400" />
-            </Button>
           </div>
         </div>
       </div>

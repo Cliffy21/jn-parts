@@ -260,7 +260,7 @@ export default function Products() {
             className="flex overflow-x-auto pb-2 sm:pb-0 sm:justify-center gap-2 sm:gap-2.5 md:gap-3 scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0 snap-x snap-mandatory"
           >
             {filters.map((cat) => (
-              <button
+              <motion.button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
                 className={`flex-shrink-0 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-full text-[11px] xs:text-xs sm:text-sm font-medium transition-all duration-300 whitespace-nowrap min-h-[36px] sm:min-h-[40px] flex items-center justify-center ${
@@ -268,6 +268,8 @@ export default function Products() {
                     ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/20"
                     : "bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-800"
                 } snap-start`}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
               >
                 {cat.label}
                 <span
@@ -277,7 +279,7 @@ export default function Products() {
                 >
                   {cat.count}
                 </span>
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
@@ -405,21 +407,33 @@ export default function Products() {
                   layoutId={`card-${product.id}-${id}`}
                   key={product.id}
                   onClick={() => setActiveProduct(product)}
-                  className={`group bg-gray-900/50 rounded-lg sm:rounded-xl md:rounded-2xl border border-gray-800/50 overflow-hidden hover:border-red-500/30 transition-all duration-500 w-full cursor-pointer ${
-                    isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-                  }`}
-                  style={{ transitionDelay: `${idx * 50 + 300}ms` }}
+                  initial={{ opacity: 0, y: 30, scale: 0.95 }}
+                  animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : {}}
+                  transition={{ 
+                    duration: 0.4, 
+                    delay: idx * 0.05,
+                    ease: [0.25, 0.46, 0.45, 0.94]
+                  }}
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="group bg-gray-900/50 rounded-lg sm:rounded-xl md:rounded-2xl border border-gray-800/50 overflow-hidden hover:border-red-500/30 transition-all duration-500 w-full cursor-pointer"
                 >
                   {/* Image */}
                   <motion.div layoutId={`image-${product.id}-${id}`} className="relative aspect-square bg-gray-800 overflow-hidden">
                     {product.image_url ? (
-                      <Image
-                        src={product.image_url}
-                        alt={product.name}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      />
+                      <motion.div
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        className="w-full h-full"
+                      >
+                        <Image
+                          src={product.image_url}
+                          alt={product.name}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        />
+                      </motion.div>
                     ) : (
                       <div className="w-full h-full flex items-center justify-center">
                         <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-red-500/10 flex items-center justify-center">

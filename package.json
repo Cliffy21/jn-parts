@@ -6,7 +6,9 @@
     "dev": "next dev ",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "health-check": "node scripts/health-check.js",
+    "health-check:build": "node scripts/health-check.js --build"
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.1.11",

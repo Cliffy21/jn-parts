@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
+import { motion } from "motion/react";
 
 interface PortfolioItem {
   _id: string;
@@ -245,30 +246,36 @@ export default function Portfolio() {
 
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div
-          className={`text-center mb-12 sm:mb-16 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-center mb-12 sm:mb-16"
         >
-        
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
             Recent{" "}
             <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
               Transformations
             </span>
           </h2>
-          <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto"
+          >
             Showcasing our premium wrap and customization projects
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Filter Tabs with Color Indicators */}
-        <div
-          className={`flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-14 transition-all duration-700 delay-100 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-14"
         >
-          {filters.map((filterOption) => {
+          {filters.map((filterOption, idx) => {
             const isActive = filter === filterOption.id;
             const colorStyle = filterOption.color ? getColorStyle(filterOption.color) : null;
 
@@ -286,9 +293,14 @@ export default function Portfolio() {
             }
 
             return (
-              <button
+              <motion.button
                 key={filterOption.id}
                 onClick={() => setFilter(filterOption.id)}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.3, delay: 0.4 + idx * 0.05 }}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
                 className={`group flex items-center gap-2 px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 min-h-[40px] ${bgClass}`}
                 aria-label={`Filter by ${filterOption.label} (${filterOption.count} items)`}
               >
@@ -312,10 +324,10 @@ export default function Portfolio() {
                 >
                   {filterOption.count}
                 </span>
-              </button>
+              </motion.button>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Carousel */}
         <div

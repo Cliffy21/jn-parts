@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "motion/react";
 
 // Car images from Unsplash - different colors and brands
 const carSlides = [
@@ -41,6 +42,11 @@ export default function Hero() {
   const [showCursor, setShowCursor] = useState(true);
   const [showDescCursor, setShowDescCursor] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 500], [0, 150]);
+  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   const fullText1 = "TRANSFORM";
   const fullText2 = "YOUR RIDE";
@@ -135,8 +141,13 @@ export default function Hero() {
       {/* Sliding Background Images */}
       <div className="absolute inset-0">
         {carSlides.map((slide, index) => (
-          <div
+          <motion.div
             key={index}
+            style={{ 
+              y: index === currentSlide ? y1 : 0,
+              opacity: index === currentSlide ? opacity : 0,
+              scale: index === currentSlide ? 1 : 1.05
+            }}
             className={`absolute inset-0 transition-all duration-1000 ease-out ${
               index === currentSlide
                 ? "opacity-100 scale-100"
@@ -151,7 +162,7 @@ export default function Hero() {
               className="object-cover"
               sizes="100vw"
             />
-          </div>
+          </motion.div>
         ))}
 
         {/* Gradient Overlays */}
@@ -187,7 +198,10 @@ export default function Hero() {
       >
         <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8 lg:gap-12">
           {/* Text Content */}
-          <div className="text-center lg:text-left flex-1 max-w-2xl">
+          <motion.div 
+            style={{ y: y2 }}
+            className="text-center lg:text-left flex-1 max-w-2xl"
+          >
             {/* Decorative element */}
             <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
               <div className="w-8 sm:w-12 h-[2px] bg-gradient-to-r from-red-500 to-orange-500" />
@@ -272,7 +286,7 @@ export default function Hero() {
                 <span className="relative text-white">Get Free Quote</span>
               </button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Slide Navigation - Desktop */}
           <div

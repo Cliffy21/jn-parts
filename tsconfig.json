@@ -37,7 +37,7 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts",
     "app/components/Hero.jsx",
-    "app/components/About.jsx",
+    "app/components/About.tsx",
     "app/components/Contact.jsx",
     "Next.js/types/**/*.ts",
     "Next.js/dev/types/**/*.ts"
