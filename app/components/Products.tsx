@@ -12,6 +12,7 @@ interface Product {
   description?: string;
   price?: number;
   image_url?: string;
+  installation_cost?: number;
 }
 
 const CloseIcon = () => {
@@ -50,95 +51,101 @@ export const mockProducts: Product[] = [
   // ENGINE CATEGORY
   {
     id: "1",
-    name: "High Performance Air Filter",
-    category: "engine",
-    description: "K&N style high-flow air filter for improved engine breathing.",
-    price: 4500,
-    image_url: "https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=800&q=80", // Engine air filter / engine bay
+    name: "Chameleon tints",
+    category: "exterior",
+    description: "Color-shifting tints that react to light, heat, and angle — bold by day, subtle by night.",
+    price: 13000,
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/chamelion_tints-13k_windscreen_ng0nwi.jpg", // Engine air filter / engine bay
+  },
+  {
+    id: "8",
+    name: "Wraps + material",
+    category: "exterior",
+    description: "Full vinyl wrap materials engineered for flawless coverage and long-lasting finish.",
+    price: 50000,
+    installation_cost: 90000,
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/Wraps-material-50k_gyrmk5.jpg", // Sports steering wheel
+  },
+  {
+    id: "10",
+    name: "Car Wraps",
+    category: "exterior",
+    description: "High-grade wraps that transform your car’s look with showroom-level precision.",
+    price: 90000,
+    installation_cost: 80000,
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770748058/chameleon_v9o7gd.jpg", // Car touchscreen/infotainment
   },
   {
     id: "2",
-    name: "Performance Exhaust System",
-    category: "engine",
-    description: "Stainless steel cat-back exhaust with deep tone.",
-    price: 35000,
-    image_url: "https://images.unsplash.com/photo-1619405399517-d7fce0f13302?w=800&q=80", // Exhaust pipes
+    name: "D-series bulbs",
+    category: "exterior",
+    description: "High-intensity D-series bulbs designed for crisp visibility and sharper road presence.",
+    price: 5000,
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/Dseries_bulbs-5k_u0egzk.jpg", // Exhaust pipes
   },
   {
     id: "3",
-    name: "Turbo Intercooler Kit",
+    name: "Service parts",
     category: "engine",
-    description: "Front-mount intercooler for turbocharged engines.",
-    price: 28000,
-    image_url: "https://images.unsplash.com/photo-1613214149922-f1809c99b414?w=800&q=80", // Turbo/intercooler setup
+    description:"Essential service components that keep your engine running smooth and reliable.",
+    price: 15000,
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770745107/Service_parts-15k_p9pydu.jpg", // Turbo/intercooler setup
   },
 
   // EXTERIOR CATEGORY
   {
     id: "4",
-    name: "Carbon Fiber Hood",
+    name: "Projectors",
     category: "exterior",
-    description: "Lightweight carbon fiber hood with aggressive vents.",
-    price: 85000,
-    image_url: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80", // Carbon fiber car hood
+    description: "Precision projector lenses that deliver a sharp beam pattern and premium night vision.",
+    price: 20000,
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744120/projectors_bdh94o.jpg", // Carbon fiber car hood
   },
   {
     id: "5",
-    name: "LED Headlight Kit",
+    name: "Car logos",
     category: "exterior",
-    description: "6000K LED headlight bulbs. Plug and play.",
-    price: 8500,
-    image_url: "https://images.unsplash.com/photo-1556800572-1b8aeef2c54f?w=800&q=80", // Car LED headlights
+    description: "Sleek replacement logos crafted to elevate your car’s exterior identity.",
+    price: 5000,
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/car_logos-5000_znc3cz.jpg", // Car LED headlights
   },
   {
     id: "6",
-    name: "Wide Body Fender Flares",
+    name: "Colored-PPFs",
     category: "exterior",
-    description: "ABS plastic fender flares for wide body look.",
-    price: 22000,
-    image_url: "https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=800&q=80", // Wide body car fenders
+    description: "Advanced colored PPFs that protect paint while making a bold visual statement.",
+    price: 80000,
+    installation_cost: 200000,
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744119/wraps_gf5tmc.jpg", // Wide body car fenders
   },
 
   // INTERIOR CATEGORY
   {
     id: "7",
-    name: "Racing Bucket Seats",
-    category: "interior",
-    description: "FIA approved racing seats with Alcantara finish.",
-    price: 65000,
-    image_url: "https://res.cloudinary.com/dgumz7yur/image/upload/v1766331305/headlights_lp0cwl.jpg", // Racing bucket seats
+    name: "Paint Protection Films",
+    category: "exterior",
+    description: "Invisible protection films that shield your paint from scratches, chips, and wear.",
+    price: 60000,
+    installation_cost: 180000,
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770745732/WhatsApp_Image_2026-02-10_at_17.22.17_l0yidr.jpg", // Racing bucket seats
   },
-  {
-    id: "8",
-    name: "Quick Release Steering",
-    category: "interior",
-    description: "350mm flat-bottom wheel with quick release hub.",
-    price: 15000,
-    image_url: "https://images.unsplash.com/photo-1547744152-14d985cb937f?w=800&q=80", // Sports steering wheel
-  },
+ 
   {
     id: "9",
-    name: "Carbon Fiber Trim Kit",
-    category: "interior",
-    description: "Real carbon fiber interior trim pieces.",
-    price: 18000,
-    image_url: "https://images.unsplash.com/photo-1600712242805-5f78671b24da?w=800&q=80", // Carbon fiber interior trim
+    name: "Car bulbs ",
+    category: "exterior",
+    description: "High-output bulbs built for clean illumination and enhanced road clarity.",
+    price: 6000,
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/bulbs-6k_p5buev.jpg", // Carbon fiber interior trim
   },
 
   // ELECTRONICS CATEGORY
-  {
-    id: "10",
-    name: "Android Auto Head Unit",
-    category: "electronics",
-    description: "10.1 inch touchscreen with CarPlay and GPS.",
-    price: 32000,
-    image_url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80", // Car touchscreen/infotainment
-  },
+ 
   {
     id: "11",
     name: "360° Camera System",
     category: "electronics",
-    description: "Bird's eye view camera with parking sensors.",
+    description: "Surround-view camera system delivering a real-time 360° perspective when parking.",
     price: 25000,
     image_url: "https://res.cloudinary.com/dgumz7yur/image/upload/v1767652210/laser_jets_g3ug1t.jpg", // Car camera/parking view
   },
@@ -146,7 +153,7 @@ export const mockProducts: Product[] = [
     id: "12",
     name: "Performance ECU Tune",
     category: "electronics",
-    description: "Custom ECU remapping for more power.",
+    description: "Performance ECU tuning that unlocks smoother power delivery and sharper response.",
     price: 45000,
     image_url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?w=800&q=80", // ECU/car electronics
   },
@@ -469,16 +476,25 @@ export default function Products() {
                     </p>
 
                     {/* Price */}
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex-1 min-w-0">
-                        {product.price ? (
-                          <motion.p layoutId={`price-${product.id}-${id}`} className="text-sm xs:text-base sm:text-lg font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent truncate">
-                            KES {product.price.toLocaleString()}
-                          </motion.p>
-                        ) : (
-                          <p className="text-[10px] xs:text-xs sm:text-sm text-gray-400 truncate">Request price</p>
-                        )}
-                      </div>
+                    <div className="flex flex-col gap-1">
+                      {product.price ? (
+                        <motion.p
+                          layoutId={`price-${product.id}-${id}`}
+                          className="text-sm xs:text-base sm:text-lg font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent truncate"
+                        >
+                          KES {product.price.toLocaleString()}
+                        </motion.p>
+                      ) : (
+                        <p className="text-[10px] xs:text-xs sm:text-sm text-gray-400 truncate">
+                          Request price
+                        </p>
+                      )}
+
+                      {product.installation_cost && (
+                        <p className="text-[10px] xs:text-xs sm:text-sm text-gray-400">
+                          Installation: KES {product.installation_cost.toLocaleString()}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </motion.div>

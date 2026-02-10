@@ -15,7 +15,7 @@ export default function Services() {
     {
       title: "Paint Protection Films",
       desc: "TPU self-healing films in 7.5 & 8.5 mils thickness for ultimate protection",
-      image: "https://images.unsplash.com/photo-1625047509168-a7026f36de04?w=800&q=80",
+      image: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744118/colored_ppf-80k_a4li9w.jpg",
     },
     {
       title: "Car LED's",
@@ -25,7 +25,7 @@ export default function Services() {
     {
       title: "Engine Fluids",
       desc: "High-quality engine oils and fluids for optimal performance",
-      image: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=800&q=80",
+      image: "https://res.cloudinary.com/das3x6ips/image/upload/v1770745107/Service_parts-15k_p9pydu.jpg",
     },
     {
       title: "Transmission Fluids",
@@ -35,12 +35,12 @@ export default function Services() {
     {
       title: "Laser Projectors",
       desc: "Custom laser door projectors with logos and designs",
-      image: "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
+      image: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744118/projectors-20k_urbofq.jpg",
     },
     {
       title: "Window Tints",
       desc: "Professional window tinting for privacy, UV protection, and style",
-      image: "https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?w=800&q=80",
+      image: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/chamelion_tints-13k_windscreen_ng0nwi.jpg",
     },
     {
       title: "Custom Accessories",

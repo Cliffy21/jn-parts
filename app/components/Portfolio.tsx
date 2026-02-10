@@ -18,7 +18,7 @@ const portfolioData: PortfolioItem[] = [
   // BLACK CARS
   {
     _id: "1",
-    title: "Matte Black Mazda cx8",
+    title: "Matte Black- Wraps",
     color: "black",
     images: [
       "https://res.cloudinary.com/dgumz7yur/image/upload/v1765322264/mazda_xehbwl.jpg",
@@ -31,7 +31,7 @@ const portfolioData: PortfolioItem[] = [
   // RED CARS
   {
     _id: "2",
-    title: "Racing Red Ferrari 488",
+    title: "Racing Red- Wraps",
     color: "red",
     images: [
       "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80",
@@ -45,11 +45,12 @@ const portfolioData: PortfolioItem[] = [
   // BLUE CARS
   {
     _id: "3",
-    title: "Midnight Blue Mazda CX8",
+    title: "Midnight Blue-Wraps",
     color: "blue",
     images: [
       "https://res.cloudinary.com/dgumz7yur/image/upload/v1765666747/midnight_nn0hf6.jpg "  ,
       "https://images.unsplash.com/photo-1611859266238-4b98091d9d9b?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770748057/midnight_blue_nitkvm.jpg",
     ],
     description: "Deep midnight blue metallic finish",
   },
@@ -57,12 +58,11 @@ const portfolioData: PortfolioItem[] = [
   // WHITE CARS
   {
     _id: "4",
-    title: "Pearl White Mazda CX8",
+    title: "Pearl White-Wraps",
     color: "white",
     images: [
       
-      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765322264/mazda2_gdtq4p.jpg",
-      
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1765322264/mazda2_gdtq4p.jpg",      
       "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80",
       "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
     ],
@@ -72,23 +72,22 @@ const portfolioData: PortfolioItem[] = [
   // GRAY CARS
   {
     _id: "5",
-    title: "Nardo Gray Audi RS7",
+    title: "Nardo Gray -Wraps",
     color: "gray",
     images: [
-      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80",
-      "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770744118/nardo_gray-porche_grhm0w.jpg",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770746211/Nardogray_wtqwh4.jpg",
       "https://res.cloudinary.com/dgumz7yur/image/upload/v1765666783/gray_mazda_qf5li6.jpg",
-      "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80",
     ],
     description: "Iconic Nardo gray with matte finish",
   },
   
   {
     _id: "6",
-    title: "Papaya Orange Ford Mustang",
+    title: "Papaya Orange-Wraps",
     color: "orange",
     images: [
-      "https://images.unsplash.com/photo-1580274455191-1c62238fa333?w=800&q=80", // Orange Mustang
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/Wraps-material-50k_gyrmk5.jpg", // Orange Mustang
       "https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?w=800&q=80", // Orange muscle car
       "https://images.unsplash.com/photo-1547744152-14d985cb937f?w=800&q=80", // Classic orange car
     ],
@@ -97,11 +96,11 @@ const portfolioData: PortfolioItem[] = [
   // GREEN CARS
   {
     _id: "7",
-    title: "British Racing Green Jaguar",
+    title: "Chameleon Green-Wraps",
     color: "green",
     images: [
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
-      "https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/chamelionwrap_d3wxka.jpg",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/chamelion_tints-13k_windscreen_ng0nwi.jpg",
       "https://images.unsplash.com/photo-1504215680853-026ed2a45def?w=800&q=80",
     ],
     description: "Classic British racing green restoration",
@@ -110,12 +109,11 @@ const portfolioData: PortfolioItem[] = [
   // YELLOW CARS
   {
     _id: "8",
-    title: "Velocity Yellow Corvette",
+    title: "Velocity Yellow-Wraps",
     color: "yellow",
     images: [
       "https://res.cloudinary.com/dgumz7yur/image/upload/v1765666783/yellow_mazda_kqxayy.jpg",
-      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80",
-     
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80",     
       "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
     ],
     description: "Vibrant velocity yellow with racing stripes",
