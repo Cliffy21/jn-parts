@@ -206,7 +206,7 @@ export default function Hero() {
             <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
               <div className="w-8 sm:w-12 h-[2px] bg-gradient-to-r from-red-500 to-orange-500" />
               <span className="text-xs sm:text-sm tracking-[0.2em] text-gray-400 uppercase font-light">
-                Since 2010
+                Since 2020
               </span>
               <div className="w-8 sm:w-12 h-[2px] bg-gradient-to-r from-orange-500 to-red-500" />
             </div>
