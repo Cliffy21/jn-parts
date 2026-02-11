@@ -157,10 +157,14 @@ export const Card = ({
   card,
   index,
   layout = false,
+  drag = true,
+  style,
 }: {
   card: Card;
   index: number;
   layout?: boolean;
+  drag?: boolean;
+  style?: React.CSSProperties;
 }) => {
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -245,6 +249,8 @@ export const Card = ({
       <motion.button
         layoutId={layout ? `card-${card.title}` : undefined}
         onClick={handleOpen}
+        drag={drag}
+        style={style}
         className="relative z-10 flex h-72 w-52 sm:h-80 sm:w-56 md:h-[40rem] md:w-96 flex-col items-start justify-start overflow-hidden rounded-2xl sm:rounded-3xl bg-gray-100 dark:bg-neutral-900 flex-shrink-0"
       >
         <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-gradient-to-b from-black/50 via-transparent to-transparent" />
