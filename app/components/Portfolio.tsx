@@ -92,6 +92,260 @@ const portfolioData: PortfolioItem[] = [
     description: "Classic British racing green restoration",
   },
   {
+    _id: "9",
+    title: "Crimson Red Wraps",
+    color: "red",
+    images: [
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&q=80",
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80",
+      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=800&q=80",
+    ],
+    description: "Deep crimson gloss red performance wrap",
+  },
+
+  {
+    _id: "10",
+    title: "Jet Black Gloss Wraps",
+    color: "black",
+    images: [
+      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&q=80",
+      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80",
+    ],
+    description: "High-gloss jet black luxury finish",
+  },
+
+  {
+    _id: "11",
+    title: "Royal Blue Wraps",
+    color: "blue",
+    images: [
+      
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
+      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80",
+      "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=800&q=80",
+    ],
+    description: "Rich royal blue metallic wrap",
+  },
+  {
+    _id: "19",
+    title: "Obsidian Black Wraps",
+    color: "black",
+    images: [
+      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&q=80",
+      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
+      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80",
+    ],
+    description: "Deep obsidian black gloss performance wrap",
+  },
+  
+  {
+    _id: "20",
+    title: "Carbon Black Satin Wraps",
+    color: "black",
+    images: [
+      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+      "https://images.unsplash.com/photo-1603386329225-868f9b1ee6b9?w=800&q=80",
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80",
+    ],
+    description: "Satin carbon black street finish",
+  },
+  
+  {
+    _id: "21",
+    title: "Candy Apple Red Wraps",
+    color: "red",
+    images: [
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&q=80",
+      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&q=80",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+    ],
+    description: "High-gloss candy apple red finish",
+  },
+  
+  {
+    _id: "22",
+    title: "Inferno Red Sport Wraps",
+    color: "red",
+    images: [
+      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80",
+      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80",
+      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80",
+    ],
+    description: "Aggressive inferno red sport wrap",
+  },
+  
+  {
+    _id: "23",
+    title: "Electric Blue Wraps",
+    color: "blue",
+    images: [
+      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
+      "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=800&q=80",
+    ],
+    description: "Bright electric blue metallic finish",
+  },
+  
+  {
+    _id: "24",
+    title: "Deep Ocean Blue Wraps",
+    color: "blue",
+    images: [
+      
+      "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=800&q=80",
+      "https://images.unsplash.com/photo-1583267746897-2cf415887172?w=800&q=80",
+    ],
+    description: "Deep ocean blue gloss wrap",
+  },
+  
+  {
+    _id: "25",
+    title: "Arctic White Wraps",
+    color: "white",
+    images: [
+      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80",
+      "https://images.unsplash.com/photo-1549921296-3c3b4b7d8b55?w=800&q=80",
+      "https://images.unsplash.com/photo-1504215680853-026ed2a45def?w=800&q=80",
+    ],
+    description: "Clean arctic white gloss finish",
+  },
+  
+  {
+    _id: "26",
+    title: "Pearl White Luxe Wraps",
+    color: "white",
+    images: [
+      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80",
+      "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
+    ],
+    description: "Premium pearl white luxury wrap",
+  },
+  
+  {
+    _id: "27",
+    title: "Emerald Green Sport Wraps",
+    color: "green",
+    images: [
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&q=80",
+      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+    ],
+    description: "Gloss emerald green performance wrap",
+  },
+  
+  {
+    _id: "28",
+    title: "Racing Green Classic Wraps",
+    color: "green",
+    images: [
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
+      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80",
+      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80",
+    ],
+    description: "Classic British racing green finish",
+  },
+  
+  {
+    _id: "29",
+    title: "Sunburst Yellow Wraps",
+    color: "yellow",
+    images: [
+      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+      "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=800&q=80",
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=800&q=80",
+    ],
+    description: "Bright sunburst yellow high-impact wrap",
+  },
+  
+
+  {
+    _id: "12",
+    title: "Gloss White Sport Wraps",
+    color: "white",
+    images: [
+     
+      "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=800&q=80",
+      "https://images.unsplash.com/photo-1504215680853-026ed2a45def?w=800&q=80",
+    ],
+    description: "Gloss white sport wrap with black accents",
+  },
+
+  {
+    _id: "13",
+    title: "Silver Metallic Wraps",
+    color: "gray",
+    images: [
+     
+      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+      "https://images.unsplash.com/photo-1583267746897-2cf415887172?w=800&q=80",
+    ],
+    description: "High-gloss silver metallic performance wrap",
+  },
+  
+  {
+    _id: "17",
+    title: "Nardo Gray Wraps",
+    color: "gray",
+    images: [
+      
+      "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=800&q=80",
+      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80",
+    ],
+    description: "Modern Nardo gray satin sport finish",
+  },
+  
+  {
+    _id: "18",
+    title: "Gunmetal Gray Wraps",
+    color: "gray",
+    images: [
+      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80",
+      "https://images.unsplash.com/photo-1603386329225-868f9b1ee6b9?w=800&q=80",
+      "https://images.unsplash.com/photo-1597007066704-67bf2068d5b2?w=800&q=80",
+    ],
+    description: "Aggressive gunmetal gray street wrap",
+  },
+  
+
+  {
+    _id: "14",
+    title: "Burnt Orange Wraps",
+    color: "orange",
+    images: [
+      "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=800&q=80",
+      "https://images.unsplash.com/photo-1493238792000-8113da705763?w=800&q=80",
+      "https://images.unsplash.com/photo-1509395176047-4a66953fd231?w=800&q=80",
+    ],
+    description: "Burnt orange satin performance wrap",
+  },
+
+  {
+    _id: "15",
+    title: "Emerald Green Wraps",
+    color: "green",
+    images: [
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&q=80",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+    ],
+    description: "Emerald green gloss wrap with black trims",
+  },
+
+  {
+    _id: "16",
+    title: "Lime Yellow Wraps",
+    color: "yellow",
+    images: [
+      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80",
+      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=800&q=80",
+    ],
+    description: "High-impact lime yellow street wrap",
+  },
+
+  {
     _id: "8",
     title: "Velocity Yellow Wraps",
     color: "yellow",
