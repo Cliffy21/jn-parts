@@ -133,7 +133,7 @@ const portfolioData: PortfolioItem[] = [
     title: "Obsidian Black Wraps",
     color: "black",
     images: [
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&q=80",
+      
       "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
       "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80",
     ],
@@ -147,7 +147,7 @@ const portfolioData: PortfolioItem[] = [
     images: [
       "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
       "https://images.unsplash.com/photo-1603386329225-868f9b1ee6b9?w=800&q=80",
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80",
+     
     ],
     description: "Satin carbon black street finish",
   },
