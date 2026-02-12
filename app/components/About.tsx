@@ -154,7 +154,7 @@ export default function About() {
               {[
                 { val: "1000", suffix: "+", label: "Happy Clients" },
                 { val: "5000", suffix: "+", label: "Parts Sold" },
-                { val: "15", suffix: "Yrs", label: "Experience" },
+                { val: "4+", suffix: "Yrs", label: "Experience" },
                 { val: "100", suffix: "%", label: "Genuine" },
               ].map((item, idx) => (
                 <div 

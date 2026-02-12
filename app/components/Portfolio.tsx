@@ -53,7 +53,7 @@ const portfolioData: PortfolioItem[] = [
     color: "white",
     images: [
       "https://res.cloudinary.com/dgumz7yur/image/upload/v1765322264/mazda2_gdtq4p.jpg",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770884912/white_qusazx.jpg",
       "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&q=80",
     ],
     description: "Satin pearl white with chrome delete",
@@ -96,8 +96,8 @@ const portfolioData: PortfolioItem[] = [
     title: "Crimson Red Wraps",
     color: "red",
     images: [
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&q=80",
-      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80",
+      
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770884909/marroon_bmibz0.jpg",
       "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=800&q=80",
     ],
     description: "Deep crimson gloss red performance wrap",
@@ -108,7 +108,7 @@ const portfolioData: PortfolioItem[] = [
     title: "Jet Black Gloss Wraps",
     color: "black",
     images: [
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770884908/TX_cru83k.jpg",
       "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
       "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80",
     ],
@@ -121,7 +121,8 @@ const portfolioData: PortfolioItem[] = [
     color: "blue",
     images: [
       
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80",
+     
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770884910/Blue_qemjkq.jpg",
       "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80",
       "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=800&q=80",
     ],
@@ -156,7 +157,7 @@ const portfolioData: PortfolioItem[] = [
     title: "Candy Apple Red Wraps",
     color: "red",
     images: [
-      "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&q=80",
+      
       "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&q=80",
       "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
     ],
@@ -192,7 +193,7 @@ const portfolioData: PortfolioItem[] = [
     title: "Deep Ocean Blue Wraps",
     color: "blue",
     images: [
-      
+      "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=800&q=80",
       "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=800&q=80",
       "https://images.unsplash.com/photo-1583267746897-2cf415887172?w=800&q=80",
     ],
@@ -277,9 +278,10 @@ const portfolioData: PortfolioItem[] = [
     title: "Silver Metallic Wraps",
     color: "gray",
     images: [
-     
-      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770884909/Greeeys_ijjmvk.jpg",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770884908/Grey_pbri1r.jpg",
       "https://images.unsplash.com/photo-1583267746897-2cf415887172?w=800&q=80",
+      
     ],
     description: "High-gloss silver metallic performance wrap",
   },
@@ -289,7 +291,7 @@ const portfolioData: PortfolioItem[] = [
     title: "Nardo Gray Wraps",
     color: "gray",
     images: [
-      
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770884909/Gray_gbgvrw.jpg",      
       "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=800&q=80",
       "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80",
     ],
