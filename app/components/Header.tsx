@@ -82,7 +82,8 @@ export default function Header() {
             {/* --- LOGO SECTION --- */}
 <button 
   onClick={() => scrollToSection("home")}
-  className="group relative z-10 flex items-center justify-center overflow-visible"
+  className="group relative z-10 flex items-center justify-center overflow-visible -ml-3 md:-ml-4"
+
   style={{ width: '220px' }} // Fixed width container to prevent layout shift
 >
   {/* Radial glow to make the white text visible on any dark bg */}

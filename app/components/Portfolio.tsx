@@ -25,17 +25,7 @@ const portfolioData: PortfolioItem[] = [
     ],
     description: "Full matte black wrap with gloss black accents",
   },
-  {
-    _id: "2",
-    title: "Racing Red Wraps",
-    color: "red",
-    images: [
-      "https://images.unsplash.com/photo-1592198084033-aade902d1aae?w=800&q=80",
-      "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=800&q=80",
-      "https://images.unsplash.com/photo-1617531653332-bd46c24f2068?w=800&q=80",
-    ],
-    description: "Gloss racing red with carbon fiber details",
-  },
+
   {
     _id: "3",
     title: "Midnight Blue Wraps",
