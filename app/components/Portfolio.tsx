@@ -96,9 +96,9 @@ const portfolioData: PortfolioItem[] = [
     title: "Crimson Red Wraps",
     color: "red",
     images: [
-      
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896766/crimson_noidke.png",
       "https://res.cloudinary.com/das3x6ips/image/upload/v1770884909/marroon_bmibz0.jpg",
-      "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896751/crimson-red_hojumz.png",
     ],
     description: "Deep crimson gloss red performance wrap",
   },
@@ -109,8 +109,8 @@ const portfolioData: PortfolioItem[] = [
     color: "black",
     images: [
       "https://res.cloudinary.com/das3x6ips/image/upload/v1770884908/TX_cru83k.jpg",
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
-      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896734/Jet_black_xmkeo9.png",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896725/J-Black_h9lvzg.png",
     ],
     description: "High-gloss jet black luxury finish",
   },
@@ -123,8 +123,8 @@ const portfolioData: PortfolioItem[] = [
       
      
       "https://res.cloudinary.com/das3x6ips/image/upload/v1770884910/Blue_qemjkq.jpg",
-      "https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?w=800&q=80",
-      "https://images.unsplash.com/photo-1525609004556-c46c7d6cf023?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896773/royal_blue_cqzgcg.png",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896781/royal_-_blue_c2ngf3.png",
     ],
     description: "Rich royal blue metallic wrap",
   },
@@ -134,8 +134,8 @@ const portfolioData: PortfolioItem[] = [
     color: "black",
     images: [
       
-      "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
-      "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896781/obsidian_black2_xo65v8.png",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896777/obsidian_black_yulggw.png",
     ],
     description: "Deep obsidian black gloss performance wrap",
   },
@@ -145,8 +145,8 @@ const portfolioData: PortfolioItem[] = [
     title: "Carbon Black Satin Wraps",
     color: "black",
     images: [
-      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&q=80",
-      "https://images.unsplash.com/photo-1603386329225-868f9b1ee6b9?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896743/carbon_black_satin_v8ozbf.png",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896723/carbon_black_gzkbbf.png",
      
     ],
     description: "Satin carbon black street finish",
@@ -158,8 +158,9 @@ const portfolioData: PortfolioItem[] = [
     color: "red",
     images: [
       
-      "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&q=80",
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896750/candy_apple_red_rzzn5c.png",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896736/candy_apple_nrgqdg.png",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896753/inferno_vwthdg.png",
     ],
     description: "High-gloss candy apple red finish",
   },
@@ -169,9 +170,9 @@ const portfolioData: PortfolioItem[] = [
     title: "Inferno Red Sport Wraps",
     color: "red",
     images: [
-      "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=800&q=80",
-      "https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=800&q=80",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896773/inferno-red_iwogkf.png",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896753/inferno_vwthdg.png",
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770896766/crimson_noidke.png",
     ],
     description: "Aggressive inferno red sport wrap",
   },
