@@ -53,7 +53,28 @@ export const mockProducts: Product[] = [
     id: "1",
     name: "Chameleon tints",
     category: "exterior",
-    description: "Color-shifting tints that react to light, heat, and angle — bold by day, subtle by night.",
+    description: "Chameleon Series: Ultimate Color-Shift Wrap
+      
+                 Your car was never meant to blend in. With the Chameleon Series, you don’t choose a single color—you unlock a dynamic finish that shifts with every angle, every light, every movement.
+                 Watch your vehicle transform in real time. Rich purples fade into electric blues, then melt into deep greens as light hits the surface. It’s more than a wrap—it’s a statement that turns heads at every stoplight and keeps them looking.
+
+                 Key Features & Benefits:
+
+                	•	Dynamic Multi-Color Shift: 
+              Advanced light-reactive pigments create smooth transitions between 3–4 distinct colors depending on angle and lighting.
+                    
+	                •	Ultra-Gloss “Liquid” Finish:
+              A deep, glass-like surface that amplifies the color shift and delivers a high-end, show-car shine.
+                    
+                	•	Precision Fit & Flexibility:
+              Premium cast vinyl engineered to wrap seamlessly around curves, edges, mirrors, and complex body lines without distortion.
+  
+                 	•	Paint Protection Built In:
+              Shields your original paint from UV rays, minor scratches, and road debris—keeping your factory finish intact underneath.
+                
+                 	•	Removable & Long-Lasting:
+              Designed for durability while remaining safe to remove when you’re ready for a new look.",
+                
     price: 13000,
     image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/chamelion_tints-13k_windscreen_ng0nwi.jpg", // Engine air filter / engine bay
   },
