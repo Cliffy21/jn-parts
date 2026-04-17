@@ -12,6 +12,7 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import ScrollProgressBeam from "./components/ScrollProgressBeam";
+import Blog from "./components/Blog";
 
 // ============================================
 // COMMENTED OUT: Backend fetch for products
@@ -62,6 +63,7 @@ export default function HomePage() {
         <FAQ />
         <Benefits />
         <Contact />
+        <Blog />
       </main>
 
       <Footer />
