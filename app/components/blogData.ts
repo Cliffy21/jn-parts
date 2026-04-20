@@ -21,7 +21,7 @@ export const blogPosts: BlogPost[] = [
     title: "Car Wrap Cost in Kenya: Everything You Need to Know in 2026",
     metaDescription: "Wondering how much a car wrap costs in Kenya? We break down pricing by vehicle size, wrap type, and what to look for in a quality installer. Updated 2026.",
     date: "April 10, 2026",
-    image: "/blog-car-wrap.jpg",
+    image: "/https://res.cloudinary.com/dgumz7yur/image/upload/q_auto/f_auto/v1776521119/WhatsApp_Image_2026-04-18_at_16.59.07_ivfflp.jpg",
     summary: "Thinking about wrapping your car in Kenya but not sure about the cost? We break down everything — from small hatchbacks to full SUV wraps — so you know exactly what to expect.",
     body: {
       intro: "Car wrapping has become one of the most popular vehicle upgrades in Kenya, and for good reason. It protects your paint, transforms your car's look, and is fully reversible. But one of the first questions most people ask is: how much does it actually cost? The answer depends on several factors — and in this guide we break it all down for you.",
@@ -51,7 +51,7 @@ export const blogPosts: BlogPost[] = [
     title: "360 Degree Camera for Cars in Kenya: Is It Worth It?",
     metaDescription: "Considering a 360 degree camera for your car in Kenya? Learn how it works, how much it costs, and why it is one of the best safety upgrades you can make in 2026.",
     date: "April 3, 2026",
-    image: "/blog-360-camera.jpg",
+    image: "/https://res.cloudinary.com/dgumz7yur/image/upload/q_auto/f_auto/v1776521635/WhatsApp_Image_2026-04-18_at_17.12.46_rl414d.jpg",
     summary: "A 360 degree camera system gives you a bird's eye view of your entire vehicle while parking and maneuvering. Here is everything you need to know about getting one installed in Kenya.",
     body: {
       intro: "Parking in busy Nairobi streets, tight parking lots, and congested matatu routes is stressful. A 360 degree camera system — also called a surround view camera — eliminates blind spots completely by giving you a real-time overhead view of your entire car. It is one of the most practical tech upgrades you can add to any vehicle in Kenya right now.",
