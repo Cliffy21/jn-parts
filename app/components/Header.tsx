@@ -80,36 +80,30 @@ export default function Header() {
           <nav className="max-w-[1400px] mx-auto px-6 md:px-10 flex items-center justify-between">
             
             {/* --- LOGO SECTION --- */}
-<button 
-  onClick={() => scrollToSection("home")}
-  className="group relative z-10 flex items-center justify-center overflow-visible -ml-3 md:-ml-4"
-
-  style={{ width: '220px' }} // Fixed width container to prevent layout shift
->
-  {/* Radial glow to make the white text visible on any dark bg */}
-  <div className="absolute inset-0 bg-red-600/10 blur-[50px] rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
-  
-  <div className="relative flex items-center justify-center w-full h-full">
-    <Image 
-      src="/1.png" 
-      alt="JN Parts & Accessories" 
-      width={400} // Fetching higher res because we are "zooming in"
-      height={400}
-      className={`
-        w-auto object-contain transition-all duration-500
-        /* The Magic Fix: Scale up to ignore the empty padding in your PNG */
-        scale-[2.2] md:scale-[2.8] 
-        /* Brightness boost to make sure the white/red pops */
-        brightness-110 contrast-125
-        ${scrolled ? "h-10 lg:h-12" : "h-14 lg:h-16"} 
-      `}
-      priority
-    />
-    
-    {/* Premium Shimmer Overlay - Adjusted to match the larger scale */}
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none scale-150" />
-  </div>
-</button>
+            <button
+              type="button"
+              onClick={() => scrollToSection("home")}
+              className="group relative z-10 flex items-center justify-center overflow-visible -ml-3 md:-ml-4"
+              style={{ width: "220px" }}
+            >
+              <div className="absolute inset-0 bg-red-600/10 blur-[50px] rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative flex items-center justify-center w-full h-full">
+                <Image
+                  src="/1.png"
+                  alt="JN Parts & Accessories"
+                  width={400}
+                  height={400}
+                  className={`
+                    w-auto object-contain transition-all duration-500
+                    scale-[2.2] md:scale-[2.8]
+                    brightness-110 contrast-125
+                    ${scrolled ? "h-10 lg:h-12" : "h-14 lg:h-16"}
+                  `}
+                  priority
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none scale-150" />
+              </div>
+            </button>
 
             {/* --- DESKTOP NAV --- */}
             <div className="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-full px-2 py-1 backdrop-blur-md">
@@ -132,13 +126,14 @@ export default function Header() {
               })}
             </div>
 
-            {/* --- ACTION BUTTON --- */}
+            {/* --- DESKTOP: OUR BLOG --- */}
             <div className="hidden lg:block">
-              <button 
-                onClick={() => scrollToSection("contact")}
+              <button
+                type="button"
+                onClick={() => scrollToSection("blog")}
                 className="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all transform hover:scale-105 active:scale-95 shadow-lg shadow-red-600/20"
               >
-                BOOK SERVICE
+                OUR BLOG
               </button>
             </div>
 
@@ -160,31 +155,50 @@ export default function Header() {
           menuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
         }`}
       >
-        <div className="p-8 flex flex-col h-full">
-          <div className="flex justify-between items-center mb-12">
+        <div className="p-8 flex flex-col h-full min-h-0">
+          <div className="flex justify-between items-center mb-12 shrink-0">
             <Image src="/1.png" alt="Logo" width={180} height={60} className="h-12 w-auto object-contain" />
-            <button onClick={() => setMenuOpen(false)} className="p-3 text-white"><X className="w-8 h-8" /></button>
+            <button
+              type="button"
+              onClick={() => setMenuOpen(false)}
+              className="p-3 text-white"
+              aria-label="Close menu"
+            >
+              <X className="w-8 h-8" />
+            </button>
           </div>
 
-          <nav className="flex flex-col gap-6">
+          <nav className="flex flex-col gap-6 flex-1 overflow-y-auto min-h-0">
             {sections.map((s) => (
               <button
+                type="button"
                 key={s.id}
                 onClick={() => scrollToSection(s.id)}
                 className="text-3xl font-black text-white text-left flex justify-between items-center group"
               >
                 <span className={activeSection === s.id ? "text-red-600" : ""}>{s.label}</span>
-                <ChevronRight className="w-8 h-8 opacity-0 group-hover:opacity-100 text-red-600 transition-all" />
+                <ChevronRight className="w-8 h-8 opacity-0 group-hover:opacity-100 text-red-600 transition-all shrink-0" />
               </button>
             ))}
           </nav>
 
-          <button 
-             onClick={() => scrollToSection("contact")}
-             className="mt-auto w-full bg-red-600 py-5 rounded-2xl font-black text-xl text-white flex items-center justify-center gap-3"
-          >
-            <Sparkles /> GET A QUOTE
-          </button>
+          <div className="mt-8 pt-8 border-t border-white/10 shrink-0 flex flex-col gap-3">
+            <button
+              type="button"
+              onClick={() => scrollToSection("blog")}
+              className="w-full bg-red-600 hover:bg-red-700 py-4 rounded-2xl font-black text-lg text-white shadow-lg shadow-red-600/20 transition-colors"
+            >
+              OUR BLOG
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollToSection("contact")}
+              className="w-full border border-white/20 hover:border-red-500/50 hover:bg-white/5 py-4 rounded-2xl font-bold text-lg text-white flex items-center justify-center gap-3 transition-colors"
+            >
+              <Sparkles className="w-5 h-5 text-red-500" />
+              GET A QUOTE
+            </button>
+          </div>
         </div>
       </div>
     </>

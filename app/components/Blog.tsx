@@ -4,7 +4,7 @@ import { blogPosts } from "./blogData";
 
 export default function Blog() {
   return (
-    <section className="py-16 px-6 bg-zinc-950">
+    <section id="blog" className="py-16 px-6 bg-zinc-950">
       <div className="max-w-6xl mx-auto">
 
         {/* Section Header */}
