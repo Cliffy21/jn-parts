@@ -98,10 +98,7 @@ export default function Contact() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 mb-4">
-            <MapPin className="w-4 h-4 text-red-500" />
-            <span className="text-sm font-semibold text-red-400">Get In Touch</span>
-          </div>
+          
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-4">
             <span className="bg-gradient-to-r from-white via-gray-100 to-white bg-clip-text text-transparent">
               Visit Our Location

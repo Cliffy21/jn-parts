@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, useId } from "react";
+import { useState, useEffect, useId } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
-import { useOutsideClick } from "@/hooks/use-outside-click";
 
 interface Product {
   id: string;
@@ -46,16 +45,14 @@ export const categoryLabels: Record<string, string> = {
   electronics: "Electronics",
 };
 
-// Mock products with relevant images
 export const mockProducts: Product[] = [
-  // ENGINE CATEGORY
   {
     id: "1",
     name: "Chameleon tints",
     category: "exterior",
-    description: "Color-shifting tints that react to light, heat and angle-bold by day, subtle by night.",            
+    description: "Color-shifting tints that react to light, heat and angle-bold by day, subtle by night.",
     price: 13000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/chamelion_tints-13k_windscreen_ng0nwi.jpg", // Engine air filter / engine bay
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/chamelion_tints-13k_windscreen_ng0nwi.jpg",
   },
   {
     id: "8",
@@ -64,16 +61,16 @@ export const mockProducts: Product[] = [
     description: "Full vinyl wrap materials engineered for flawless coverage and long-lasting finish.",
     price: 50000,
     installation_cost: 90000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/Wraps-material-50k_gyrmk5.jpg", // Sports steering wheel
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/Wraps-material-50k_gyrmk5.jpg",
   },
   {
     id: "10",
     name: "Car Wraps",
     category: "exterior",
-    description: "High-grade wraps that transform your car’s look with showroom-level precision.",
+    description: "High-grade wraps that transform your car's look with showroom-level precision.",
     price: 90000,
     installation_cost: 80000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770748058/chameleon_v9o7gd.jpg", // Car touchscreen/infotainment
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770748058/chameleon_v9o7gd.jpg",
   },
   {
     id: "2",
@@ -81,33 +78,31 @@ export const mockProducts: Product[] = [
     category: "exterior",
     description: "High-intensity D-series bulbs designed for crisp visibility and sharper road presence.",
     price: 5000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/Dseries_bulbs-5k_u0egzk.jpg", // Exhaust pipes
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/Dseries_bulbs-5k_u0egzk.jpg",
   },
   {
     id: "3",
     name: "Service parts",
     category: "engine",
-    description:"Essential service components that keep your engine running smooth and reliable.",
+    description: "Essential service components that keep your engine running smooth and reliable.",
     price: 15000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770745107/Service_parts-15k_p9pydu.jpg", // Turbo/intercooler setup
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770745107/Service_parts-15k_p9pydu.jpg",
   },
-
-  // EXTERIOR CATEGORY
   {
     id: "4",
     name: "Projectors",
     category: "exterior",
     description: "Precision projector lenses that deliver a sharp beam pattern and premium night vision.",
     price: 20000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744120/projectors_bdh94o.jpg", // Carbon fiber car hood
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744120/projectors_bdh94o.jpg",
   },
   {
     id: "5",
     name: "Car logos",
     category: "exterior",
-    description: "Sleek replacement logos crafted to elevate your car’s exterior identity.",
+    description: "Sleek replacement logos crafted to elevate your car's exterior identity.",
     price: 5000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/car_logos-5000_znc3cz.jpg", // Car LED headlights
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/car_logos-5000_znc3cz.jpg",
   },
   {
     id: "6",
@@ -116,10 +111,8 @@ export const mockProducts: Product[] = [
     description: "Advanced colored PPFs that protect paint while making a bold visual statement.",
     price: 80000,
     installation_cost: 200000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744119/wraps_gf5tmc.jpg", // Wide body car fenders
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744119/wraps_gf5tmc.jpg",
   },
-
-  // INTERIOR CATEGORY
   {
     id: "7",
     name: "Paint Protection Films",
@@ -127,27 +120,23 @@ export const mockProducts: Product[] = [
     description: "Invisible protection films that shield your paint from scratches, chips, and wear.",
     price: 60000,
     installation_cost: 180000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770745732/WhatsApp_Image_2026-02-10_at_17.22.17_l0yidr.jpg", // Racing bucket seats
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770745732/WhatsApp_Image_2026-02-10_at_17.22.17_l0yidr.jpg",
   },
- 
   {
     id: "9",
-    name: "Car bulbs ",
+    name: "Car bulbs",
     category: "exterior",
     description: "High-output bulbs built for clean illumination and enhanced road clarity.",
     price: 6000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/bulbs-6k_p5buev.jpg", // Carbon fiber interior trim
+    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/bulbs-6k_p5buev.jpg",
   },
-
-  // ELECTRONICS CATEGORY
- 
   {
     id: "11",
     name: "360° Camera System",
     category: "electronics",
     description: "Surround-view camera system delivering a real-time 360° perspective when parking.",
     price: 25000,
-    image_url: "https://res.cloudinary.com/dgumz7yur/image/upload/v1767652210/laser_jets_g3ug1t.jpg", // Car camera/parking view
+    image_url: "https://res.cloudinary.com/dgumz7yur/image/upload/v1767652210/laser_jets_g3ug1t.jpg",
   },
   {
     id: "12",
@@ -155,57 +144,40 @@ export const mockProducts: Product[] = [
     category: "electronics",
     description: "Performance ECU tuning that unlocks smoother power delivery and sharper response.",
     price: 45000,
-    image_url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?w=800&q=80", // ECU/car electronics
+    image_url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?w=800&q=80",
   },
 ];
-
-
 
 export default function Products() {
   const [allProducts] = useState<Product[]>(mockProducts);
   const [activeCategory, setActiveCategory] = useState("all");
   const [isVisible, setIsVisible] = useState(false);
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-  const filterScrollRef = useRef<HTMLDivElement>(null);
-  const modalRef = useRef<HTMLDivElement | null>(null);
   const id = useId();
 
+  // ─── Intersection observer for entrance animation ──────────────────────────
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
       { threshold: 0.1 }
     );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
+    const section = document.getElementById("products");
+    if (section) observer.observe(section);
     return () => observer.disconnect();
   }, []);
 
+  // ─── Lock body scroll & ESC key while modal is open ───────────────────────
   useEffect(() => {
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setActiveProduct(null);
-      }
-    }
-
-    if (activeProduct) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActiveProduct(null);
+    };
+    document.body.style.overflow = activeProduct ? "hidden" : "auto";
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "auto";
+    };
   }, [activeProduct]);
-
-  useOutsideClick(modalRef, () => setActiveProduct(null));
 
   const dynamicCategories = Array.from(
     new Set(allProducts.map((p) => p.category).filter(Boolean))
@@ -231,20 +203,14 @@ export default function Products() {
 
   return (
     <section
-      ref={sectionRef}
       id="products"
       className="relative py-12 sm:py-16 md:py-20 lg:py-24 px-3 sm:px-4 md:px-6 bg-black overflow-x-hidden"
     >
-      {/* Subtle top border */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
 
       <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
-        <div
-          className={`text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12 transition-all duration-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className={`text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-3 md:mb-4 leading-tight px-2">
             Our{" "}
             <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
@@ -256,34 +222,23 @@ export default function Products() {
           </p>
         </div>
 
-        {/* Filter Tabs - Horizontally scrollable on mobile */}
-        <div
-          className={`mb-6 sm:mb-8 md:mb-10 lg:mb-12 transition-all duration-700 delay-100 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div
-            ref={filterScrollRef}
-            className="flex overflow-x-auto pb-2 sm:pb-0 sm:justify-center gap-2 sm:gap-2.5 md:gap-3 scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0 snap-x snap-mandatory"
-          >
+        {/* Filter Tabs */}
+        <div className={`mb-6 sm:mb-8 md:mb-10 lg:mb-12 transition-all duration-700 delay-100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className="flex overflow-x-auto pb-2 sm:pb-0 sm:justify-center gap-2 sm:gap-2.5 md:gap-3 scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0 snap-x snap-mandatory">
             {filters.map((cat) => (
               <motion.button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`flex-shrink-0 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-full text-[11px] xs:text-xs sm:text-sm font-medium transition-all duration-300 whitespace-nowrap min-h-[36px] sm:min-h-[40px] flex items-center justify-center ${
+                className={`flex-shrink-0 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-full text-[11px] xs:text-xs sm:text-sm font-medium transition-all duration-300 whitespace-nowrap min-h-[36px] sm:min-h-[40px] flex items-center justify-center snap-start ${
                   activeCategory === cat.id
                     ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/20"
                     : "bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-800"
-                } snap-start`}
+                }`}
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
                 {cat.label}
-                <span
-                  className={`ml-1.5 sm:ml-2 text-[9px] xs:text-[10px] sm:text-xs px-1.5 py-0.5 rounded-md ${
-                    activeCategory === cat.id ? "bg-white/20" : "bg-gray-800"
-                  }`}
-                >
+                <span className={`ml-1.5 sm:ml-2 text-[9px] xs:text-[10px] sm:text-xs px-1.5 py-0.5 rounded-md ${activeCategory === cat.id ? "bg-white/20" : "bg-gray-800"}`}>
                   {cat.count}
                 </span>
               </motion.button>
@@ -291,122 +246,140 @@ export default function Products() {
           </div>
         </div>
 
-        {/* Expandable Cards Modal */}
+        {/* ─── MODAL ──────────────────────────────────────────────────────────
+            Key fix:
+            • Single <AnimatePresence> wraps BOTH backdrop and card.
+            • Backdrop has onClick={() => setActiveProduct(null)}.
+            • Card has onClick={(e) => e.stopPropagation()} so tapping the
+              card itself doesn't bubble up to the backdrop and close it.
+            • Card uses max-h-[90dvh] instead of h-full so there IS a visible
+              backdrop around the card on mobile for users to tap.
+        ────────────────────────────────────────────────────────────────────── */}
         <AnimatePresence>
           {activeProduct && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm h-full w-full z-50"
-            />
-          )}
-        </AnimatePresence>
-        <AnimatePresence>
-          {activeProduct ? (
-            <div className="fixed inset-0 grid place-items-center z-[100] p-4">
-              <motion.button
-                key={`button-${activeProduct.id}-${id}`}
-                layout
+            <>
+              {/* Backdrop */}
+              <motion.div
+                key="backdrop"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0, transition: { duration: 0.05 } }}
-                className="flex absolute top-4 right-4 lg:hidden items-center justify-center bg-white rounded-full h-10 w-10 z-10"
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={() => setActiveProduct(null)}
+                className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 cursor-pointer"
+              />
+
+              {/* Close button – always visible, sits above the card */}
+              <motion.button
+                key={`close-${activeProduct.id}-${id}`}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.1 } }}
+                className="fixed top-4 right-4 z-[110] flex items-center justify-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full h-10 w-10 cursor-pointer"
                 onClick={() => setActiveProduct(null)}
               >
                 <CloseIcon />
               </motion.button>
-              <motion.div
-                layoutId={`card-${activeProduct.id}-${id}`}
-                ref={modalRef}
-                className="w-full max-w-[600px] h-full md:h-fit md:max-h-[90%] flex flex-col bg-gray-900 border border-gray-800 sm:rounded-3xl overflow-hidden"
-              >
-                <motion.div layoutId={`image-${activeProduct.id}-${id}`} className="relative h-80 lg:h-96">
-                  {activeProduct.image_url ? (
-                    <Image
-                      src={activeProduct.image_url}
-                      alt={activeProduct.name}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 600px"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gray-800">
-                      <div className="w-24 h-24 rounded-2xl bg-red-500/10 flex items-center justify-center">
-                        <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                        </svg>
-                      </div>
-                    </div>
-                  )}
-                </motion.div>
 
-                <div className="flex-1 overflow-y-auto">
-                  <div className="flex justify-between items-start p-6">
-                    <div className="flex-1">
-                      <motion.h3
-                        layoutId={`title-${activeProduct.id}-${id}`}
-                        className="text-2xl font-bold text-white mb-2"
-                      >
-                        {activeProduct.name}
-                      </motion.h3>
-                      {activeProduct.category && (
-                        <span className="inline-block px-3 py-1 text-xs font-medium bg-red-500/20 text-red-400 rounded-full mb-3">
-                          {categoryLabels[activeProduct.category] || activeProduct.category}
-                        </span>
-                      )}
-                      {activeProduct.price && (
-                        <motion.p
-                          layoutId={`price-${activeProduct.id}-${id}`}
-                          className="text-xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent"
-                        >
-                          KES {activeProduct.price.toLocaleString()}
-                        </motion.p>
-                      )}
-                    </div>
-                    <motion.button
-                      layout
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      onClick={scrollToContact}
-                      className="px-6 py-3 text-sm rounded-full font-bold bg-gradient-to-r from-red-500 to-orange-500 text-white hover:shadow-lg hover:shadow-red-500/25 transition-all ml-4"
-                    >
-                      Inquire
-                    </motion.button>
-                  </div>
-                  <div className="px-6 pb-6">
-                    <motion.div
-                      layout
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      className="text-gray-300 text-base leading-relaxed"
-                    >
-                      {activeProduct.description ? (
-                        <p>{activeProduct.description}</p>
-                      ) : (
-                        <p className="text-gray-500">No description available.</p>
-                      )}
-                      <div className="mt-6 pt-6 border-t border-gray-800">
-                        <p className="text-sm text-gray-400">
-                          Interested in this product? Click the &quot;Inquire&quot; button to get in touch with us for more information and pricing details.
-                        </p>
+              {/* Card wrapper – pointer-events-none so backdrop clicks pass through the empty space */}
+              <div className="fixed inset-0 grid place-items-center z-[100] p-4 pointer-events-none">
+                <motion.div
+                  layoutId={`card-${activeProduct.id}-${id}`}
+                  // Stop clicks on the card from reaching the backdrop
+                  onClick={(e) => e.stopPropagation()}
+                  className="w-full max-w-[600px] max-h-[90dvh] flex flex-col bg-gray-900 border border-gray-800 rounded-2xl sm:rounded-3xl overflow-hidden pointer-events-auto cursor-default"
+                >
+                  {/* Image */}
+                  <motion.div layoutId={`image-${activeProduct.id}-${id}`} className="relative h-64 sm:h-80 lg:h-96 flex-shrink-0">
+                    {activeProduct.image_url ? (
+                      <Image
+                        src={activeProduct.image_url}
+                        alt={activeProduct.name}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 600px"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-800">
+                        <div className="w-24 h-24 rounded-2xl bg-red-500/10 flex items-center justify-center">
+                          <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                          </svg>
+                        </div>
                       </div>
-                    </motion.div>
+                    )}
+                  </motion.div>
+
+                  {/* Scrollable content */}
+                  <div className="flex-1 overflow-y-auto overscroll-contain">
+                    <div className="flex justify-between items-start p-5 sm:p-6">
+                      <div className="flex-1 min-w-0">
+                        <motion.h3
+                          layoutId={`title-${activeProduct.id}-${id}`}
+                          className="text-xl sm:text-2xl font-bold text-white mb-2"
+                        >
+                          {activeProduct.name}
+                        </motion.h3>
+                        {activeProduct.category && (
+                          <span className="inline-block px-3 py-1 text-xs font-medium bg-red-500/20 text-red-400 rounded-full mb-3">
+                            {categoryLabels[activeProduct.category] || activeProduct.category}
+                          </span>
+                        )}
+                        {activeProduct.price && (
+                          <motion.p
+                            layoutId={`price-${activeProduct.id}-${id}`}
+                            className="text-xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent"
+                          >
+                            KES {activeProduct.price.toLocaleString()}
+                          </motion.p>
+                        )}
+                        {activeProduct.installation_cost && (
+                          <p className="text-sm text-gray-400 mt-1">
+                            Installation: KES {activeProduct.installation_cost.toLocaleString()}
+                          </p>
+                        )}
+                      </div>
+                      <motion.button
+                        layout
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={scrollToContact}
+                        className="px-5 py-2.5 text-sm rounded-full font-bold bg-gradient-to-r from-red-500 to-orange-500 text-white hover:shadow-lg hover:shadow-red-500/25 transition-all ml-4 flex-shrink-0"
+                      >
+                        Inquire
+                      </motion.button>
+                    </div>
+
+                    <div className="px-5 sm:px-6 pb-6">
+                      <motion.div
+                        layout
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="text-gray-300 text-base leading-relaxed"
+                      >
+                        {activeProduct.description ? (
+                          <p>{activeProduct.description}</p>
+                        ) : (
+                          <p className="text-gray-500">No description available.</p>
+                        )}
+                        <div className="mt-6 pt-6 border-t border-gray-800">
+                          <p className="text-sm text-gray-400">
+                            Interested in this product? Click the &quot;Inquire&quot; button to get in touch with us for more information and pricing details.
+                          </p>
+                        </div>
+                      </motion.div>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            </div>
-          ) : null}
+                </motion.div>
+              </div>
+            </>
+          )}
         </AnimatePresence>
 
         {/* Products Grid */}
-        <div
-          className={`transition-all duration-700 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
+        <div className={`transition-all duration-700 delay-200 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
           {visibleProducts.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4 lg:gap-5 xl:gap-6">
               {visibleProducts.map((product, idx) => (
@@ -416,11 +389,7 @@ export default function Products() {
                   onClick={() => setActiveProduct(product)}
                   initial={{ opacity: 0, y: 30, scale: 0.95 }}
                   animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : {}}
-                  transition={{ 
-                    duration: 0.4, 
-                    delay: idx * 0.05,
-                    ease: [0.25, 0.46, 0.45, 0.94]
-                  }}
+                  transition={{ duration: 0.4, delay: idx * 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
                   whileHover={{ y: -8, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="group bg-gray-900/50 rounded-lg sm:rounded-xl md:rounded-2xl border border-gray-800/50 overflow-hidden hover:border-red-500/30 transition-all duration-500 w-full cursor-pointer"
@@ -451,12 +420,10 @@ export default function Products() {
                       </div>
                     )}
 
-                    {/* Gradient overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                    {/* Category Badge */}
                     {product.category && (
-                      <div className="absolute top-1.5 left-1.5 sm:top-2 md:top-3 left-2 sm:left-3 z-10">
+                      <div className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 md:top-3 md:left-3 z-10">
                         <span className="px-1.5 py-0.5 sm:px-2 md:px-2.5 sm:py-0.5 md:py-1 text-[9px] xs:text-[10px] sm:text-xs font-medium bg-black/80 backdrop-blur-sm rounded-full text-gray-300 border border-white/10">
                           {categoryLabels[product.category] || product.category}
                         </span>
@@ -469,13 +436,9 @@ export default function Products() {
                     <motion.h3 layoutId={`title-${product.id}-${id}`} className="text-xs xs:text-sm sm:text-base font-semibold text-white mb-1 line-clamp-1 leading-tight">
                       {product.name}
                     </motion.h3>
-                    
-                    {/* Description */}
                     <p className="hidden sm:block text-gray-500 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2 leading-relaxed">
                       {product.description}
                     </p>
-
-                    {/* Price */}
                     <div className="flex flex-col gap-1">
                       {product.price ? (
                         <motion.p
@@ -485,11 +448,8 @@ export default function Products() {
                           KES {product.price.toLocaleString()}
                         </motion.p>
                       ) : (
-                        <p className="text-[10px] xs:text-xs sm:text-sm text-gray-400 truncate">
-                          Request price
-                        </p>
+                        <p className="text-[10px] xs:text-xs sm:text-sm text-gray-400 truncate">Request price</p>
                       )}
-
                       {product.installation_cost && (
                         <p className="text-[10px] xs:text-xs sm:text-sm text-gray-400">
                           Installation: KES {product.installation_cost.toLocaleString()}
@@ -501,28 +461,15 @@ export default function Products() {
               ))}
             </div>
           ) : (
-            // Empty State
             <div className="text-center py-10 sm:py-16 md:py-20 px-4">
               <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-gray-900 flex items-center justify-center mx-auto mb-3 sm:mb-4 md:mb-6">
-                <svg
-                  className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-gray-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                  />
+                <svg className="w-7 h-7 sm:w-8 sm:h-8 md:w-10 md:h-10 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
               </div>
               <h3 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-2">No products found</h3>
               <p className="text-gray-500 text-xs sm:text-sm md:text-base max-w-md mx-auto">
-                {activeCategory === "all"
-                  ? "No products available yet."
-                  : "No products in this category."}
+                {activeCategory === "all" ? "No products available yet." : "No products in this category."}
               </p>
               {activeCategory !== "all" && (
                 <button
@@ -538,11 +485,7 @@ export default function Products() {
 
         {/* CTA */}
         {visibleProducts.length > 0 && (
-          <div
-            className={`text-center mt-6 sm:mt-8 md:mt-10 lg:mt-12 transition-all duration-700 delay-500 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
+          <div className={`text-center mt-6 sm:mt-8 md:mt-10 lg:mt-12 transition-all duration-700 delay-500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <button
               onClick={scrollToContact}
               className="group inline-flex items-center gap-2 px-4 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs sm:text-sm md:text-base font-semibold rounded-lg sm:rounded-xl hover:shadow-lg hover:shadow-red-500/25 transition-all min-h-[44px] touch-manipulation"
@@ -555,33 +498,18 @@ export default function Products() {
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </button>
           </div>
         )}
       </div>
 
-      {/* Hide scrollbar but keep functionality */}
       <style jsx>{`
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .snap-x {
-          scroll-snap-type: x mandatory;
-        }
-        .snap-start {
-          scroll-snap-align: start;
-        }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .snap-x { scroll-snap-type: x mandatory; }
+        .snap-start { scroll-snap-align: start; }
       `}</style>
     </section>
   );
