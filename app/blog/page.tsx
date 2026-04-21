@@ -27,15 +27,15 @@ export default function BlogPage() {
           {blogPosts.map((post) => (
             <div
               key={post.slug}
-              className="bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="group bg-zinc-900/80 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300"
             >
               {/* Image */}
-              <div className="relative h-64 w-full">
+              <div className="relative aspect-[16/10] w-full bg-zinc-950/80">
                 <Image
                   src={post.image}
                   alt={post.title}
                   fill
-                  className="object-cover"
+                  className="object-contain p-2 transition-transform duration-300 group-hover:scale-[1.02]"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>

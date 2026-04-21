@@ -62,8 +62,9 @@ export default function HomePage() {
         <Testimonials />
         <FAQ />
         <Benefits />
-        <Contact />
         <Blog />
+        <Contact />
+        
       </main>
 
       <Footer />
