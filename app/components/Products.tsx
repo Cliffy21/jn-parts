@@ -68,8 +68,8 @@ export const mockProducts: Product[] = [
     name: "Car Wraps",
     category: "exterior",
     description: "High-grade wraps that transform your car's look with showroom-level precision.",
-    price: 90000,
-    installation_cost: 80000,
+    price: 45000,
+    installation_cost: 20000,
     image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770748058/chameleon_v9o7gd.jpg",
   },
   {

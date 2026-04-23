@@ -5,6 +5,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/app/components/theme-provider";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://jncaraccessories.com"),
   title: "JN Car Accessories | Premium Car Wraps, PPF & Detailing",
   description:
     "JN Car Accessories offers high-quality car wraps, paint protection films, detailing, and premium automotive accessories.",
@@ -26,6 +27,24 @@ export const metadata: Metadata = {
     siteName: "JN Car Accessories",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "JN Parts & Accessories",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "JN Car Accessories | Premium Car Wraps, PPF & Detailing",
+    description:
+      "JN Car Accessories offers high-quality car wraps, paint protection films, detailing, and premium automotive accessories.",
+    images: ["/opengraph-image"],
+  },
+  alternates: {
+    canonical: "/",
   },
 
   icons: {
@@ -43,10 +62,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="canonical" href="https://jncaraccessories.com" />
-      </head>
-
       <body className="bg-black text-white overflow-x-hidden antialiased">
         <ThemeProvider
           attribute="class"

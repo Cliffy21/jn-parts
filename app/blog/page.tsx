@@ -1,10 +1,34 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { blogPosts } from "../components/blogData";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Blog | JN Parts",
   description: "Car tips, upgrade guides, and expert advice from the JN Parts team in Kenya.",
+  alternates: {
+    canonical: "/blog",
+  },
+  openGraph: {
+    title: "Blog | JN Parts",
+    description: "Car tips, upgrade guides, and expert advice from the JN Parts team in Kenya.",
+    url: "https://jncaraccessories.com/blog",
+    type: "website",
+    images: [
+      {
+        url: "/blog/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "JN Parts Blog",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog | JN Parts",
+    description: "Car tips, upgrade guides, and expert advice from the JN Parts team in Kenya.",
+    images: ["/blog/opengraph-image"],
+  },
 };
 
 export default function BlogPage() {

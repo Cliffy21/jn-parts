@@ -44,9 +44,29 @@ async function fetchProducts() {
 export default function HomePage() {
   // COMMENTED OUT: Was fetching products from backend
   // const products = await fetchProducts();
+  const localBusinessJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AutoPartsStore",
+    name: "JN Parts & Accessories",
+    url: "https://jncaraccessories.com",
+    email: "jncarparts301@gmail.com",
+    telephone: "+254741509156",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Kirinyaga Road",
+      addressLocality: "Nairobi",
+      addressCountry: "KE",
+    },
+    openingHours: ["Mo-Fr 08:00-18:00", "Sa 09:00-17:00"],
+    areaServed: "Kenya",
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+      />
       <Header />
       <ScrollProgressBeam />
       <main className="pt-20">

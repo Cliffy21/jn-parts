@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { blogPosts } from "../../components/blogData";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 interface Props {
   params: {
@@ -15,12 +16,29 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = blogPosts.find((p) => p.slug === params.slug);
   if (!post) return {};
+  const ogImageUrl = `/blog/${post.slug}/opengraph-image`;
   return {
     title: `${post.title} | JN Parts`,
     description: post.metaDescription,
+    alternates: {
+      canonical: `/blog/${post.slug}`,
+    },
+    openGraph: {
+      title: `${post.title} | JN Parts`,
+      description: post.metaDescription,
+      url: `https://jncaraccessories.com/blog/${post.slug}`,
+      type: "article",
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${post.title} | JN Parts`,
+      description: post.metaDescription,
+      images: [ogImageUrl],
+    },
   };
 }
 
@@ -28,6 +46,26 @@ export default function BlogPostPage({ params }: Props) {
   const post = blogPosts.find((p) => p.slug === params.slug);
 
   if (!post) return notFound();
+  const publishedDateIso = new Date(post.date).toISOString();
+
+  const blogPostingJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.metaDescription,
+    image: [post.image],
+    datePublished: publishedDateIso,
+    dateModified: publishedDateIso,
+    mainEntityOfPage: `https://jncaraccessories.com/blog/${post.slug}`,
+    author: {
+      "@type": "Organization",
+      name: "JN Parts & Accessories",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "JN Parts & Accessories",
+    },
+  };
 
   return (
     <main className="min-h-screen bg-zinc-950 py-16 px-6">
@@ -45,6 +83,10 @@ export default function BlogPostPage({ params }: Props) {
         <h1 className="text-3xl font-bold text-white mb-3 leading-snug">
           {post.title}
         </h1>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+        />
 
         {/* Date */}
         <p className="text-xs text-zinc-500 mb-8">{post.date}</p>
