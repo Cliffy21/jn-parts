@@ -54,10 +54,11 @@ export default function Image({ params }: Props) {
           }}
         />
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px", zIndex: 2 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div
             style={{
-              display: "inline-flex",
+              display: "flex",
+              alignSelf: "flex-start",
               padding: "8px 14px",
               borderRadius: "9999px",
               fontSize: "23px",
@@ -74,7 +75,7 @@ export default function Image({ params }: Props) {
           <div style={{ fontSize: "30px", color: "#d4d4d8", maxWidth: "940px", lineHeight: 1.3 }}>{description}</div>
         </div>
 
-        <div style={{ fontSize: "28px", color: "#a1a1aa", zIndex: 2 }}>jncaraccessories.com/blog</div>
+        <div style={{ fontSize: "28px", color: "#a1a1aa" }}>jncaraccessories.com/blog</div>
       </div>
     ),
     size,

@@ -47,10 +47,11 @@ export default function Image() {
           }}
         />
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "16px", zIndex: 2 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           <div
             style={{
-              display: "inline-flex",
+              display: "flex",
+              alignSelf: "flex-start",
               padding: "8px 14px",
               borderRadius: "9999px",
               fontSize: "24px",
@@ -76,7 +77,6 @@ export default function Image() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            zIndex: 2,
           }}
         >
           <div style={{ fontSize: "28px", color: "#a1a1aa" }}>jncaraccessories.com</div>
