@@ -9,6 +9,7 @@ export interface BlogPost {
     intro: string;
     sections: {
       heading: string;
+      subheading: string;
       text: string;
     }[];
   };
@@ -28,18 +29,22 @@ export const blogPosts: BlogPost[] = [
       sections: [
         {
           heading: "What Affects the Cost of a Car Wrap in Kenya?",
+          subheading: "Key factors that determine your final price",
           text: "The price of a car wrap in Kenya depends on three main things: the size of your vehicle, the type of vinyl material used, and the complexity of the installation. A small hatchback like a Toyota Vitz will cost significantly less than a full-size SUV like a Prado or Land Cruiser. The finish you choose — matte, gloss, satin, chrome, or color-shift — also affects the price since premium materials cost more.",
         },
         {
           heading: "Car Wrap Price Ranges in Kenya",
+          subheading: "What to expect for different vehicle sizes",
           text: "For a small car such as a Vitz or Demio, a full wrap typically starts from KES 35,000 to KES 60,000. A medium sedan like a Premio or Allion ranges from KES 60,000 to KES 90,000. Large SUVs and 4x4s such as a Prado or Harrier can range from KES 90,000 to KES 150,000 or more depending on the material. These prices include both the vinyl material and professional installation.",
         },
         {
           heading: "Matte vs Gloss vs Color-Shift Wraps",
+          subheading: "Choosing the right finish for your car",
           text: "Matte wraps give your car a flat, premium look and are very popular in Kenya right now. Gloss wraps mimic a fresh paint job and are great for making colors pop. Color-shift or chameleon wraps are the most premium option — they change color depending on the angle and lighting, making your car truly one of a kind. Each finish has a different price point, with color-shift being the most expensive.",
         },
         {
           heading: "Is a Car Wrap Worth It in Kenya?",
+          subheading: "Value for money compared to a full respray",
           text: "Absolutely. A quality wrap protects your factory paint from UV rays, minor scratches, and road debris. When you eventually remove it, your original paint is preserved underneath — which is great for resale value. Compared to a full respray which can cost KES 80,000 to KES 200,000 and is permanent, a wrap gives you more flexibility at a competitive price.",
         },
       ],
@@ -58,18 +63,22 @@ export const blogPosts: BlogPost[] = [
       sections: [
         {
           heading: "How Does a 360 Degree Camera Work?",
+          subheading: "Understanding the technology behind surround view",
           text: "A 360 degree camera system uses four wide-angle cameras mounted at the front, rear, and both sides of your vehicle. The footage from all four cameras is stitched together in real time to create a single bird's eye view displayed on your car screen. This makes parking, reversing, and navigating tight spaces significantly easier and safer.",
         },
         {
           heading: "Benefits of a 360 Camera in Kenya",
+          subheading: "Why it makes sense for Kenyan roads and parking",
           text: "Kenyan roads present unique challenges — from potholed side streets to chaotic parking areas in malls and markets. A 360 camera helps you avoid curb damage, spot pedestrians and boda bodas approaching from blind spots, and park confidently in tight spaces. It also acts as a deterrent against parking lot scratches and minor collisions that are very common in busy urban areas.",
         },
         {
           heading: "How Much Does a 360 Camera Cost in Kenya?",
+          subheading: "Price ranges for different system types",
           text: "The cost of a 360 degree camera installation in Kenya typically ranges from KES 25,000 to KES 70,000 depending on the quality of the system and your vehicle type. Entry-level systems offer basic surround view while premium systems include night vision, dynamic parking guidelines, and integration with your factory screen. Professional installation is highly recommended to ensure all cameras are perfectly calibrated.",
         },
         {
           heading: "Which Cars Can Get a 360 Camera Installed?",
+          subheading: "Compatible with almost any vehicle make or model",
           text: "Almost any car can have a 360 degree camera system installed regardless of make or model. Whether you drive a Toyota, Subaru, Mercedes, or any other brand, an aftermarket 360 system can be fitted professionally. The installation typically takes one day and does not require any permanent modifications to your vehicle.",
         },
       ],
