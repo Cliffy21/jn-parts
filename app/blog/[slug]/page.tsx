@@ -115,9 +115,12 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="space-y-8">
           {post.body.sections.map((section, index) => (
             <div key={index}>
-              <h2 className="text-xl font-semibold text-white mb-3">
+              <h2 className="text-xl font-semibold text-white mb-2">
                 {section.heading}
               </h2>
+              <h3 className="text-base font-medium text-orange-400 mb-3">
+                {section.subheading}
+              </h3>
               <p className="text-zinc-400 text-sm leading-relaxed">
                 {section.text}
               </p>
