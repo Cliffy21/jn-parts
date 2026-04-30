@@ -1,20 +1,20 @@
-# JN Parts - Change Summary (2026-04-23)
+ JN Parts - Change Summary (2026-04-23)
 
 This file summarizes the work completed today so collaborators can review quickly before merge/deploy.
 
-## Scope Completed
+Scope Completed
 
-### 1) Blog and Navigation UX
+1) Blog and Navigation UX
 - Blog cards were improved to reduce awkward image cropping and better match the site palette.
 - Header navigation was updated so `OUR BLOG` points to the blog section.
 - Mobile navigation was cleaned so blog CTA is visible and usable on mobile.
 
-### 2) Contact Section Polish
+ 2) Contact Section Polish
 - Removed icons from form input fields (cleaner form UI).
 - Improved input styling consistency (spacing, borders, focus states).
 - Reworked submit button styling with visible brand hover/focus/active behavior.
 
-### 3) SEO Foundation Implemented
+ 3) SEO Foundation Implemented
 - Added typed sitemap generation with valid routes only (`/`, `/blog`, `/blog/[slug]`).
 - Added robots metadata route (`/robots.txt`) with sitemap reference.
 - Added canonical handling via Next metadata.
@@ -23,22 +23,22 @@ This file summarizes the work completed today so collaborators can review quickl
   - `AutoPartsStore` JSON-LD on home page.
   - `BlogPosting` JSON-LD on blog post pages.
 
-### 4) Social Preview Assets (Dynamic OG Images)
+ 4) Social Preview Assets (Dynamic OG Images)
 - Added Next OG image routes for:
   - Site-wide preview
   - Blog listing preview
   - Per-blog-post preview (dynamic title/description from slug)
 
-### 5) Favicon + PWA Icon Assets
+5) Favicon + PWA Icon Assets
 - Generated favicon and app icon files from existing logo.
 - Added `site.webmanifest`.
 - Note: these files live in `public/` and require `public/` to be tracked (remove `/public/` from `.gitignore`, which you already plan to do).
 
 ---
 
-## Files Modified (current working changes)
+ Files Modified (current working changes)
 
-### Modified
+ Modified
 - `app/layout.tsx`
 - `app/page.tsx`
 - `app/sitemap.ts`
@@ -46,13 +46,13 @@ This file summarizes the work completed today so collaborators can review quickl
 - `app/blog/[slug]/page.tsx`
 - `app/components/Products.tsx` *(pricing update in mock product data)*
 
-### Added
+ Added
 - `app/robots.ts`
 - `app/opengraph-image.tsx`
 - `app/blog/opengraph-image.tsx`
 - `app/blog/[slug]/opengraph-image.tsx`
 
-### Public assets added (once `public/` is no longer ignored)
+Public assets added (once `public/` is no longer ignored)
 - `public/favicon.ico`
 - `public/favicon-16x16.png`
 - `public/favicon-32x32.png`
@@ -63,9 +63,9 @@ This file summarizes the work completed today so collaborators can review quickl
 
 ---
 
-## Key Code Snippets
+ Key Code Snippets
 
-### Sitemap now includes real pages + dynamic blog slugs
+ Sitemap now includes real pages + dynamic blog slugs
 
 ```ts
 import type { MetadataRoute } from "next";
@@ -88,7 +88,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 }
 ```
 
-### Robots metadata route
+ Robots metadata route
 
 ```ts
 import type { MetadataRoute } from "next";
@@ -104,7 +104,7 @@ export default function robots(): MetadataRoute.Robots {
 }
 ```
 
-### Global metadata now includes canonical + OG/Twitter image
+ Global metadata now includes canonical + OG/Twitter image
 
 ```ts
 export const metadata: Metadata = {
@@ -130,7 +130,7 @@ export const metadata: Metadata = {
 };
 ```
 
-### Blog post metadata uses per-slug social image route
+ Blog post metadata uses per-slug social image route
 
 ```ts
 const ogImageUrl = `/blog/${post.slug}/opengraph-image`;
@@ -149,7 +149,7 @@ return {
 };
 ```
 
-### Structured data (home + blog posts)
+Structured data (home + blog posts)
 
 ```ts
 // app/page.tsx (AutoPartsStore JSON-LD)
@@ -180,7 +180,7 @@ const blogPostingJsonLd = {
 
 ---
 
-## Push Checklist
+Push Checklist
 - [ ] Remove `/public/` from `.gitignore`
 - [ ] Confirm `public/favicon.ico` is reachable locally (`/favicon.ico`)
 - [ ] Run final smoke test on `/`, `/blog`, `/blog/[slug]`

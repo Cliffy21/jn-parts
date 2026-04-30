@@ -36,6 +36,14 @@ export default function BlogPage() {
     <main className="min-h-screen bg-zinc-950 py-16 px-6">
       <div className="max-w-6xl mx-auto">
 
+        {/* Back to Home */}
+        <Link
+          href="/"
+          className="inline-block mb-8 text-sm text-orange-400 hover:text-orange-300 transition-colors duration-200"
+        >
+          ← Back to Home
+        </Link>
+
         {/* Page Header */}
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold text-white mb-3">
@@ -70,6 +78,9 @@ export default function BlogPage() {
                 <h2 className="text-xl font-semibold text-white leading-snug">
                   {post.title}
                 </h2>
+                <p className="text-sm text-zinc-300 leading-relaxed">
+                  {post.metaDescription}
+                </p>
                 <p className="text-sm text-zinc-400 leading-relaxed">
                   {post.summary}
                 </p>

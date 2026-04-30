@@ -85,7 +85,9 @@ export default async function BlogPostPage({ params }: Props) {
         <h1 className="text-3xl font-bold text-white mb-3 leading-snug">
           {post.title}
         </h1>
-
+        <p className="text-zinc-300 text-base leading-relaxed mb-4">
+          {post.metaDescription}
+        </p>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
