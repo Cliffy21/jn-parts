@@ -41,7 +41,7 @@ export const blogPosts: BlogPost[] = [
     slug: "how-much-does-it-cost-to-wrap-a-car-in-kenya",
     title: "How Much Does It Cost to Wrap a Car in Kenya?",
     date: "May 2, 2025",
-    image: "/images/blog/car-wrap-kenya.jpg", // update to your actual image path
+    image: "https://res.cloudinary.com/dgumz7yur/image/upload/v1776519758/WhatsApp_Image_2026-04-18_at_16.35.44_d2umjt.jpg", // update to your actual image path
     metaDescription:
       "Looking for car wrap prices in Kenya? Learn full wrap and PPF costs, key pricing factors, and where to get professional services in Nairobi.",
     summary:
