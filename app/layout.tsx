@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
+import { Barlow } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/app/components/theme-provider";
+
+const barlow = Barlow({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-barlow",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jncaraccessories.com"),
@@ -62,7 +69,9 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-black text-white overflow-x-hidden antialiased">
+      <body
+        className={`${barlow.className} ${barlow.variable} bg-black text-white overflow-x-hidden antialiased`}
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
