@@ -4,6 +4,11 @@ import { useState, useEffect, useId } from "react";
 import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 
+interface ProductFeature {
+  title: string;
+  description: string;
+}
+
 interface Product {
   id: string;
   name: string;
@@ -12,6 +17,8 @@ interface Product {
   price?: number;
   image_url?: string;
   installation_cost?: number;
+  features?: ProductFeature[];
+  cta?: string;
 }
 
 const CloseIcon = () => {
@@ -48,103 +55,217 @@ export const categoryLabels: Record<string, string> = {
 export const mockProducts: Product[] = [
   {
     id: "1",
-    name: "Chameleon tints",
+    name: "Chameleon Window Tint",
     category: "exterior",
-    description: "Color-shifting tints that react to light, heat and angle-bold by day, subtle by night.",
+    description:
+      "Driving under the Kenyan sun can turn your car into a furnace. Our chameleon window tint doesn't just enhance your car's look — it delivers powerful heat rejection, UV protection, and glare reduction, creating a cooler, more private driving experience in Nairobi and beyond.",
     price: 13000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/chamelion_tints-13k_windscreen_ng0nwi.jpg",
+    image_url:
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/chamelion_tints-13k_windscreen_ng0nwi.jpg",
+    features: [
+      { title: "Dynamic Color-Shift Finish", description: "Premium chameleon car tint with an iridescent look" },
+      { title: "Advanced Heat Rejection", description: "Blocks infrared rays for cooler car interiors" },
+      { title: "99% UV Protection", description: "Prevents dashboard fading and leather cracking" },
+      { title: "Anti-Glare Technology", description: "Improves visibility during sunrise and sunset driving" },
+      { title: "Maximum Privacy", description: "High-performance privacy window tint for cars" },
+    ],
+    cta: "Upgrade your car window tint in Kenya today for style, comfort, and protection.",
   },
   {
     id: "8",
-    name: "Wraps + material",
+    name: "Wraps + Material",
     category: "exterior",
-    description: "Full vinyl wrap materials engineered for flawless coverage and long-lasting finish.",
+    description:
+      "Transform your car without repainting. Our premium car wrap vinyl gives you full creative control with a durable, paint-like finish perfect for DIY enthusiasts and professional installers in Kenya.",
     price: 50000,
     installation_cost: 90000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/Wraps-material-50k_gyrmk5.jpg",
+    image_url:
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/Wraps-material-50k_gyrmk5.jpg",
+    features: [
+      { title: "Air-Release Technology", description: "Bubble-free vinyl wrap installation" },
+      { title: "High-Stretch Conformability", description: "Ideal for curves, bumpers, and edges" },
+      { title: "Paint-Safe Adhesive", description: "Protects factory paint and allows clean removal" },
+      { title: "Weather-Shield Coating", description: "Resists UV, rain, and dirt buildup" },
+      { title: "Multiple Finishes", description: "Matte, gloss, satin, and metallic car wraps" },
+    ],
+    cta: "Start your car wrapping project in Nairobi with professional-grade vinyl.",
   },
   {
     id: "10",
     name: "Car Wraps",
     category: "exterior",
-    description: "High-grade wraps that transform your car's look with showroom-level precision.",
+    description:
+      "Upgrade your vehicle with our high-performance car wrap product — engineered to deliver a sleek, paint-like finish while protecting your original paintwork. Designed for durability and visual impact, it's the perfect solution for both personal styling and business branding in Kenya.",
     price: 45000,
     installation_cost: 20000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770748058/chameleon_v9o7gd.jpg",
+    image_url:
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770748058/chameleon_v9o7gd.jpg",
+    features: [
+      { title: "Advanced Edge Technology", description: "Ensures smooth, seamless edges for a factory-quality look" },
+      { title: "Flexible Coverage Options", description: "Available for full wraps or selected areas like roofs, mirrors, and bonnets" },
+      { title: "Protective Film Layer", description: "Helps prevent scratches, fading, and minor abrasions" },
+      { title: "Custom Design Compatibility", description: "Supports unique colors, textures, and branded graphics" },
+      { title: "Safe Removal System", description: "Leaves no residue, keeping your original paint intact" },
+    ],
+    cta: "Get your premium car wrap product in Nairobi today and redefine your vehicle's style with confidence.",
   },
   {
     id: "2",
-    name: "D-series bulbs",
+    name: "D-Series HID Bulbs",
     category: "exterior",
-    description: "High-intensity D-series bulbs designed for crisp visibility and sharper road presence.",
+    description:
+      "Upgrade your night driving with powerful HID headlight bulbs designed for maximum clarity and safety on Kenyan roads.",
     price: 5000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/Dseries_bulbs-5k_u0egzk.jpg",
+    image_url:
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770744115/Dseries_bulbs-5k_u0egzk.jpg",
+    features: [
+      { title: "6000K Diamond White Light", description: "Modern bright white headlights" },
+      { title: "Anti-UV Quartz Glass", description: "Prevents headlight fogging" },
+      { title: "OEM Precision Beam", description: "Safe alignment without glare" },
+      { title: "Long Lifespan", description: "3000+ hours durability" },
+    ],
+    cta: "Upgrade to D-Series HID bulbs in Kenya for brighter, safer night driving.",
   },
   {
     id: "3",
-    name: "Service parts",
+    name: "Engine Service Parts",
     category: "engine",
-    description: "Essential service components that keep your engine running smooth and reliable.",
+    description:
+      "Keep your engine performing at its best with high-quality car service parts in Kenya designed for durability and efficiency.",
     price: 15000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770745107/Service_parts-15k_p9pydu.jpg",
+    image_url:
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770745107/Service_parts-15k_p9pydu.jpg",
+    features: [
+      { title: "OEM-Spec Fitment", description: "Perfect compatibility with your vehicle" },
+      { title: "High-Efficiency Filters", description: "Protect engine from contaminants" },
+      { title: "Heat-Resistant Materials", description: "Long-lasting performance under high temperatures" },
+      { title: "Improved Fuel Efficiency", description: "Optimized engine operation" },
+    ],
+    cta: "Shop reliable auto parts in Nairobi and keep your engine running smoothly.",
   },
   {
     id: "4",
-    name: "Projectors",
+    name: "Headlight Projectors",
     category: "exterior",
-    description: "Precision projector lenses that deliver a sharp beam pattern and premium night vision.",
+    description:
+      "Experience sharper visibility with projector headlights that focus light exactly where you need it for safer night driving.",
     price: 20000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744120/projectors_bdh94o.jpg",
+    image_url:
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770744120/projectors_bdh94o.jpg",
+    features: [
+      { title: "Sharp Cut-Off Line", description: "Prevents blinding other drivers" },
+      { title: "Clear Glass Optics", description: "Maximum brightness output" },
+      { title: "Bi-Xenon Function", description: "Dual low/high beam performance" },
+      { title: "Universal Fit", description: "Compatible with most vehicles" },
+    ],
+    cta: "Upgrade to projector headlights at JN Car Accessories for superior visibility.",
   },
   {
     id: "5",
-    name: "Car logos",
+    name: "Car Emblems / Logos",
     category: "exterior",
-    description: "Sleek replacement logos crafted to elevate your car's exterior identity.",
+    description:
+      "Restore your vehicle's original look with high-quality car badges and emblems designed for a perfect fit and long-lasting shine.",
     price: 5000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/car_logos-5000_znc3cz.jpg",
+    image_url:
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/car_logos-5000_znc3cz.jpg",
+    features: [
+      { title: "Durable Chrome Finish", description: "Resistant to fading and peeling" },
+      { title: "Vehicle-Specific Design", description: "Perfect alignment for your make and model" },
+      { title: "Strong Adhesive Backing", description: "Secure, long-lasting installation" },
+      { title: "Instant Visual Upgrade", description: "Enhances exterior appearance immediately" },
+    ],
+    cta: "Replace your car logo and refresh your vehicle's look.",
   },
   {
     id: "6",
-    name: "Colored-PPFs",
+    name: "Colored PPF",
     category: "exterior",
-    description: "Advanced colored PPFs that protect paint while making a bold visual statement.",
+    description:
+      "Combine style and protection with colored PPF, offering the beauty of a wrap and the durability of protective film.",
     price: 80000,
     installation_cost: 200000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744119/wraps_gf5tmc.jpg",
+    image_url:
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770744119/wraps_gf5tmc.jpg",
+    features: [
+      { title: "Self-Healing Technology", description: "Removes scratches with heat" },
+      { title: "Impact Resistance", description: "Protects against stone chips" },
+      { title: "High-Gloss Finish", description: "Deep, premium look" },
+      { title: "Hydrophobic Coating", description: "Easy cleaning and maintenance" },
+      { title: "Stain Resistance", description: "Protection from environmental contaminants" },
+    ],
+    cta: "Install colored PPF in Nairobi for ultimate style and protection.",
   },
   {
     id: "7",
     name: "Paint Protection Films",
     category: "exterior",
-    description: "Invisible protection films that shield your paint from scratches, chips, and wear.",
+    description:
+      "Protect your car's original paint with clear PPF — an invisible shield against scratches, chips, and environmental damage.",
     price: 60000,
     installation_cost: 180000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770745732/WhatsApp_Image_2026-02-10_at_17.22.17_l0yidr.jpg",
+    image_url:
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770745732/WhatsApp_Image_2026-02-10_at_17.22.17_l0yidr.jpg",
+    features: [
+      { title: "Invisible Finish", description: "Maintains your factory look" },
+      { title: "Stone Chip Protection", description: "Prevents road damage" },
+      { title: "UV Resistant", description: "Non-yellowing clarity over time" },
+      { title: "Self-Healing Surface", description: "Fixes minor scratches automatically" },
+      { title: "Boosts Resale Value", description: "Keeps paint in top condition" },
+    ],
+    cta: "Protect your car with clear PPF installation in Kenya today.",
   },
   {
     id: "9",
-    name: "Car bulbs",
+    name: "Car Bulbs",
     category: "exterior",
-    description: "High-output bulbs built for clean illumination and enhanced road clarity.",
+    description:
+      "Restore your visibility with high-output car bulbs designed for reliability and improved night driving.",
     price: 6000,
-    image_url: "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/bulbs-6k_p5buev.jpg",
+    image_url:
+      "https://res.cloudinary.com/das3x6ips/image/upload/v1770744114/bulbs-6k_p5buev.jpg",
+    features: [
+      { title: "Bright Light Output", description: "Enhanced road visibility" },
+      { title: "Durable Filament", description: "Vibration-resistant for long life" },
+      { title: "Plug-and-Play Installation", description: "Easy drop-in replacement" },
+      { title: "Error-Free Performance", description: "No dashboard warnings" },
+    ],
+    cta: "Buy car bulbs at JN Car Accessories for safer, clearer driving.",
   },
   {
     id: "11",
     name: "360° Camera System",
     category: "electronics",
-    description: "Surround-view camera system delivering a real-time 360° perspective when parking.",
+    description:
+      "Park with confidence using a 360-degree car camera system that gives you a full bird's-eye view of your surroundings.",
     price: 25000,
-    image_url: "https://res.cloudinary.com/dgumz7yur/image/upload/v1767652210/laser_jets_g3ug1t.jpg",
+    image_url:
+      "https://res.cloudinary.com/dgumz7yur/image/upload/v1767652210/laser_jets_g3ug1t.jpg",
+    features: [
+      { title: "Full Surround View", description: "Eliminates blind spots entirely" },
+      { title: "HD Night Vision", description: "Clear image in low light conditions" },
+      { title: "Smart Activation", description: "Auto-on with reverse gear" },
+      { title: "Universal Compatibility", description: "Works with most car models" },
+    ],
+    cta: "Install a 360° camera system and park stress-free.",
   },
   {
     id: "12",
-    name: "Performance ECU Tune",
+    name: "ECU Performance Tune",
     category: "electronics",
-    description: "Performance ECU tuning that unlocks smoother power delivery and sharper response.",
+    description:
+      "Unlock hidden power with professional ECU tuning in Kenya, improving throttle response, torque, and efficiency.",
     price: 45000,
-    image_url: "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?w=800&q=80",
+    image_url:
+      "https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?w=800&q=80",
+    features: [
+      { title: "Faster Throttle Response", description: "Immediate acceleration improvement" },
+      { title: "Increased Horsepower", description: "More power across the RPM range" },
+      { title: "Better Fuel Efficiency", description: "Optimized fuel mapping" },
+      { title: "Safe Tuning", description: "Performed within engine limits" },
+      { title: "Reversible Software", description: "Return to stock settings anytime" },
+    ],
+    cta: "Get your ECU remap and transform your driving experience.",
   },
 ];
 
@@ -155,7 +276,6 @@ export default function Products() {
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
   const id = useId();
 
-  // ─── Intersection observer for entrance animation ──────────────────────────
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) setIsVisible(true); },
@@ -166,7 +286,6 @@ export default function Products() {
     return () => observer.disconnect();
   }, []);
 
-  // ─── Lock body scroll & ESC key while modal is open ───────────────────────
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") setActiveProduct(null);
@@ -246,15 +365,7 @@ export default function Products() {
           </div>
         </div>
 
-        {/* ─── MODAL ──────────────────────────────────────────────────────────
-            Key fix:
-            • Single <AnimatePresence> wraps BOTH backdrop and card.
-            • Backdrop has onClick={() => setActiveProduct(null)}.
-            • Card has onClick={(e) => e.stopPropagation()} so tapping the
-              card itself doesn't bubble up to the backdrop and close it.
-            • Card uses max-h-[90dvh] instead of h-full so there IS a visible
-              backdrop around the card on mobile for users to tap.
-        ────────────────────────────────────────────────────────────────────── */}
+        {/* MODAL */}
         <AnimatePresence>
           {activeProduct && (
             <>
@@ -269,7 +380,7 @@ export default function Products() {
                 className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 cursor-pointer"
               />
 
-              {/* Close button – always visible, sits above the card */}
+              {/* Close button */}
               <motion.button
                 key={`close-${activeProduct.id}-${id}`}
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -281,23 +392,22 @@ export default function Products() {
                 <CloseIcon />
               </motion.button>
 
-              {/* Card wrapper – pointer-events-none so backdrop clicks pass through the empty space */}
+              {/* Card wrapper */}
               <div className="fixed inset-0 grid place-items-center z-[100] p-4 pointer-events-none">
                 <motion.div
                   layoutId={`card-${activeProduct.id}-${id}`}
-                  // Stop clicks on the card from reaching the backdrop
                   onClick={(e) => e.stopPropagation()}
-                  className="w-full max-w-[600px] max-h-[90dvh] flex flex-col bg-gray-900 border border-gray-800 rounded-2xl sm:rounded-3xl overflow-hidden pointer-events-auto cursor-default"
+                  className="w-full max-w-[640px] max-h-[90dvh] flex flex-col bg-gray-900 border border-gray-800 rounded-2xl sm:rounded-3xl overflow-hidden pointer-events-auto cursor-default"
                 >
                   {/* Image */}
-                  <motion.div layoutId={`image-${activeProduct.id}-${id}`} className="relative h-64 sm:h-80 lg:h-96 flex-shrink-0">
+                  <motion.div layoutId={`image-${activeProduct.id}-${id}`} className="relative h-52 sm:h-64 lg:h-72 flex-shrink-0">
                     {activeProduct.image_url ? (
                       <Image
                         src={activeProduct.image_url}
                         alt={activeProduct.name}
                         fill
                         className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 600px"
+                        sizes="(max-width: 768px) 100vw, 640px"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gray-800">
@@ -308,12 +418,15 @@ export default function Products() {
                         </div>
                       </div>
                     )}
+                    {/* Gradient overlay for better text contrast */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
                   </motion.div>
 
                   {/* Scrollable content */}
                   <div className="flex-1 overflow-y-auto overscroll-contain">
-                    <div className="flex justify-between items-start p-5 sm:p-6">
-                      <div className="flex-1 min-w-0">
+                    {/* Title + price + actions */}
+                    <div className="flex justify-between items-start p-5 sm:p-6 pb-4">
+                      <div className="flex-1 min-w-0 pr-4">
                         <motion.h3
                           layoutId={`title-${activeProduct.id}-${id}`}
                           className="text-xl sm:text-2xl font-bold text-white mb-2"
@@ -325,19 +438,21 @@ export default function Products() {
                             {categoryLabels[activeProduct.category] || activeProduct.category}
                           </span>
                         )}
-                        {activeProduct.price && (
-                          <motion.p
-                            layoutId={`price-${activeProduct.id}-${id}`}
-                            className="text-xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent"
-                          >
-                            KES {activeProduct.price.toLocaleString()}
-                          </motion.p>
-                        )}
-                        {activeProduct.installation_cost && (
-                          <p className="text-sm text-gray-400 mt-1">
-                            Installation: KES {activeProduct.installation_cost.toLocaleString()}
-                          </p>
-                        )}
+                        <div className="flex flex-col gap-0.5">
+                          {activeProduct.price && (
+                            <motion.p
+                              layoutId={`price-${activeProduct.id}-${id}`}
+                              className="text-xl font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent"
+                            >
+                              KES {activeProduct.price.toLocaleString()}
+                            </motion.p>
+                          )}
+                          {activeProduct.installation_cost && (
+                            <p className="text-sm text-gray-400">
+                              Installation: KES {activeProduct.installation_cost.toLocaleString()}
+                            </p>
+                          )}
+                        </div>
                       </div>
                       <motion.button
                         layout
@@ -345,32 +460,73 @@ export default function Products() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={scrollToContact}
-                        className="px-5 py-2.5 text-sm rounded-full font-bold bg-gradient-to-r from-red-500 to-orange-500 text-white hover:shadow-lg hover:shadow-red-500/25 transition-all ml-4 flex-shrink-0"
+                        className="px-5 py-2.5 text-sm rounded-full font-bold bg-gradient-to-r from-red-500 to-orange-500 text-white hover:shadow-lg hover:shadow-red-500/25 transition-all flex-shrink-0"
                       >
                         Inquire
                       </motion.button>
                     </div>
 
-                    <div className="px-5 sm:px-6 pb-6">
+                    {/* Description */}
+                    <div className="px-5 sm:px-6">
+                      <motion.p
+                        layout
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="text-gray-300 text-sm sm:text-base leading-relaxed"
+                      >
+                        {activeProduct.description || "No description available."}
+                      </motion.p>
+                    </div>
+
+                    {/* Features */}
+                    {activeProduct.features && activeProduct.features.length > 0 && (
                       <motion.div
                         layout
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="text-gray-300 text-base leading-relaxed"
+                        className="px-5 sm:px-6 mt-5"
                       >
-                        {activeProduct.description ? (
-                          <p>{activeProduct.description}</p>
-                        ) : (
-                          <p className="text-gray-500">No description available.</p>
-                        )}
-                        <div className="mt-6 pt-6 border-t border-gray-800">
-                          <p className="text-sm text-gray-400">
-                            Interested in this product? Click the &quot;Inquire&quot; button to get in touch with us for more information and pricing details.
-                          </p>
-                        </div>
+                        <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
+                          Features &amp; Benefits
+                        </h4>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {activeProduct.features.map((feature, i) => (
+                            <li
+                              key={i}
+                              className="flex items-start gap-2.5 bg-gray-800/60 rounded-xl p-3 border border-gray-700/50"
+                            >
+                              <span className="mt-0.5 flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
+                                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                </svg>
+                              </span>
+                              <div>
+                                <p className="text-white text-xs sm:text-sm font-semibold leading-tight">{feature.title}</p>
+                                <p className="text-gray-400 text-xs leading-snug mt-0.5">{feature.description}</p>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
                       </motion.div>
-                    </div>
+                    )}
+
+                    {/* CTA banner */}
+                    {activeProduct.cta && (
+                      <motion.div
+                        layout
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="mx-5 sm:mx-6 mt-5 mb-5 sm:mb-6 p-4 rounded-xl bg-gradient-to-r from-red-500/10 to-orange-500/10 border border-red-500/20"
+                      >
+                        <p className="text-sm text-gray-300 leading-relaxed">
+                          <span className="text-red-400 font-semibold">💡 </span>
+                          {activeProduct.cta}
+                        </p>
+                      </motion.div>
+                    )}
                   </div>
                 </motion.div>
               </div>
@@ -426,6 +582,15 @@ export default function Products() {
                       <div className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 md:top-3 md:left-3 z-10">
                         <span className="px-1.5 py-0.5 sm:px-2 md:px-2.5 sm:py-0.5 md:py-1 text-[9px] xs:text-[10px] sm:text-xs font-medium bg-black/80 backdrop-blur-sm rounded-full text-gray-300 border border-white/10">
                           {categoryLabels[product.category] || product.category}
+                        </span>
+                      </div>
+                    )}
+
+                    {/* Feature count badge */}
+                    {product.features && product.features.length > 0 && (
+                      <div className="absolute bottom-1.5 right-1.5 sm:bottom-2 sm:right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span className="px-1.5 py-0.5 text-[9px] sm:text-[10px] font-medium bg-red-500/80 backdrop-blur-sm rounded-full text-white">
+                          {product.features.length} features
                         </span>
                       </div>
                     )}
