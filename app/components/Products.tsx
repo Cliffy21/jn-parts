@@ -52,6 +52,16 @@ export const categoryLabels: Record<string, string> = {
   electronics: "Electronics",
 };
 
+const productAnchorIds: Record<string, string> = {
+  "10": "product-car-wraps",
+  "7": "product-ppf",
+  "6": "product-colored-ppf",
+};
+
+function getProductAnchorId(productId: string) {
+  return productAnchorIds[productId];
+}
+
 export const mockProducts: Product[] = [
   {
     id: "1",
@@ -542,13 +552,14 @@ export default function Products() {
                 <motion.div
                   layoutId={`card-${product.id}-${id}`}
                   key={product.id}
+                  id={getProductAnchorId(product.id)}
                   onClick={() => setActiveProduct(product)}
                   initial={{ opacity: 0, y: 30, scale: 0.95 }}
                   animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : {}}
                   transition={{ duration: 0.4, delay: idx * 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
                   whileHover={{ y: -8, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group bg-gray-900/50 rounded-lg sm:rounded-xl md:rounded-2xl border border-gray-800/50 overflow-hidden hover:border-red-500/30 transition-all duration-500 w-full cursor-pointer"
+                  className="group bg-gray-900/50 rounded-lg sm:rounded-xl md:rounded-2xl border border-gray-800/50 overflow-hidden hover:border-red-500/30 transition-all duration-500 w-full cursor-pointer scroll-mt-28"
                 >
                   {/* Image */}
                   <motion.div layoutId={`image-${product.id}-${id}`} className="relative aspect-square bg-gray-800 overflow-hidden">
