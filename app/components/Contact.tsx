@@ -28,21 +28,46 @@ export default function Contact() {
     coordinates: { lat: -1.281939, lng: 36.830821 },
   };
 
+  const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function sanitizeField(value: FormDataEntryValue | null, maxLength: number) {
+    return String(value ?? "")
+      .trim()
+      .slice(0, maxLength);
+  }
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
     const form = e.currentTarget;
     const formData = new FormData(form);
+
+    // Honeypot: bots often fill hidden fields
+    if (sanitizeField(formData.get("website"), 200)) {
+      return;
+    }
+
     const data = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      phone: formData.get("phone") as string,
-      vehicle_model: formData.get("vehicle_model") as string,
-      message: formData.get("message") as string,
+      name: sanitizeField(formData.get("name"), 120),
+      email: sanitizeField(formData.get("email"), 254),
+      phone: sanitizeField(formData.get("phone"), 30),
+      vehicle_model: sanitizeField(formData.get("vehicle_model"), 120),
+      message: sanitizeField(formData.get("message"), 2000),
     };
 
     if (!data.name || !data.email || !data.message) {
       setError("Please fill in all required fields.");
+      return;
+    }
+
+    if (!EMAIL_PATTERN.test(data.email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+    if (!accessKey) {
+      setError("Contact form is not configured. Please call or email us directly.");
       return;
     }
 
@@ -52,7 +77,7 @@ export default function Contact() {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+          access_key: accessKey,
           subject: `New Quote Request from ${data.name}`,
           from_name: "JN Parts Website",
           to_email: "jncarparts301@gmail.com",
@@ -169,6 +194,15 @@ export default function Contact() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-5">
+                {/* Honeypot — hidden from users, catches bots */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute left-[-9999px] h-0 w-0 opacity-0 pointer-events-none"
+                />
                 {/* Row 1: Name & Email */}
                 <div className="grid sm:grid-cols-2 gap-5">
                   <div>
@@ -177,6 +211,7 @@ export default function Contact() {
                       id="name"
                       name="name"
                       required
+                      maxLength={120}
                       placeholder="Full Name"
                       className={inputClasses("name")}
                       onFocus={() => setFocusedField("name")}
@@ -189,6 +224,7 @@ export default function Contact() {
                       id="email"
                       name="email"
                       required
+                      maxLength={254}
                       placeholder="Email Address"
                       className={inputClasses("email")}
                       onFocus={() => setFocusedField("email")}

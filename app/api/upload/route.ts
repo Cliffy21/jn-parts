@@ -1,5 +1,10 @@
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest, NextResponse } from "next/server";
+import {
+  isUploadAuthorized,
+  validateImageBuffer,
+  validateImageFile,
+} from "@/lib/upload-security";
 
 // Configure Cloudinary
 cloudinary.config({
@@ -24,6 +29,10 @@ function validateConfig(): { valid: boolean; error?: string } {
 
 export async function POST(req: NextRequest) {
   try {
+    if (!isUploadAuthorized(req)) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     // Validate configuration
     const configCheck = validateConfig();
     if (!configCheck.valid) {
@@ -44,26 +53,20 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
-    if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json(
-        { error: "Invalid file type. Only images are allowed." },
-        { status: 400 }
-      );
-    }
-
-    // Validate file size (max 10MB)
-    const maxSize = 10 * 1024 * 1024; // 10MB
-    if (file.size > maxSize) {
-      return NextResponse.json(
-        { error: "File size exceeds 10MB limit" },
-        { status: 400 }
-      );
+    const fileValidation = validateImageFile(file);
+    if (!fileValidation.ok) {
+      return NextResponse.json({ error: fileValidation.error }, { status: 400 });
     }
 
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+
+    if (!validateImageBuffer(buffer)) {
+      return NextResponse.json(
+        { error: "File content does not match a supported image format." },
+        { status: 400 }
+      );
+    }
 
     interface CloudinaryUploadResult {
       secure_url: string;

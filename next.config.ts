@@ -16,11 +16,21 @@ const nextConfig: NextConfig = {
     ],
   },
 
+  // Only proxy a dedicated backend path in local dev (never hijack /api/upload).
   async rewrites() {
+    if (process.env.NODE_ENV !== "development") {
+      return [];
+    }
+
+    const backendUrl = process.env.BACKEND_API_URL;
+    if (!backendUrl) {
+      return [];
+    }
+
     return [
       {
-        source: "/api/:path*",
-        destination: "http://localhost:5000/:path*",
+        source: "/api/backend/:path*",
+        destination: `${backendUrl}/api/:path*`,
       },
     ];
   },

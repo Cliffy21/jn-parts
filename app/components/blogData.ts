@@ -15,28 +15,8 @@ export interface BlogPost {
   };
   conclusion: string;
 }
-// app/components/blogData.ts  (add or replace the car-wrap entry)
-
-export interface BlogPost {
-  slug: string;
-  title: string;
-  date: string;
-  image: string;
-  metaDescription: string;
-  summary: string;
-  body: {
-    intro: string;
-    sections: {
-      heading: string;
-      subheading: string;
-      text: string;
-    }[];
-  };
-  conclusion: string;
-}
 
 export const blogPosts: BlogPost[] = [
-  // ... your other posts ...
   {
     slug: "how-much-does-it-cost-to-wrap-a-car-in-kenya",
     title: "How Much Does It Cost to Wrap a Car in Kenya?",

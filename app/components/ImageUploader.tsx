@@ -39,6 +39,8 @@ export default function ImageUploader({
     setUploading(true);
     
     try {
+      // Upload requires server-side Authorization header (UPLOAD_API_SECRET).
+      // Do not expose the secret in client code — proxy through your admin backend.
       const res = await fetch("/api/upload", {
         method: "POST",
         body: formData,
