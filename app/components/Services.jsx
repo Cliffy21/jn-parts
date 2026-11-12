@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useInViewAnimation } from "@/app/hooks/useInViewAnimation";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 export default function Services() {
@@ -80,23 +80,26 @@ export default function Services() {
     <section 
       id="services" 
       ref={sectionRef}
-      className="py-24 sm:py-28 px-4 bg-gradient-to-b from-black via-gray-900 to-black relative overflow-hidden"
+      className="relative overflow-hidden bg-[#050a10] py-24 sm:py-28 px-4"
     >
-      {/* Animated background elements */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-orange-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute left-1/4 top-12 h-72 w-72 rounded-full bg-red-500/15 blur-3xl" />
+        <div className="absolute bottom-8 right-12 h-80 w-80 rounded-full bg-white/5 blur-3xl" />
       </div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="mx-auto max-w-7xl relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mb-12 text-center"
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-center mb-4">
-            Our{" "}
-            <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-red-400/90">
+            Premium Service Suite
+          </p>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white">
+            Performance-driven{" "}
+            <span className="bg-gradient-to-r from-red-500 via-red-400 to-white bg-clip-text text-transparent">
               Services
             </span>
           </h2>
@@ -104,31 +107,31 @@ export default function Services() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            className="text-center text-gray-400 mb-16 text-lg sm:text-xl"
+            className="mx-auto mt-5 max-w-2xl text-base text-gray-300 sm:text-lg"
           >
-            We connect you with the best service providers
+            From premium wraps and protection to lighting and detailing, every service is built to elevate your vehicle and your driving experience.
           </motion.p>
         </motion.div>
         
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((service, idx) => (
             <motion.div
               key={service.title}
-              initial={{ opacity: 0, y: 50, scale: 0.9 }}
-              animate={isVisible ? { opacity: 1, y: 0, scale: 1 } : {}}
+              initial={{ opacity: 0, y: 40 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ 
-                duration: 0.5, 
-                delay: idx * 0.1,
+                duration: 0.45, 
+                delay: idx * 0.08,
                 ease: [0.25, 0.46, 0.45, 0.94]
               }}
-              whileHover={{ y: -8, scale: 1.02 }}
-              className="group relative bg-gradient-to-br from-gray-900 to-black rounded-2xl border border-white/10 hover:border-red-500/50 overflow-hidden transition-all duration-500 hover:shadow-2xl hover:shadow-red-500/30"
+              whileHover={{ y: -8 }}
+              className="group relative overflow-hidden rounded-[1.5rem] border border-white/10 bg-gradient-to-b from-[#0f141b] to-[#090d12] shadow-[0_30px_80px_rgba(0,0,0,0.45)] transition-all duration-500 hover:border-red-500/40 hover:shadow-[0_24px_70px_rgba(239,68,68,0.18)]"
             >
-              {/* Image with zoom effect */}
-              <div className="relative h-48 sm:h-56 overflow-hidden">
+              <div className="relative h-52 overflow-hidden">
                 <motion.div
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.08 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="h-full w-full"
                 >
                   <Image
                     src={service.image}
@@ -138,62 +141,49 @@ export default function Services() {
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                 </motion.div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent pointer-events-none" />
-                
-                {/* Animated overlay on hover */}
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/20 to-orange-500/0"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050a10] via-[#050a10]/25 to-transparent" />
+                <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/40 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">
+                  Service
+                </div>
               </div>
               
-              {/* Content */}
-              <div className="p-6">
+              <div className="space-y-3 p-5 sm:p-6">
                 <motion.h3 
-                  className="text-xl font-bold mb-2 group-hover:text-red-500 transition-colors duration-300"
-                  whileHover={{ x: 4 }}
+                  className="text-xl font-bold text-white transition-colors duration-300 group-hover:text-red-400"
+                  whileHover={{ x: 3 }}
                 >
                   {service.title}
                 </motion.h3>
-                <p className="text-gray-400 text-sm leading-relaxed">
+                <p className="text-sm leading-relaxed text-gray-300">
                   {service.desc}
                 </p>
+                <div className="flex items-center gap-2 text-sm font-medium text-red-400">
+                  <span>Learn more</span>
+                  <svg
+                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </div>
               </div>
-              
-              {/* Hover indicator with animation */}
-              <motion.div 
-                className="absolute top-4 right-4 w-10 h-10 rounded-full bg-gradient-to-br from-red-500/20 to-orange-500/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                whileHover={{ rotate: 45, scale: 1.1 }}
-              >
-                <svg
-                  className="w-5 h-5 text-red-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </motion.div>
 
-              {/* Shimmer effect */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full"
-                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/5 to-red-500/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
               />
             </motion.div>
           ))}
         </div>
         
-        {/* CTA with enhanced animation */}
         <motion.div 
-          className="text-center mt-16"
+          className="mt-16 text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={isVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
@@ -204,25 +194,14 @@ export default function Services() {
                 .getElementById("contact")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
-            whileHover={{ scale: 1.05, y: -2 }}
+            whileHover={{ scale: 1.03, y: -2 }}
             whileTap={{ scale: 0.98 }}
-            className="relative bg-gradient-to-r from-red-500 to-orange-500 px-8 py-4 rounded-full text-lg font-bold shadow-lg hover:shadow-red-500/50 overflow-hidden group"
+            className="relative overflow-hidden rounded-full bg-gradient-to-r from-red-600 via-red-500 to-red-400 px-8 py-3.5 text-base font-bold text-white shadow-[0_12px_30px_rgba(239,68,68,0.35)] transition-all duration-300 hover:shadow-[0_18px_35px_rgba(239,68,68,0.45)]"
           >
             <span className="relative z-10 flex items-center gap-2">
-              Book Your Service Now
-              <motion.span
-                animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                →
-              </motion.span>
+              Book Your Service
+              <span aria-hidden="true">→</span>
             </span>
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500"
-              initial={{ x: "-100%" }}
-              whileHover={{ x: "0%" }}
-              transition={{ duration: 0.3 }}
-            />
           </motion.button>
         </motion.div>
       </div>

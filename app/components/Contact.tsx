@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import { useState } from "react";
 import {
@@ -23,7 +23,7 @@ export default function Contact() {
     name: "JN Parts & Accessories",
     address: "Kirinyaga Road, Nairobi, Kenya",
     phone: "+254 741 509 156",
-    email: "jncarparts301@gmail.com",
+    email: "jncarparts1@gmail.com",
     hours: "Mon-Fri: 8AM-6PM, Sat: 9AM-5PM",
     coordinates: { lat: -1.281939, lng: 36.830821 },
   };
@@ -31,21 +31,18 @@ export default function Contact() {
   const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function sanitizeField(value: FormDataEntryValue | null, maxLength: number) {
-    return String(value ?? "")
-      .trim()
-      .slice(0, maxLength);
+    return String(value ?? "").trim().slice(0, maxLength);
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError(null);
+
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    // Honeypot: bots often fill hidden fields
-    if (sanitizeField(formData.get("website"), 200)) {
-      return;
-    }
+    // Honeypot: bots often fill hidden fields.
+    if (sanitizeField(formData.get("website"), 200)) return;
 
     const data = {
       name: sanitizeField(formData.get("name"), 120),
@@ -73,26 +70,32 @@ export default function Contact() {
 
     try {
       setSubmitting(true);
+
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify({
           access_key: accessKey,
           subject: `New Quote Request from ${data.name}`,
           from_name: "JN Parts Website",
-          to_email: "jncarparts301@gmail.com",
+          to_email: "jncarparts1@gmail.com",
           ...data,
         }),
       });
+
       const result = await response.json();
+
       if (result.success) {
         setShowSuccess(true);
         form.reset();
-        setTimeout(() => setShowSuccess(false), 5000);
+        window.setTimeout(() => setShowSuccess(false), 5000);
       } else {
         throw new Error(result.message || "Failed to send message");
       }
-    } catch (err) {
+    } catch {
       setError("Failed to send message. Please try again.");
     } finally {
       setSubmitting(false);
@@ -102,225 +105,341 @@ export default function Contact() {
   const openInGoogleMaps = () => {
     window.open(
       `https://www.google.com/maps/search/?api=1&query=${businessInfo.coordinates.lat},${businessInfo.coordinates.lng}`,
-      "_blank"
+      "_blank",
+      "noopener,noreferrer"
     );
   };
 
   const inputClasses = (fieldName: string) =>
-    `w-full px-4 py-3.5 bg-zinc-950/60 border border-zinc-800 rounded-xl text-white text-[15px] placeholder:text-zinc-500 transition-all duration-300 outline-none ${
+    `w-full rounded-lg border bg-[#08090B] px-4 py-4 text-sm text-[#F7F8FD] placeholder:text-[#777D86] outline-none transition-all duration-200 ${
       focusedField === fieldName
-        ? "border-red-500/50 bg-zinc-900/80 shadow-[0_0_0_3px_rgba(239,68,68,0.12)]"
-        : "hover:border-zinc-700"
+        ? "border-[#FF1616] ring-2 ring-[#FF1616]/15"
+        : "border-[#34373D] hover:border-[#555B64]"
     }`;
 
-  return (
-    <section id="contact" className="relative bg-zinc-950 py-20 md:py-28">
-      {/* Subtle grid pattern background */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
+  const contactItems = [
+    {
+      icon: MapPin,
+      label: "Visit our showroom",
+      value: businessInfo.address,
+      href: null,
+    },
+    {
+      icon: PhoneCall,
+      label: "Call us",
+      value: businessInfo.phone,
+      href: `tel:${businessInfo.phone.replace(/\s/g, "")}`,
+    },
+    {
+      icon: Mail,
+      label: "Email",
+      value: businessInfo.email,
+      href: `mailto:${businessInfo.email}`,
+    },
+    {
+      icon: Clock,
+      label: "Business hours",
+      value: businessInfo.hours,
+      href: null,
+    },
+  ];
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16 md:mb-20">
- 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight">
-            Request a <span className="text-red-500">Free Quote</span>
+  return (
+    <section
+      id="contact"
+      className="relative overflow-hidden bg-[#08090B] py-24 text-[#F7F8FD] sm:py-28"
+    >
+      {/* Restrained background detail */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,22,22,0.055),transparent_48%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* Section heading */}
+        <div className="mx-auto mb-14 max-w-3xl text-center md:mb-16">
+          <div className="mb-5 flex items-center justify-center gap-3">
+            <span className="h-px w-8 bg-[#FF1616]" />
+            <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-[#FF1616] sm:text-xs">
+              Get in touch
+            </p>
+            <span className="h-px w-8 bg-[#FF1616]" />
+          </div>
+
+          <h2 className="text-4xl font-extrabold tracking-[-0.045em] text-[#F7F8FD] sm:text-5xl md:text-6xl">
+            Let&apos;s get your{" "}
+            <span className="text-[#FF1616]">vehicle</span> sorted.
           </h2>
-          <p className="text-zinc-400 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-            Visit our Nairobi showroom or send us your requirements. We&apos;ll get back to you within 24 hours.
+
+          <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-[#A5A8AE] sm:text-base">
+            Visit our Nairobi showroom or tell us what you need. Whether it&apos;s
+            an upgrade, protection or an accessory, our team is ready to help.
           </p>
         </div>
 
-        {/* NEW LAYOUT: Stacked on mobile, side-by-side on desktop but reversed */}
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12">
-          
-          {/* LEFT COLUMN: Contact Info & Map (takes 5/12 on desktop) */}
-          <div className="lg:col-span-5 space-y-6 order-2 lg:order-1">
+        <div className="grid gap-7 lg:grid-cols-12 lg:gap-8">
+          {/* Contact details and map */}
+          <div className="space-y-5 lg:col-span-5">
             {/* Map */}
-            <div className="relative rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-900/30 h-[300px] sm:h-[350px] lg:h-[320px]">
-              <Map center={[businessInfo.coordinates.lng, businessInfo.coordinates.lat]} zoom={14}>
+            <div className="group relative h-[290px] overflow-hidden rounded-xl border border-[#34373D] bg-[#15171B] sm:h-[340px]">
+              <Map
+                center={[
+                  businessInfo.coordinates.lng,
+                  businessInfo.coordinates.lat,
+                ]}
+                zoom={14}
+              >
                 <MapControls />
               </Map>
-              <button
-                onClick={openInGoogleMaps}
-                className="absolute bottom-4 right-4 flex items-center gap-2 px-4 py-2.5 bg-zinc-950/90 backdrop-blur-sm border border-zinc-700 rounded-lg text-sm font-medium text-white hover:border-red-500/50 hover:text-red-400 transition-all duration-300 group"
-              >
-                <Navigation className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                Open in Maps
-              </button>
+
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#08090B]/65 via-transparent to-transparent" />
+
+              <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-3">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/65">
+                    Find us
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-white">
+                    Kirinyaga Road, Nairobi
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={openInGoogleMaps}
+                  className="inline-flex shrink-0 items-center gap-2 border border-white/20 bg-[#08090B]/90 px-4 py-3 text-xs font-bold text-white backdrop-blur-md transition-colors hover:border-[#FF1616] hover:bg-[#FF1616]"
+                >
+                  <Navigation className="h-4 w-4" />
+                  Directions
+                </button>
+              </div>
             </div>
 
-            {/* Info Cards - 2x2 Grid */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {[
-                { icon: MapPin, label: "Address", value: businessInfo.address, href: null },
-                { icon: PhoneCall, label: "Phone", value: businessInfo.phone, href: `tel:${businessInfo.phone}` },
-                { icon: Mail, label: "Email", value: businessInfo.email, href: `mailto:${businessInfo.email}` },
-                { icon: Clock, label: "Hours", value: businessInfo.hours, href: null },
-              ].map((item) => (
+            {/* Contact information */}
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {contactItems.map((item) => (
                 <div
                   key={item.label}
-                  className="group p-4 sm:p-5 rounded-xl bg-zinc-900/40 border border-zinc-800/60 hover:border-zinc-700 hover:bg-zinc-900/60 transition-all duration-300"
+                  className="group min-h-[132px] rounded-xl border border-[#34373D] bg-[#15171B] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#FF1616]/60 hover:bg-[#191C21]"
                 >
-                  <item.icon className="w-5 h-5 text-zinc-500 group-hover:text-red-500 transition-colors mb-3" />
-                  <p className="text-xs text-zinc-500 uppercase tracking-wider font-medium mb-1">{item.label}</p>
+                  <div className="mb-5 flex h-9 w-9 items-center justify-center border border-[#FF1616]/25 bg-[#FF1616]/[0.07]">
+                    <item.icon className="h-4 w-4 text-[#FF1616]" />
+                  </div>
+
+                  <p className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#858B94]">
+                    {item.label}
+                  </p>
+
                   {item.href ? (
                     <a
                       href={item.href}
-                      className="text-sm text-zinc-300 hover:text-red-400 transition-colors break-all leading-snug"
+                      className="break-words text-sm leading-6 text-[#F7F8FD] transition-colors hover:text-[#FF1616]"
                     >
                       {item.value}
                     </a>
                   ) : (
-                    <p className="text-sm text-zinc-300 leading-snug">{item.value}</p>
+                    <p className="text-sm leading-6 text-[#F7F8FD]">
+                      {item.value}
+                    </p>
                   )}
                 </div>
               ))}
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Form (takes 7/12 on desktop) */}
-          <div className="lg:col-span-7 order-1 lg:order-2">
-            <div className="relative rounded-2xl border border-zinc-800/80 bg-zinc-900/40 backdrop-blur-sm p-6 sm:p-8 lg:p-10 shadow-xl shadow-black/20 overflow-hidden">
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-red-500/[0.04] via-transparent to-orange-500/[0.05]" />
+          {/* Enquiry form */}
+          <div className="lg:col-span-7">
+            <div className="relative h-full overflow-hidden rounded-xl border border-[#34373D] bg-[#15171B] p-6 sm:p-8 lg:p-10">
+              <div className="pointer-events-none absolute right-0 top-0 h-48 w-48 rounded-full bg-[#FF1616]/[0.045] blur-3xl" />
+
               <div className="relative">
-              <div className="flex items-start gap-3 mb-8 pb-6 border-b border-zinc-800/80">
-                <div className="p-2.5 bg-red-500/10 rounded-xl ring-1 ring-red-500/20">
-                  <Send className="w-5 h-5 text-red-500" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white tracking-tight">Send Enquiry</h3>
-                  <p className="text-sm text-zinc-400 mt-0.5">Fill in your details below — we&apos;ll reply as soon as we can.</p>
-                </div>
-              </div>
-
-              <form onSubmit={handleSubmit} className="space-y-5">
-                {/* Honeypot — hidden from users, catches bots */}
-                <input
-                  type="text"
-                  name="website"
-                  tabIndex={-1}
-                  autoComplete="off"
-                  aria-hidden="true"
-                  className="absolute left-[-9999px] h-0 w-0 opacity-0 pointer-events-none"
-                />
-                {/* Row 1: Name & Email */}
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <div>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      maxLength={120}
-                      placeholder="Full Name"
-                      className={inputClasses("name")}
-                      onFocus={() => setFocusedField("name")}
-                      onBlur={() => setFocusedField(null)}
-                    />
+                <div className="mb-8 flex items-start gap-4 border-b border-[#34373D] pb-7">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center border border-[#FF1616]/30 bg-[#FF1616]/10">
+                    <Send className="h-5 w-5 text-[#FF1616]" />
                   </div>
+
                   <div>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      maxLength={254}
-                      placeholder="Email Address"
-                      className={inputClasses("email")}
-                      onFocus={() => setFocusedField("email")}
-                      onBlur={() => setFocusedField(null)}
-                    />
+                    <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#FF1616]">
+                      Start a conversation
+                    </p>
+                    <h3 className="text-2xl font-bold tracking-tight text-[#F7F8FD]">
+                      Request a free quote
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-[#A5A8AE]">
+                      Share a few details and we&apos;ll help you find the right
+                      solution for your vehicle.
+                    </p>
                   </div>
                 </div>
 
-                {/* Row 2: Phone & Vehicle */}
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <div>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      required
-                      placeholder="Phone Number"
-                      className={inputClasses("phone")}
-                      onFocus={() => setFocusedField("phone")}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                  </div>
-                  <div>
-                    <input
-                      type="text"
-                      id="vehicle_model"
-                      name="vehicle_model"
-                      placeholder="Vehicle Model (Optional)"
-                      className={inputClasses("vehicle")}
-                      onFocus={() => setFocusedField("vehicle")}
-                      onBlur={() => setFocusedField(null)}
-                    />
-                  </div>
-                </div>
-
-                {/* Message */}
-                <div>
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    rows={5}
-                    placeholder="Tell us what parts or services you need..."
-                    className={`${inputClasses("message")} resize-y min-h-[140px] leading-relaxed`}
-                    onFocus={() => setFocusedField("message")}
-                    onBlur={() => setFocusedField(null)}
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Honeypot field */}
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    className="pointer-events-none absolute left-[-9999px] h-0 w-0 opacity-0"
                   />
-                </div>
 
-                {/* Error */}
-                {error && (
-                  <div className="flex items-start gap-3 p-4 rounded-xl bg-red-950/30 border border-red-900/50 text-red-300 text-sm">
-                    <div className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 shrink-0" />
-                    {error}
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <div>
+                      <label
+                        htmlFor="name"
+                        className="mb-2 block text-[10px] font-bold uppercase tracking-[0.14em] text-[#A5A8AE]"
+                      >
+                        Full name <span className="text-[#FF1616]">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        maxLength={120}
+                        autoComplete="name"
+                        placeholder="Your full name"
+                        className={inputClasses("name")}
+                        onFocus={() => setFocusedField("name")}
+                        onBlur={() => setFocusedField(null)}
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="email"
+                        className="mb-2 block text-[10px] font-bold uppercase tracking-[0.14em] text-[#A5A8AE]"
+                      >
+                        Email address <span className="text-[#FF1616]">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        maxLength={254}
+                        autoComplete="email"
+                        placeholder="you@example.com"
+                        className={inputClasses("email")}
+                        onFocus={() => setFocusedField("email")}
+                        onBlur={() => setFocusedField(null)}
+                      />
+                    </div>
                   </div>
-                )}
 
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="w-full group relative flex items-center justify-center gap-2.5 px-6 py-4 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-red-600 via-red-500 to-orange-500 shadow-lg shadow-red-900/30 ring-1 ring-white/10 transition-all duration-300 hover:shadow-xl hover:shadow-red-500/25 hover:brightness-[1.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-950 active:scale-[0.99] disabled:opacity-55 disabled:cursor-not-allowed disabled:hover:brightness-100 disabled:hover:shadow-lg"
-                >
-                  {submitting ? (
-                    <>
-                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin shrink-0" />
-                      Processing…
-                    </>
-                  ) : (
-                    <>
-                      Request Free Quote
-                      <ArrowRight className="w-4 h-4 shrink-0 group-hover:translate-x-0.5 transition-transform duration-300" />
-                    </>
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <div>
+                      <label
+                        htmlFor="phone"
+                        className="mb-2 block text-[10px] font-bold uppercase tracking-[0.14em] text-[#A5A8AE]"
+                      >
+                        Phone number
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        maxLength={30}
+                        autoComplete="tel"
+                        placeholder="+254 ..."
+                        className={inputClasses("phone")}
+                        onFocus={() => setFocusedField("phone")}
+                        onBlur={() => setFocusedField(null)}
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor="vehicle_model"
+                        className="mb-2 block text-[10px] font-bold uppercase tracking-[0.14em] text-[#A5A8AE]"
+                      >
+                        Vehicle model
+                      </label>
+                      <input
+                        type="text"
+                        id="vehicle_model"
+                        name="vehicle_model"
+                        maxLength={120}
+                        placeholder="e.g. Toyota Harrier"
+                        className={inputClasses("vehicle")}
+                        onFocus={() => setFocusedField("vehicle")}
+                        onBlur={() => setFocusedField(null)}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="message"
+                      className="mb-2 block text-[10px] font-bold uppercase tracking-[0.14em] text-[#A5A8AE]"
+                    >
+                      How can we help?{" "}
+                      <span className="text-[#FF1616]">*</span>
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      required
+                      maxLength={2000}
+                      rows={5}
+                      placeholder="Tell us about the parts, accessories or services you're looking for..."
+                      className={`${inputClasses("message")} min-h-[145px] resize-y leading-6`}
+                      onFocus={() => setFocusedField("message")}
+                      onBlur={() => setFocusedField(null)}
+                    />
+                  </div>
+
+                  {error && (
+                    <div
+                      role="alert"
+                      className="border border-[#FF1616]/35 bg-[#FF1616]/[0.07] px-4 py-3 text-sm text-[#F7F8FD]"
+                    >
+                      <span className="mr-2 text-[#FF1616]">!</span>
+                      {error}
+                    </div>
                   )}
-                </button>
 
-                <p className="text-center text-xs text-zinc-500 leading-relaxed">
-                  We typically respond within 24 hours on business days.
-                </p>
-              </form>
+                  <button
+                    type="submit"
+                    disabled={submitting}
+                    className="group flex w-full items-center justify-center gap-3 bg-[#FF1616] px-6 py-4 text-xs font-bold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-[#D90F0F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF1616] focus-visible:ring-offset-2 focus-visible:ring-offset-[#15171B] disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {submitting ? (
+                      <>
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                        Sending enquiry...
+                      </>
+                    ) : (
+                      <>
+                        Send enquiry
+                        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      </>
+                    )}
+                  </button>
+
+                  <p className="text-center text-xs leading-5 text-[#858B94]">
+                    We typically respond within 24 hours on business days.
+                  </p>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Success Toast */}
+      {/* Success notification */}
       {showSuccess && (
-        <div className="fixed top-6 right-4 z-50 animate-in slide-in-from-right-full fade-in duration-300">
-          <div className="flex items-center gap-3 px-5 py-4 bg-zinc-900 border border-zinc-700 rounded-xl shadow-2xl">
-            <div className="p-1 bg-emerald-500/10 rounded-full">
-              <CheckCircle className="w-5 h-5 text-emerald-500" />
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-white">Message Sent!</p>
-              <p className="text-xs text-zinc-400">We&apos;ll be in touch shortly.</p>
-            </div>
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed right-4 top-6 z-50 flex max-w-sm items-center gap-3 border border-[#34373D] bg-[#15171B] px-5 py-4 shadow-2xl"
+        >
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center border border-[#FF1616]/25 bg-[#FF1616]/10">
+            <CheckCircle className="h-5 w-5 text-[#FF1616]" />
+          </div>
+          <div>
+            <p className="text-sm font-bold text-[#F7F8FD]">Enquiry received</p>
+            <p className="mt-0.5 text-xs text-[#A5A8AE]">
+              Thank you. We&apos;ll be in touch shortly.
+            </p>
           </div>
         </div>
       )}

@@ -73,52 +73,44 @@ export default function Header() {
       >
         <div className={`transition-all duration-500 ${
           scrolled 
-            ? "bg-black/80 backdrop-blur-2xl py-2 shadow-2xl border-b border-white/10" 
+            ? "border-b border-[#34373D] bg-[#08090B]/80 py-2 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-2xl" 
             : "bg-transparent py-5"
         }`}>
           
-          <nav className="max-w-[1400px] mx-auto px-6 md:px-10 flex items-center justify-between">
+          <nav className="mx-auto flex max-w-[1400px] items-center justify-between px-6 md:px-10">
             
-            {/* --- LOGO SECTION --- */}
             <button
               type="button"
               onClick={() => scrollToSection("home")}
-              className="group relative z-10 flex items-center justify-center overflow-visible -ml-3 md:-ml-4"
+              className="group relative z-10 -ml-3 flex items-center justify-center overflow-visible md:-ml-4"
               style={{ width: "220px" }}
             >
-              <div className="absolute inset-0 bg-red-600/10 blur-[50px] rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
-              <div className="relative flex items-center justify-center w-full h-full">
+              <div className="absolute inset-0 rounded-full bg-[#FF1616]/10 blur-[50px] opacity-60 transition-opacity duration-700 group-hover:opacity-100" />
+              <div className="relative flex h-full w-full items-center justify-center">
                 <Image
                   src="/1.png"
                   alt="JN Parts & Accessories"
                   width={400}
                   height={400}
-                  className={`
-                    w-auto object-contain transition-all duration-500
-                    scale-[2.2] md:scale-[2.8]
-                    brightness-110 contrast-125
-                    ${scrolled ? "h-10 lg:h-12" : "h-14 lg:h-16"}
-                  `}
+                  className={`w-auto object-contain brightness-110 contrast-125 transition-all duration-500 ${scrolled ? "h-10 scale-[2.1] lg:h-12" : "h-14 scale-[2.2] lg:h-16"}`}
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none scale-150" />
               </div>
             </button>
 
-            {/* --- DESKTOP NAV --- */}
-            <div className="hidden lg:flex items-center bg-white/5 border border-white/10 rounded-full px-2 py-1 backdrop-blur-md">
+            <div className="hidden items-center gap-1 rounded-full border border-[#34373D] bg-[#111317]/80 px-2 py-1.5 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.02)] backdrop-blur-md lg:flex">
               {sections.map((s) => {
                 const isActive = activeSection === s.id;
                 return (
                   <button
                     key={s.id}
                     onClick={() => scrollToSection(s.id)}
-                    className={`px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 relative ${
-                      isActive ? "text-white" : "text-gray-400 hover:text-white"
+                    className={`relative rounded-full px-5 py-2 text-sm font-semibold transition-all duration-300 ${
+                      isActive ? "text-[#F7F8FD]" : "text-[#A5A8AE] hover:text-[#F7F8FD]"
                     }`}
                   >
                     {isActive && (
-                      <div className="absolute inset-0 bg-red-600 rounded-full -z-10 shadow-[0_0_15px_rgba(220,38,38,0.5)]" />
+                      <div className="absolute inset-0 -z-10 rounded-full bg-[#FF1616] shadow-[0_0_18px_rgba(255,22,22,0.35)]" />
                     )}
                     {s.label}
                   </button>
@@ -126,24 +118,22 @@ export default function Header() {
               })}
             </div>
 
-            {/* --- DESKTOP: OUR BLOG --- */}
             <div className="hidden lg:block">
               <button
                 type="button"
                 onClick={() => scrollToSection("blog")}
-                className="bg-red-600 hover:bg-red-700 text-white px-6 py-2.5 rounded-xl font-bold text-sm transition-all transform hover:scale-105 active:scale-95 shadow-lg shadow-red-600/20"
+                className="rounded-xl bg-gradient-to-r from-[#FF1616] to-[#D90F0F] px-6 py-2.5 text-sm font-bold text-white shadow-[0_10px_25px_rgba(255,22,22,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_15px_30px_rgba(255,22,22,0.35)]"
               >
                 OUR BLOG
               </button>
             </div>
 
-            {/* Mobile Toggle */}
             <button
               ref={menuButtonRef}
-              className="lg:hidden p-3 rounded-xl bg-white/10 border border-white/10 text-white"
+              className="rounded-xl border border-[#34373D] bg-[#111317]/80 p-3 text-[#F7F8FD] lg:hidden"
               onClick={() => setMenuOpen(true)}
             >
-              <Menu className="w-7 h-7" />
+              <Menu className="h-7 w-7" />
             </button>
           </nav>
         </div>
@@ -151,51 +141,51 @@ export default function Header() {
 
       {/* --- MOBILE MENU OVERLAY --- */}
       <div
-        className={`fixed inset-0 bg-black/95 backdrop-blur-xl z-[60] transition-all duration-500 ${
-          menuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full"
+        className={`fixed inset-0 z-[60] bg-[#08090B]/95 backdrop-blur-xl transition-all duration-500 ${
+          menuOpen ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"
         }`}
       >
-        <div className="p-8 flex flex-col h-full min-h-0">
-          <div className="flex justify-between items-center mb-12 shrink-0">
+        <div className="flex h-full min-h-0 flex-col p-8">
+          <div className="mb-12 flex shrink-0 items-center justify-between">
             <Image src="/1.png" alt="Logo" width={180} height={60} className="h-12 w-auto object-contain" />
             <button
               type="button"
               onClick={() => setMenuOpen(false)}
-              className="p-3 text-white"
+              className="p-3 text-[#F7F8FD]"
               aria-label="Close menu"
             >
-              <X className="w-8 h-8" />
+              <X className="h-8 w-8" />
             </button>
           </div>
 
-          <nav className="flex flex-col gap-6 flex-1 overflow-y-auto min-h-0">
+          <nav className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto">
             {sections.map((s) => (
               <button
                 type="button"
                 key={s.id}
                 onClick={() => scrollToSection(s.id)}
-                className="text-3xl font-black text-white text-left flex justify-between items-center group"
+                className="group flex items-center justify-between text-left text-3xl font-black text-[#F7F8FD]"
               >
-                <span className={activeSection === s.id ? "text-red-600" : ""}>{s.label}</span>
-                <ChevronRight className="w-8 h-8 opacity-0 group-hover:opacity-100 text-red-600 transition-all shrink-0" />
+                <span className={activeSection === s.id ? "text-[#FF1616]" : ""}>{s.label}</span>
+                <ChevronRight className="h-8 w-8 shrink-0 text-[#FF1616] opacity-0 transition-all group-hover:opacity-100" />
               </button>
             ))}
           </nav>
 
-          <div className="mt-8 pt-8 border-t border-white/10 shrink-0 flex flex-col gap-3">
+          <div className="mt-8 flex shrink-0 flex-col gap-3 border-t border-[#34373D] pt-8">
             <button
               type="button"
               onClick={() => scrollToSection("blog")}
-              className="w-full bg-red-600 hover:bg-red-700 py-4 rounded-2xl font-black text-lg text-white shadow-lg shadow-red-600/20 transition-colors"
+              className="w-full rounded-2xl bg-gradient-to-r from-[#FF1616] to-[#D90F0F] py-4 text-lg font-black text-white shadow-[0_16px_30px_rgba(255,22,22,0.22)] transition-colors"
             >
               OUR BLOG
             </button>
             <button
               type="button"
               onClick={() => scrollToSection("contact")}
-              className="w-full border border-white/20 hover:border-red-500/50 hover:bg-white/5 py-4 rounded-2xl font-bold text-lg text-white flex items-center justify-center gap-3 transition-colors"
+              className="flex w-full items-center justify-center gap-3 rounded-2xl border border-[#34373D] bg-[#111317] py-4 text-lg font-bold text-[#F7F8FD] transition-colors hover:border-[#FF1616]/50 hover:bg-[#1a1d23]"
             >
-              <Sparkles className="w-5 h-5 text-red-500" />
+              <Sparkles className="h-5 w-5 text-[#FF1616]" />
               GET A QUOTE
             </button>
           </div>

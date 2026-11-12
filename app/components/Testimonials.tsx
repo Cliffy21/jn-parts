@@ -130,11 +130,11 @@ export default function Testimonials() {
   return (
     <section 
       id="testimonials" 
-      className="relative py-24 bg-zinc-950 overflow-hidden"
+      className="relative overflow-hidden bg-[#08090B] py-24"
     >
       {/* Background Ambience */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-red-900/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-orange-900/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#FF1616]/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#F7F8FD]/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
       
       <div className="container mx-auto px-4 md:px-8 relative z-10">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
@@ -149,33 +149,33 @@ export default function Testimonials() {
             >
              
               
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1]">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] text-[#F7F8FD]">
                 Trusted by <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-500">
+                <span className="bg-gradient-to-r from-[#FF1616] to-[#F7F8FD] bg-clip-text text-transparent">
                   Enthusiasts.
                 </span>
               </h2>
               
-              <p className="text-lg text-gray-400 mt-6 leading-relaxed max-w-md">
+              <p className="mt-6 max-w-md text-lg leading-relaxed text-[#A5A8AE]">
                 Don't just take our word for it. Read what genuine car owners have to say about our premium parts and installation services.
               </p>
             </motion.div>
 
             {/* Trust Metrics */}
-            <div className="flex items-center gap-8 pt-4 border-t border-white/10">
+            <div className="flex items-center gap-8 pt-4 border-t border-[#34373D]">
               <div>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-white">4.9</span>
-                  <span className="text-gray-500">/5.0</span>
+                  <span className="text-3xl font-bold text-[#F7F8FD]">4.9</span>
+                  <span className="text-[#A5A8AE]">/5.0</span>
                 </div>
-                <p className="text-sm text-gray-400 mt-1">Google Reviews</p>
+                <p className="mt-1 text-sm text-[#A5A8AE]">Google Reviews</p>
               </div>
-              <div className="w-px h-12 bg-white/10" />
+              <div className="h-12 w-px bg-[#34373D]" />
               <div>
                 <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-white">2k+</span>
+                  <span className="text-3xl font-bold text-[#F7F8FD]">2k+</span>
                 </div>
-                <p className="text-sm text-gray-400 mt-1">Happy Clients</p>
+                <p className="mt-1 text-sm text-[#A5A8AE]">Happy Clients</p>
               </div>
             </div>
 
@@ -185,7 +185,7 @@ export default function Testimonials() {
                 onClick={() => { setIsAutoPlaying(false); paginate(-1); }}
                 variant="outline"
                 size="icon"
-                className="w-14 h-14 rounded-full border-white/10 bg-white/5 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all duration-300"
+                className="h-14 w-14 rounded-full border-[#34373D] bg-[#15171B] text-[#F7F8FD] transition-all duration-300 hover:border-[#FF1616] hover:bg-[#FF1616] hover:text-white"
               >
                 <ArrowLeft className="w-6 h-6" />
               </Button>
@@ -193,7 +193,7 @@ export default function Testimonials() {
                 onClick={() => { setIsAutoPlaying(false); paginate(1); }}
                 variant="outline"
                 size="icon"
-                className="w-14 h-14 rounded-full border-white/10 bg-white/5 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all duration-300"
+                className="h-14 w-14 rounded-full border-[#34373D] bg-[#15171B] text-[#F7F8FD] transition-all duration-300 hover:border-[#FF1616] hover:bg-[#FF1616] hover:text-white"
               >
                 <ArrowRight className="w-6 h-6" />
               </Button>
@@ -227,37 +227,37 @@ export default function Testimonials() {
                   }}
                   className="absolute inset-0"
                 >
-                  <div className="h-full bg-zinc-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-8 md:p-12 flex flex-col justify-between shadow-2xl">
+                  <div className="flex h-full flex-col justify-between rounded-3xl border border-[#34373D] bg-[#15171B]/90 p-8 shadow-[0_25px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl md:p-12">
                     
                     {/* Card Content */}
                     <div>
                       <div className="flex justify-between items-start mb-8">
                         <StarRating rating={current.rating} />
                         {current.vehicle && (
-                          <Badge variant="secondary" className="bg-white/5 text-gray-300 hover:bg-white/10 border-white/5 font-normal tracking-wide">
+                          <Badge variant="secondary" className="border-[#34373D] bg-[#22252A] font-normal tracking-wide text-[#F7F8FD] hover:bg-[#2b2e34]">
                             {current.vehicle}
                           </Badge>
                         )}
                       </div>
 
-                      <blockquote className="text-xl md:text-2xl lg:text-3xl font-medium text-white leading-relaxed">
+                      <blockquote className="text-xl font-medium leading-relaxed text-[#F7F8FD] md:text-2xl lg:text-3xl">
                         "{current.text}"
                       </blockquote>
                     </div>
 
                     {/* Footer: User Info */}
-                    <div className="flex items-center gap-4 mt-8 pt-8 border-t border-white/5">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                    <div className="mt-8 flex items-center gap-4 border-t border-[#34373D] pt-8">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#FF1616] to-[#D90F0F] text-lg font-bold text-white shadow-lg">
                         {current.name.charAt(0)}
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h4 className="text-white font-semibold text-lg">{current.name}</h4>
-                          <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                          <h4 className="text-lg font-semibold text-[#F7F8FD]">{current.name}</h4>
+                          <CheckCircle2 className="h-4 w-4 text-[#FF1616]" />
                         </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
+                        <div className="flex items-center gap-2 text-sm text-[#A5A8AE]">
                           <span>{current.role}</span>
-                          <span className="w-1 h-1 rounded-full bg-gray-700" />
+                          <span className="h-1 w-1 rounded-full bg-[#A5A8AE]" />
                           <span>{current.location}</span>
                         </div>
                       </div>
@@ -278,8 +278,8 @@ export default function Testimonials() {
                       className={cn(
                         "h-1.5 rounded-full transition-all duration-300",
                         idx === activeIndex 
-                          ? "w-8 bg-gradient-to-r from-red-500 to-orange-500" 
-                          : "w-2 bg-gray-800"
+                          ? "w-8 bg-gradient-to-r from-[#FF1616] to-[#D90F0F]" 
+                          : "w-2 bg-[#34373D]"
                       )}
                       aria-label={`Go to slide ${idx + 1}`}
                     />
@@ -296,14 +296,14 @@ export default function Testimonials() {
             </div>
 
             {/* Auto-play Progress Bar (Desktop) */}
-            <div className="hidden lg:block absolute -bottom-12 left-0 right-0 h-1 bg-gray-800 rounded-full overflow-hidden">
+            <div className="hidden lg:block absolute -bottom-12 left-0 right-0 h-1 overflow-hidden rounded-full bg-[#34373D]">
                {isAutoPlaying && (
                  <motion.div 
                    key={activeIndex}
                    initial={{ width: "0%" }}
                    animate={{ width: "100%" }}
                    transition={{ duration: AUTOPLAY_DELAY / 1000, ease: "linear" }}
-                   className="h-full bg-red-600"
+                   className="h-full bg-[#FF1616]"
                  />
                )}
             </div>

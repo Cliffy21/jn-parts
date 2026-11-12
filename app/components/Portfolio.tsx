@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface PortfolioItem {
   _id: string;
@@ -249,7 +249,7 @@ function ImageLightbox({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 sm:p-8"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#050607]/95 backdrop-blur-md p-4 sm:p-8"
       onClick={onClose}
     >
       <motion.div
@@ -257,13 +257,13 @@ function ImageLightbox({
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.92, opacity: 0 }}
         transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
-        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl bg-neutral-950 border border-white/10"
+        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-2xl bg-[#15171B] border border-white/10 shadow-2xl shadow-black/60"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all"
+          className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/70 backdrop-blur-sm border border-white/15 flex items-center justify-center text-white/80 hover:text-white hover:bg-[#FF1616] hover:border-[#FF1616] transition-all"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
             <path d="M18 6L6 18M6 6l12 12" />
@@ -271,7 +271,7 @@ function ImageLightbox({
         </button>
 
         {/* Main image */}
-        <div className="relative w-full aspect-[16/10] bg-neutral-900">
+        <div className="relative w-full aspect-[16/10] bg-[#08090B]">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentImage}
@@ -300,7 +300,7 @@ function ImageLightbox({
                   e.stopPropagation();
                   setCurrentImage((prev) => (prev === 0 ? validImages.length - 1 : prev - 1));
                 }}
-                className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/80 hover:text-white hover:bg-black/70 transition-all"
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/65 backdrop-blur-sm border border-white/15 flex items-center justify-center text-white/90 hover:text-white hover:bg-[#FF1616] hover:border-[#FF1616] transition-all"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M15 18l-6-6 6-6" />
@@ -311,7 +311,7 @@ function ImageLightbox({
                   e.stopPropagation();
                   setCurrentImage((prev) => (prev === validImages.length - 1 ? 0 : prev + 1));
                 }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/80 hover:text-white hover:bg-black/70 transition-all"
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-black/65 backdrop-blur-sm border border-white/15 flex items-center justify-center text-white/90 hover:text-white hover:bg-[#FF1616] hover:border-[#FF1616] transition-all"
               >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M9 18l6-6-6-6" />
@@ -322,7 +322,7 @@ function ImageLightbox({
         </div>
 
         {/* Info + thumbnails */}
-        <div className="p-5 sm:p-6 space-y-4">
+        <div className="p-6 sm:p-8 space-y-5">
           <div>
             <div className="flex items-center gap-2 mb-1">
               <span className={`w-2.5 h-2.5 rounded-full ${colorStyle.bg}`} />
@@ -330,8 +330,8 @@ function ImageLightbox({
                 {item.color}
               </span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white">{item.title}</h3>
-            <p className="text-white/50 text-sm mt-1">{item.description}</p>
+            <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-[#F7F8FD]">{item.title}</h3>
+            <p className="text-[#A5A8AE] text-sm mt-2 leading-6">{item.description}</p>
           </div>
 
           {/* Thumbnail strip */}
@@ -343,7 +343,7 @@ function ImageLightbox({
                   onClick={() => setCurrentImage(idx)}
                   className={`relative flex-shrink-0 w-20 h-14 sm:w-24 sm:h-16 rounded-lg overflow-hidden border-2 transition-all ${
                     idx === currentImage
-                      ? `${colorStyle.border} opacity-100`
+                      ? "border-[#FF1616] opacity-100 shadow-lg shadow-red-950/30"
                       : "border-transparent opacity-50 hover:opacity-80"
                   }`}
                 >
@@ -409,7 +409,7 @@ function PortfolioCard({
 
         {/* Image count badge */}
         {validImages.length > 1 && (
-          <div className="absolute top-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 text-[11px] text-white/80 font-medium">
+          <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#08090B]/75 backdrop-blur-md border border-white/15 text-[10px] uppercase tracking-wider text-white/90 font-semibold">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <rect x="3" y="3" width="18" height="18" rx="2" />
               <path d="M3 15l5-5 4 4 4-4 5 5" />
@@ -419,17 +419,17 @@ function PortfolioCard({
         )}
 
         {/* Bottom overlay text — always readable */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+        <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6">
           <div className="flex items-center gap-2 mb-1.5">
             <span className={`w-2 h-2 rounded-full ${colorStyle.bg}`} />
-            <span className="text-[11px] font-medium text-white/50 uppercase tracking-wider">
+            <span className="text-[10px] font-semibold text-white/65 uppercase tracking-[0.18em]">
               {item.color}
             </span>
           </div>
-          <h3 className="text-base sm:text-lg font-bold text-white leading-tight">
+          <h3 className="text-base sm:text-lg font-bold tracking-tight text-[#F7F8FD] leading-tight">
             {item.title}
           </h3>
-          <p className="text-white/40 text-xs sm:text-sm mt-1 line-clamp-1">
+          <p className="text-[#C0C2C7] text-xs sm:text-sm mt-2 line-clamp-1">
             {item.description}
           </p>
         </div>
@@ -501,9 +501,10 @@ export default function Portfolio() {
         className="relative overflow-hidden bg-[#10100f] px-5 py-20 text-white sm:px-8 sm:py-28 lg:px-12 lg:py-32"
       >
         {/* Top accent line */}
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FF1616]/60 to-transparent" />
+        <div className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[min(900px,90vw)] -translate-x-1/2 rounded-full bg-[#FF1616]/[0.045] blur-[120px]" />
 
-        <div className="max-w-7xl mx-auto">
+        <div className="relative mx-auto max-w-[1440px]">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -523,7 +524,7 @@ export default function Portfolio() {
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               className="max-w-xs text-left text-sm leading-6 text-[#aaa8a2] sm:ml-auto sm:mr-0 sm:text-right"
             >
-              Showcasing our premium wrap and customization projects
+              A closer look at the finishes, details and vehicle transformations completed by our team.
             </motion.p>
           </motion.div>
 
@@ -544,13 +545,13 @@ export default function Portfolio() {
               if (isActive) {
                 if (filterOption.id === "all") {
                   bgClass =
-                    "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/20";
+                    "bg-[#FF1616] text-white border border-[#FF1616] shadow-lg shadow-red-950/30";
                 } else {
-                  bgClass = `${colorStyle?.bg || "bg-gray-600"} text-white shadow-lg ${colorStyle?.glow || ""}`;
+                  bgClass = "bg-[#FF1616] text-white border border-[#FF1616] shadow-lg shadow-red-950/30";
                 }
               } else {
                 bgClass =
-                  "bg-neutral-900 text-gray-400 hover:bg-neutral-800 hover:text-white border border-white/[0.06]";
+                  "bg-[#15171B] text-[#A5A8AE] hover:bg-[#22252A] hover:text-white border border-white/[0.09]";
               }
 
               return (
@@ -562,13 +563,13 @@ export default function Portfolio() {
                   transition={{ duration: 0.3, delay: 0.4 + idx * 0.04 }}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`group flex items-center gap-1.5 sm:gap-2 px-3.5 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${bgClass}`}
+                  className={`group flex items-center gap-2 sm:gap-2.5 px-4 sm:px-5 py-2.5 rounded-md text-xs sm:text-sm font-semibold transition-all duration-300 ${bgClass}`}
                   aria-label={`Filter by ${filterOption.label} (${filterOption.count} items)`}
                 >
                   {filterOption.color && (
                     <span
                       className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full flex-shrink-0 ${
-                        isActive ? "bg-white" : colorStyle?.bg || "bg-gray-600"
+                        colorStyle?.bg || "bg-gray-600"
                       } transition-colors duration-300`}
                     />
                   )}
@@ -577,7 +578,7 @@ export default function Portfolio() {
                     className={`px-1.5 py-0.5 rounded-md text-[10px] font-semibold flex-shrink-0 ${
                       isActive
                         ? "bg-white/20 text-white"
-                        : "bg-white/[0.04] text-gray-600"
+                        : "bg-black/20 text-white/45"
                     }`}
                   >
                     {filterOption.count}
@@ -617,7 +618,7 @@ export default function Portfolio() {
             (item) => item.images.length > 0 && item.images[0]?.trim() !== ""
           ).length === 0 && (
             <div className="text-center py-16">
-              <p className="text-gray-500">No projects found for this color.</p>
+              <p className="text-[#A5A8AE]">No projects found for this colour.</p>
             </div>
           )}
 
@@ -626,12 +627,12 @@ export default function Portfolio() {
             initial={{ opacity: 0 }}
             animate={isVisible ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.8 }}
-            className="mt-12 sm:mt-16 text-center"
+            className="mt-14 sm:mt-20 border-t border-white/[0.08] pt-8 text-center"
           >
-            <button className="group inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-red-400 transition-colors duration-300">
-              <span>View all projects</span>
+            <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#A5A8AE]">
+              <span>SELECT A PROJECT TO EXPLORE THE GALLERY</span>
               <svg
-                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                className="w-4 h-4 text-[#FF1616]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -643,7 +644,7 @@ export default function Portfolio() {
                   d="M17 8l4 4m0 0l-4 4m4-4H3"
                 />
               </svg>
-            </button>
+            </div>
           </motion.div>
         </div>
       </section>

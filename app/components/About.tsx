@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useInViewAnimation } from "@/app/hooks/useInViewAnimation";
 import { cn } from "@/lib/utils";
@@ -86,10 +87,13 @@ export default function About() {
           }}
         >
           {/* High-res car engine/detail shot from Unsplash */}
-          <img
+          <Image
             src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?q=80&w=2832&auto=format&fit=crop"
             alt="Engine Detail Background"
+            fill
+            priority
             className="w-full h-full object-cover"
+            sizes="100vw"
           />
         </div>
         

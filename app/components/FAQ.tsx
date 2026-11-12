@@ -36,15 +36,16 @@ export default function FAQ() {
   };
 
   return (
-    <section className="py-24 px-4 bg-black">
+    <section className="bg-[#15171B] py-24 px-4">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div ref={titleRef} className="text-center mb-16 opacity-0">
          
-          <h2 className="text-4xl sm:text-5xl font-bold text-white">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-[#FF1616]">Support</p>
+          <h2 className="text-4xl sm:text-5xl font-black text-[#F7F8FD]">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 text-gray-500 max-w-lg mx-auto">
+          <p className="mt-4 max-w-lg mx-auto text-[#A5A8AE]">
             Everything you need to know about our parts and services
           </p>
         </div>
@@ -56,8 +57,8 @@ export default function FAQ() {
             return (
               <div
                 key={idx}
-                className={`border-b border-white/10 ${
-                  idx === 0 ? "border-t" : ""
+                className={`border-b border-[#34373D] ${
+                  idx === 0 ? "border-t border-[#34373D]" : ""
                 }`}
               >
                 <button
@@ -67,7 +68,7 @@ export default function FAQ() {
                 >
                   <span
                     className={`text-lg font-medium transition-colors duration-200 ${
-                      isOpen ? "text-white" : "text-gray-300 group-hover:text-white"
+                      isOpen ? "text-[#F7F8FD]" : "text-[#A5A8AE] group-hover:text-[#F7F8FD]"
                     }`}
                   >
                     {item.q}
@@ -75,13 +76,13 @@ export default function FAQ() {
                   <span
                     className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
                       isOpen
-                        ? "bg-red-500 rotate-180"
-                        : "bg-white/5 group-hover:bg-white/10"
+                        ? "bg-[#FF1616] rotate-180"
+                        : "bg-[#22252A] group-hover:bg-[#2b2e34]"
                     }`}
                   >
                     <svg
                       className={`w-4 h-4 transition-colors duration-200 ${
-                        isOpen ? "text-white" : "text-gray-400"
+                        isOpen ? "text-white" : "text-[#A5A8AE]"
                       }`}
                       fill="none"
                       stroke="currentColor"
@@ -102,7 +103,7 @@ export default function FAQ() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="pb-6 text-gray-400 leading-relaxed pr-12">
+                    <p className="pb-6 pr-12 text-[#A5A8AE] leading-relaxed">
                       {item.a}
                     </p>
                   </div>
@@ -114,11 +115,11 @@ export default function FAQ() {
 
         {/* CTA */}
         <div className="mt-12 text-center">
-          <p className="text-gray-500 text-sm">
+          <p className="text-sm text-[#A5A8AE]">
             Still have questions?{" "}
             <a
               href="#contact"
-              className="text-red-500 hover:text-red-400 transition-colors font-medium"
+              className="font-medium text-[#FF1616] transition-colors hover:text-[#D90F0F]"
             >
               Get in touch
             </a>

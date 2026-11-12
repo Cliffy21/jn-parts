@@ -4,64 +4,60 @@ import { blogPosts } from "./blogData";
 
 export default function Blog() {
   return (
-    <section id="blog" className="py-16 px-6 bg-zinc-950">
-      <div className="max-w-6xl mx-auto">
+    <section id="blog" className="bg-[#08090B] px-6 py-20">
+      <div className="mx-auto max-w-6xl">
 
-        {/* Section Header */}
         <div className="mb-12 text-center">
-          <h2 className="text-3xl font-bold text-white mb-3">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-[#FF1616]">Insights</p>
+          <h2 className="mb-3 text-3xl font-black text-[#F7F8FD] sm:text-4xl md:text-5xl">
             From Our Blog
           </h2>
-          <p className="text-zinc-400 text-sm max-w-xl mx-auto">
+          <p className="mx-auto max-w-xl text-sm text-[#A5A8AE] sm:text-base">
             Car tips, upgrade guides, and expert advice from the JN Parts team.
           </p>
         </div>
 
-        {/* Blog Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {blogPosts.map((post) => (
             <div
               key={post.slug}
-              className="bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
+              className="group overflow-hidden rounded-[1.5rem] border border-[#34373D] bg-[#15171B] shadow-[0_20px_60px_rgba(0,0,0,0.28)] transition-all duration-300 hover:-translate-y-1 hover:border-[#FF1616]/40 hover:shadow-[0_22px_70px_rgba(255,22,22,0.12)]"
             >
-              {/* Image */}
-              <div className="relative h-56 w-full">
+              <div className="relative h-56 w-full overflow-hidden">
                 <Image
                   src={post.image}
                   alt={post.title}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#08090B] via-transparent to-transparent" />
               </div>
 
-              {/* Content */}
-              <div className="p-6 space-y-3">
-                <p className="text-xs text-zinc-500">{post.date}</p>
-                <h3 className="text-lg font-semibold text-white leading-snug">
+              <div className="space-y-3 p-6">
+                <p className="text-xs uppercase tracking-[0.18em] text-[#A5A8AE]">{post.date}</p>
+                <h3 className="text-xl font-bold leading-snug text-[#F7F8FD]">
                   {post.title}
                 </h3>
-                <p className="text-sm text-zinc-400 leading-relaxed">
+                <p className="text-sm leading-relaxed text-[#A5A8AE]">
                   {post.summary}
                 </p>
 
-                {/* Read More */}
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="inline-block mt-2 text-sm font-medium text-orange-400 hover:text-orange-300 transition-colors duration-200"
+                  className="inline-flex items-center gap-2 pt-2 text-sm font-semibold text-[#FF1616] transition-colors duration-200 hover:text-[#D90F0F]"
                 >
-                  Read more →
+                  Read more <span aria-hidden="true">→</span>
                 </Link>
               </div>
             </div>
           ))}
         </div>
 
-        {/* View All Button */}
         <div className="mt-12 text-center">
           <Link
             href="/blog"
-            className="inline-block px-6 py-3 rounded-full border border-orange-400 text-orange-400 text-sm font-medium hover:bg-orange-400 hover:text-black transition-all duration-200"
+            className="inline-block rounded-full border border-[#FF1616]/70 bg-[#FF1616]/5 px-6 py-3 text-sm font-semibold text-[#F7F8FD] transition-all duration-300 hover:bg-[#FF1616] hover:text-white"
           >
             View All Posts
           </Link>

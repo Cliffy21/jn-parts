@@ -13,7 +13,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 import Image, { ImageProps } from "next/image";
 import { useOutsideClick } from "@/hooks/use-outside-click";
 
@@ -288,24 +288,37 @@ export const BlurImage = ({
   ...rest
 }: ImageProps) => {
   const [isLoading, setLoading] = useState(true);
-  // Extract Next.js Image-specific props that shouldn't be on native img tag
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { fill, priority, placeholder, blurDataURL, sizes, ...imgProps } = rest as ImageProps & Record<string, unknown>;
+  const {
+    fill,
+    priority,
+    placeholder,
+    blurDataURL,
+    sizes,
+    src: _src,
+    alt: _alt,
+    ...imgProps
+  } = rest as ImageProps & Record<string, unknown>;
+
   return (
-    <img
+    <Image
       className={cn(
         "h-full w-full transition duration-300",
         isLoading ? "blur-sm" : "blur-0",
         className,
       )}
       onLoad={() => setLoading(false)}
-      src={src as string}
-      width={width}
-      height={height}
+      src={(src ?? _src) as string}
+      width={typeof width === "number" ? width : 1200}
+      height={typeof height === "number" ? height : 800}
       loading="lazy"
       decoding="async"
-      alt={alt ? alt : "Background of a beautiful view"}
-      {...(imgProps as React.ImgHTMLAttributes<HTMLImageElement>)}
+      alt={alt ?? _alt ?? "Background of a beautiful view"}
+      {...imgProps}
+      fill={Boolean(fill)}
+      priority={Boolean(priority)}
+      placeholder={placeholder}
+      blurDataURL={blurDataURL}
+      sizes={sizes}
     />
   );
 };

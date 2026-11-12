@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useId } from "react";
 import Image from "next/image";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface ProductFeature {
   title: string;
@@ -339,35 +339,38 @@ export default function Products() {
 
       <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
-        <div className={`text-center mb-6 sm:mb-8 md:mb-10 lg:mb-12 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-3 md:mb-4 leading-tight px-2">
-            Our{" "}
-            <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
-              Products
+        <div className={`mb-6 text-center transition-all duration-700 sm:mb-8 md:mb-10 lg:mb-12 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.3em] text-red-400/90">
+            Premium collection
+          </p>
+          <h2 className="px-2 text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white leading-tight">
+            Curated for drivers who want{" "}
+            <span className="bg-gradient-to-r from-red-500 via-red-400 to-white bg-clip-text text-transparent">
+              more presence
             </span>
           </h2>
-          <p className="text-gray-500 text-xs sm:text-sm md:text-base max-w-md mx-auto px-4">
-            Premium vehicle parts and accessories
+          <p className="mx-auto mt-4 max-w-2xl px-4 text-xs text-gray-300 sm:text-sm md:text-base">
+            Premium vehicle parts, accessories, and protection upgrades designed for high-end finishes and everyday performance.
           </p>
         </div>
 
         {/* Filter Tabs */}
         <div className={`mb-6 sm:mb-8 md:mb-10 lg:mb-12 transition-all duration-700 delay-100 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <div className="flex overflow-x-auto pb-2 sm:pb-0 sm:justify-center gap-2 sm:gap-2.5 md:gap-3 scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0 snap-x snap-mandatory">
+          <div className="flex gap-2 overflow-x-auto pb-2 sm:justify-center sm:pb-0 scrollbar-hide -mx-3 px-3 sm:mx-0 sm:px-0 snap-x snap-mandatory">
             {filters.map((cat) => (
               <motion.button
                 key={cat.id}
                 onClick={() => setActiveCategory(cat.id)}
-                className={`flex-shrink-0 px-3 sm:px-4 md:px-5 py-2 sm:py-2.5 rounded-full text-[11px] xs:text-xs sm:text-sm font-medium transition-all duration-300 whitespace-nowrap min-h-[36px] sm:min-h-[40px] flex items-center justify-center snap-start ${
+                className={`flex-shrink-0 rounded-full border px-3 py-2 text-[11px] font-medium transition-all duration-300 whitespace-nowrap min-h-[38px] sm:min-h-[40px] sm:px-4 sm:text-sm flex items-center justify-center snap-start ${
                   activeCategory === cat.id
-                    ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/20"
-                    : "bg-gray-900 text-gray-400 hover:bg-gray-800 hover:text-white border border-gray-800"
+                    ? "border-red-500/60 bg-gradient-to-r from-red-600 to-red-500 text-white shadow-[0_8px_25px_rgba(239,68,68,0.25)]"
+                    : "border-white/10 bg-[#0d1218] text-gray-300 hover:border-red-500/30 hover:bg-[#111a22] hover:text-white"
                 }`}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.96 }}
               >
                 {cat.label}
-                <span className={`ml-1.5 sm:ml-2 text-[9px] xs:text-[10px] sm:text-xs px-1.5 py-0.5 rounded-md ${activeCategory === cat.id ? "bg-white/20" : "bg-gray-800"}`}>
+                <span className={`ml-2 rounded-full px-1.5 py-0.5 text-[9px] sm:text-[10px] ${activeCategory === cat.id ? "bg-white/15" : "bg-white/5"}`}>
                   {cat.count}
                 </span>
               </motion.button>
@@ -559,15 +562,14 @@ export default function Products() {
                   transition={{ duration: 0.4, delay: idx * 0.05, ease: [0.25, 0.46, 0.45, 0.94] }}
                   whileHover={{ y: -8, scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group bg-gray-900/50 rounded-lg sm:rounded-xl md:rounded-2xl border border-gray-800/50 overflow-hidden hover:border-red-500/30 transition-all duration-500 w-full cursor-pointer scroll-mt-28"
+                  className="group w-full cursor-pointer overflow-hidden rounded-[1.25rem] border border-white/10 bg-gradient-to-b from-[#0d1218] to-[#070b12] shadow-[0_18px_40px_rgba(0,0,0,0.35)] transition-all duration-500 hover:border-red-500/40 hover:shadow-[0_20px_50px_rgba(239,68,68,0.18)] scroll-mt-28"
                 >
-                  {/* Image */}
-                  <motion.div layoutId={`image-${product.id}-${id}`} className="relative aspect-square bg-gray-800 overflow-hidden">
+                  <motion.div layoutId={`image-${product.id}-${id}`} className="relative aspect-square overflow-hidden bg-[#111827]">
                     {product.image_url ? (
                       <motion.div
-                        whileHover={{ scale: 1.1 }}
+                        whileHover={{ scale: 1.08 }}
                         transition={{ duration: 0.5, ease: "easeOut" }}
-                        className="w-full h-full"
+                        className="h-full w-full"
                       >
                         <Image
                           src={product.image_url}
@@ -578,57 +580,55 @@ export default function Products() {
                         />
                       </motion.div>
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-red-500/10 flex items-center justify-center">
-                          <svg className="w-6 h-6 sm:w-8 sm:h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex h-full w-full items-center justify-center">
+                        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-red-500/10 sm:h-16 sm:w-16 sm:rounded-2xl">
+                          <svg className="h-6 w-6 text-red-500 sm:h-8 sm:w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                           </svg>
                         </div>
                       </div>
                     )}
 
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050a10]/85 via-transparent to-transparent" />
 
                     {product.category && (
-                      <div className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 md:top-3 md:left-3 z-10">
-                        <span className="px-1.5 py-0.5 sm:px-2 md:px-2.5 sm:py-0.5 md:py-1 text-[9px] xs:text-[10px] sm:text-xs font-medium bg-black/80 backdrop-blur-sm rounded-full text-gray-300 border border-white/10">
+                      <div className="absolute left-2 top-2 z-10 sm:left-3 sm:top-3">
+                        <span className="rounded-full border border-white/10 bg-black/55 px-2 py-1 text-[9px] font-medium uppercase tracking-[0.12em] text-white/80 backdrop-blur-sm sm:text-[10px]">
                           {categoryLabels[product.category] || product.category}
                         </span>
                       </div>
                     )}
 
-                    {/* Feature count badge */}
                     {product.features && product.features.length > 0 && (
-                      <div className="absolute bottom-1.5 right-1.5 sm:bottom-2 sm:right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span className="px-1.5 py-0.5 text-[9px] sm:text-[10px] font-medium bg-red-500/80 backdrop-blur-sm rounded-full text-white">
+                      <div className="absolute bottom-2 right-2 z-10 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        <span className="rounded-full bg-red-500/90 px-2 py-1 text-[9px] font-medium text-white sm:text-[10px]">
                           {product.features.length} features
                         </span>
                       </div>
                     )}
                   </motion.div>
 
-                  {/* Content */}
-                  <div className="p-2 sm:p-3 md:p-4">
-                    <motion.h3 layoutId={`title-${product.id}-${id}`} className="text-xs xs:text-sm sm:text-base font-semibold text-white mb-1 line-clamp-1 leading-tight">
+                  <div className="p-3 sm:p-4">
+                    <motion.h3 layoutId={`title-${product.id}-${id}`} className="mb-2 line-clamp-1 text-sm font-bold text-white sm:text-base">
                       {product.name}
                     </motion.h3>
-                    <p className="hidden sm:block text-gray-500 text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2 leading-relaxed">
+                    <p className="mb-3 hidden text-xs leading-relaxed text-gray-300 sm:block">
                       {product.description}
                     </p>
                     <div className="flex flex-col gap-1">
                       {product.price ? (
                         <motion.p
                           layoutId={`price-${product.id}-${id}`}
-                          className="text-sm xs:text-base sm:text-lg font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent truncate"
+                          className="truncate bg-gradient-to-r from-red-500 to-red-300 bg-clip-text text-sm font-black text-transparent sm:text-lg"
                         >
                           KES {product.price.toLocaleString()}
                         </motion.p>
                       ) : (
-                        <p className="text-[10px] xs:text-xs sm:text-sm text-gray-400 truncate">Request price</p>
+                        <p className="truncate text-[10px] text-gray-400 xs:text-xs sm:text-sm">Request price</p>
                       )}
                       {product.installation_cost && (
-                        <p className="text-[10px] xs:text-xs sm:text-sm text-gray-400">
-                          Installation: KES {product.installation_cost.toLocaleString()}
+                        <p className="text-[10px] text-gray-400 xs:text-xs sm:text-sm">
+                          Install: KES {product.installation_cost.toLocaleString()}
                         </p>
                       )}
                     </div>

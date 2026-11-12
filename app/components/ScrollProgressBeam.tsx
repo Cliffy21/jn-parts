@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 
 export default function ScrollProgressBeam() {
   const [heroEnd, setHeroEnd] = useState(0);

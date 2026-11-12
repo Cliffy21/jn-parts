@@ -1,358 +1,305 @@
+
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 
-// Car images from Unsplash - different colors and brands
 const carSlides = [
   {
-    url: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1920&q=80",
-    alt: "Red Ferrari sports car",
-    brand: "Performance Parts",
+    url: "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1920&q=85",
+    alt: "Premium red performance sports car",
+    brand: "PERFORMANCE PARTS",
   },
   {
-    url: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80",
-    alt: "Porsche 911 silver",
-    brand: "Luxury Accessories",
+    url: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=85",
+    alt: "Luxury Porsche sports car",
+    brand: "LUXURY ACCESSORIES",
   },
   {
-    url: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1920&q=80",
-    alt: "BMW M4 blue",
-    brand: "Premium Quality",
+    url: "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=1920&q=85",
+    alt: "Premium BMW performance vehicle",
+    brand: "PREMIUM QUALITY",
   },
   {
-    url: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1920&q=80",
-    alt: "Mercedes AMG GT",
-    brand: "Expert Service",
+    url: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=1920&q=85",
+    alt: "Mercedes performance vehicle",
+    brand: "EXPERT SERVICE",
   },
   {
-    url: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&q=80",
-    alt: "Chevrolet Corvette yellow",
-    brand: "American Muscle",
+    url: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&q=85",
+    alt: "Chevrolet performance sports car",
+    brand: "AUTOMOTIVE EXCELLENCE",
   },
 ];
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [displayedText, setDisplayedText] = useState("");
-  const [displayedText2, setDisplayedText2] = useState("");
-  const [displayedDesc, setDisplayedDesc] = useState("");
-  const [showCursor, setShowCursor] = useState(true);
-  const [showDescCursor, setShowDescCursor] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  
-  const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, 150]);
-  const y2 = useTransform(scrollY, [0, 500], [0, -100]);
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
-  const fullText1 = "TRANSFORM";
-  const fullText2 = "YOUR RIDE";
-  const fullDesc =
-    "Premium Vehicle Parts & Accessories · Quality Guaranteed · Expert Installation";
-
-  // Auto-slide functionality
   const nextSlide = useCallback(() => {
-    setIsTransitioning(true);
-    setTimeout(() => {
-      setCurrentSlide((prev) => (prev + 1) % carSlides.length);
-      setIsTransitioning(false);
-    }, 500);
+    setCurrentSlide((prev) => (prev + 1) % carSlides.length);
   }, []);
 
-  // Auto-advance slides
   useEffect(() => {
-    const slideInterval = setInterval(nextSlide, 4000);
-    return () => clearInterval(slideInterval);
+    const interval = setInterval(nextSlide, 6000);
+    return () => clearInterval(interval);
   }, [nextSlide]);
 
-  // Typing animation
   useEffect(() => {
-    let currentIndex = 0;
-    let isFirstLine = true;
-    let isSecondLine = false;
-    let isDescription = false;
-
-    const typingInterval = setInterval(() => {
-      if (isFirstLine) {
-        if (currentIndex < fullText1.length) {
-          setDisplayedText(fullText1.slice(0, currentIndex + 1));
-          currentIndex++;
-        } else {
-          isFirstLine = false;
-          isSecondLine = true;
-          currentIndex = 0;
-        }
-      } else if (isSecondLine) {
-        if (currentIndex < fullText2.length) {
-          setDisplayedText2(fullText2.slice(0, currentIndex + 1));
-          currentIndex++;
-        } else {
-          isSecondLine = false;
-          isDescription = true;
-          currentIndex = 0;
-          setShowCursor(false);
-          setShowDescCursor(true);
-        }
-      } else if (isDescription) {
-        if (currentIndex < fullDesc.length) {
-          setDisplayedDesc(fullDesc.slice(0, currentIndex + 1));
-          currentIndex++;
-        } else {
-          clearInterval(typingInterval);
-          setTimeout(() => setShowDescCursor(false), 2000);
-        }
-      }
-    }, 80);
-
-    const cursorInterval = setInterval(() => {
-      setShowCursor((prev) => !prev);
-      setShowDescCursor((prev) => !prev);
-    }, 500);
-
-    return () => {
-      clearInterval(typingInterval);
-      clearInterval(cursorInterval);
-    };
-  }, []);
-
-  // Initial load animation
-  useEffect(() => {
-    setIsLoaded(true);
+    const frame = requestAnimationFrame(() => setIsLoaded(true));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const goToSlide = (index: number) => {
-    if (index !== currentSlide) {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setCurrentSlide(index);
-        setIsTransitioning(false);
-      }, 500);
-    }
+    setCurrentSlide(index);
+  };
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   return (
     <section
       id="home"
-      className="relative h-screen min-h-[600px] max-h-[1200px] flex items-center justify-center overflow-hidden bg-black"
+      className="relative flex min-h-[700px] h-screen max-h-[1100px] w-full items-center overflow-hidden bg-[#08090B] text-white"
     >
-      {/* Sliding Background Images */}
-      <div className="absolute inset-0">
-        {carSlides.map((slide, index) => (
+      {/* CINEMATIC BACKGROUND SLIDER */}
+      <div className="absolute inset-0 overflow-hidden">
+        <AnimatePresence mode="sync">
           <motion.div
-            key={index}
-            style={{ 
-              y: index === currentSlide ? y1 : 0,
-              opacity: index === currentSlide ? opacity : 0,
-              scale: index === currentSlide ? 1 : 1.05
-            }}
-            className={`absolute inset-0 transition-all duration-1000 ease-out ${
-              index === currentSlide
-                ? "opacity-100 scale-100"
-                : "opacity-0 scale-105"
-            } ${isTransitioning ? "blur-sm" : "blur-0"}`}
+            key={currentSlide}
+            initial={{ opacity: 0, scale: 1.06 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ opacity: { duration: 1.2 }, scale: { duration: 7 } }}
+            className="absolute inset-0"
           >
             <Image
-              src={slide.url}
-              alt={slide.alt}
+              src={carSlides[currentSlide].url}
+              alt={carSlides[currentSlide].alt}
               fill
-              priority={index === 0}
-              className="object-cover"
+              priority={currentSlide === 0}
               sizes="100vw"
+              className="object-cover object-center"
             />
           </motion.div>
-        ))}
+        </AnimatePresence>
 
-        {/* Gradient Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-b from-red-950/30 via-transparent to-black/90" />
+        {/* DARK CINEMATIC OVERLAYS */}
+        <div className="absolute inset-0 bg-black/45" />
 
-        {/* Animated accent lines */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-60" />
-        <div
-          className={`absolute bottom-0 left-0 h-1 bg-gradient-to-r from-red-500 via-orange-500 to-red-500 transition-all duration-1000 ${
-            isLoaded ? "w-full" : "w-0"
-          }`}
-        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#08090B] via-[#08090B]/85 to-[#08090B]/20" />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-[#08090B] via-transparent to-[#08090B]/60" />
+
+        {/* SUBTLE RED BRAND ACCENT */}
+        <div className="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-[#FF1616] to-transparent opacity-70" />
       </div>
 
-      {/* Slide brand indicator */}
+      {/* MAIN CONTENT */}
       <div
-        className={`absolute top-24 sm:top-28 md:top-32 right-4 sm:right-8 md:right-12 z-20 transition-all duration-700 ${
-          isLoaded ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+        className={`relative z-10 mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-16 xl:px-20 transition-all duration-1000 ${
+          isLoaded
+            ? "translate-y-0 opacity-100"
+            : "translate-y-8 opacity-0"
         }`}
       >
-        <span className="text-xs sm:text-sm tracking-[0.3em] text-red-400 font-light uppercase">
-          {carSlides[currentSlide].brand}
-        </span>
-      </div>
+        <div className="flex items-center justify-between gap-12">
 
-      {/* Main Content */}
-      <div
-        className={`relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-1000 ${
-          isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-        }`}
-      >
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-8 lg:gap-12">
-          {/* Text Content */}
-          <motion.div 
-            style={{ y: y2 }}
-            className="text-center lg:text-left flex-1 max-w-2xl"
-          >
-            {/* Decorative element */}
-            <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
-              <div className="w-8 sm:w-12 h-[2px] bg-gradient-to-r from-red-500 to-orange-500" />
-              <span className="text-xs sm:text-sm tracking-[0.2em] text-gray-400 uppercase font-light">
-                Since 2022
+          {/* LEFT CONTENT */}
+          <div className="max-w-3xl">
+
+            {/* BRAND EYEBROW */}
+            <div className="mb-7 flex items-center gap-4">
+              <span className="h-[2px] w-10 bg-[#FF1616]" />
+
+              <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/75 sm:text-xs">
+                JN PARTS & ACCESSORIES
               </span>
-              <div className="w-8 sm:w-12 h-[2px] bg-gradient-to-r from-orange-500 to-red-500" />
+
+              <span className="h-[2px] w-10 bg-white/30" />
             </div>
 
-            {/* Main Heading */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-4 sm:mb-6 leading-[0.95] tracking-tight">
-              <span className="block bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent drop-shadow-2xl">
-                {displayedText}
-                {displayedText.length < fullText1.length && showCursor && (
-                  <span className="inline-block w-[3px] sm:w-1 h-[0.85em] bg-red-500 ml-1 animate-pulse rounded-sm" />
-                )}
-              </span>
-              <span className="block bg-gradient-to-r from-red-400 via-red-500 to-orange-500 bg-clip-text text-transparent mt-1 sm:mt-2">
-                {displayedText2}
-                {displayedText.length === fullText1.length &&
-                  displayedText2.length < fullText2.length &&
-                  showCursor && (
-                    <span className="inline-block w-[3px] sm:w-1 h-[0.85em] bg-red-500 ml-1 animate-pulse rounded-sm" />
-                  )}
-              </span>
-            </h1>
-
-            {/* Description */}
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 mb-6 sm:mb-8 min-h-[50px] sm:min-h-[60px] font-light tracking-wide">
-              {displayedDesc}
-              {displayedText2.length === fullText2.length && showDescCursor && (
-                <span className="inline-block w-[2px] h-[1em] bg-gray-400 ml-1 animate-pulse" />
-              )}
-            </p>
-
-            {/* CTA Buttons */}
-            <div
-              className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start transition-all duration-1000 delay-500 ${
-                isLoaded
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
-              }`}
+            {/* MAIN HEADING */}
+            <motion.h1
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="mb-7 text-[48px] font-extrabold leading-[0.98] tracking-[-0.055em] sm:text-6xl md:text-7xl lg:text-8xl xl:text-[100px]"
             >
+              <span className="block text-[#F7F8FD]">
+                PREMIUM
+              </span>
+
+              <span className="mt-2 block text-[#FF1616]">
+                AUTO STYLING
+              </span>
+            </motion.h1>
+
+            {/* DESCRIPTION */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mb-9 max-w-xl text-sm font-normal leading-7 tracking-wide text-[#C0C2C7] sm:text-base md:text-lg"
+            >
+              Car wraps, PPF, detailing and accessories built for drivers who want more presence on the road.
+            </motion.p>
+
+            {/* CTA BUTTONS */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-col gap-4 sm:flex-row"
+            >
+              {/* PRIMARY BUTTON */}
               <button
-                onClick={() =>
-                  document
-                    .getElementById("products")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="group relative px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-sm sm:text-base overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-red-500/30"
+                onClick={() => scrollTo("products")}
+                className="group inline-flex items-center justify-center gap-4 bg-[#FF1616] px-8 py-[17px] text-xs font-bold uppercase tracking-[0.15em] text-white transition-all duration-300 hover:bg-[#D90F0F] hover:-translate-y-1"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-red-500 to-orange-500" />
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-500 via-red-500 to-red-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <span className="relative flex items-center justify-center gap-2">
-                  Browse Products
-                  <svg
-                    className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </span>
+                Explore Products
+
+                <svg
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 12h14m-7-7 7 7-7 7"
+                  />
+                </svg>
               </button>
 
+              {/* SECONDARY BUTTON */}
               <button
-                onClick={() =>
-                  document
-                    .getElementById("contact")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="group relative px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-sm sm:text-base overflow-hidden transition-all duration-300 hover:scale-105"
+                onClick={() => scrollTo("contact")}
+                className="inline-flex items-center justify-center gap-3 border border-white/40 bg-white/[0.04] px-8 py-[17px] text-xs font-bold uppercase tracking-[0.15em] text-white backdrop-blur-sm transition-all duration-300 hover:border-[#FF1616] hover:bg-[#FF1616]/10"
               >
-                <div className="absolute inset-0 border-2 border-red-500/50 rounded-full group-hover:border-red-500 transition-colors" />
-                <div className="absolute inset-0 bg-red-500/0 group-hover:bg-red-500/10 rounded-full transition-colors duration-300" />
-                <span className="relative text-white">Get Free Quote</span>
-              </button>
-            </div>
-          </motion.div>
+                Get a Quote
 
-          {/* Slide Navigation - Desktop */}
-          <div
-            className={`hidden lg:flex flex-col items-center gap-6 transition-all duration-1000 delay-700 ${
-              isLoaded
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 translate-x-10"
-            }`}
-          >
-            {/* Current slide number */}
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.8}
+                    d="M7 17 17 7M7 7h10v10"
+                  />
+                </svg>
+              </button>
+            </motion.div>
+
+            {/* BRAND SERVICES STRIP */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.9, duration: 1 }}
+              className="mt-14 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-white/15 pt-6"
+            >
+              {["CAR WRAPS", "PPF PROTECTION", "AUTO ACCESSORIES"].map(
+                (item, index) => (
+                  <div key={item} className="flex items-center gap-6">
+                    <span className="text-[9px] font-semibold tracking-[0.17em] text-white/65 sm:text-[10px]">
+                      {item}
+                    </span>
+
+                    {index !== 2 && (
+                      <span className="h-1 w-1 rounded-full bg-[#FF1616]" />
+                    )}
+                  </div>
+                )
+              )}
+            </motion.div>
+          </div>
+
+          {/* RIGHT SIDE SLIDE NAVIGATION */}
+          <div className="hidden flex-col items-center gap-7 lg:flex">
+
             <div className="text-center">
-              <span className="text-4xl xl:text-5xl font-black text-white">
+              <span className="text-4xl font-bold tracking-tight text-white">
                 0{currentSlide + 1}
               </span>
-              <span className="text-lg xl:text-xl text-gray-600 font-light">
-                {" "}
+
+              <span className="ml-1 text-sm text-white/40">
                 / 0{carSlides.length}
               </span>
             </div>
 
-            {/* Vertical progress bars */}
-            <div className="flex flex-col gap-2">
-              {carSlides.map((_, index) => (
+            <div className="flex flex-col gap-3">
+              {carSlides.map((slide, index) => (
                 <button
-                  key={index}
+                  key={slide.brand}
                   onClick={() => goToSlide(index)}
-                  className="group relative w-1 h-12 xl:h-16 bg-white/20 rounded-full overflow-hidden hover:bg-white/30 transition-colors"
-                  aria-label={`Go to slide ${index + 1}`}
+                  aria-label={`View ${slide.brand}`}
+                  className={`relative h-12 w-[3px] overflow-hidden transition-all duration-300 ${
+                    currentSlide === index
+                      ? "bg-[#FF1616]"
+                      : "bg-white/25 hover:bg-white/60"
+                  }`}
                 >
-                  <div
-                    className={`absolute bottom-0 left-0 w-full bg-gradient-to-t from-red-500 to-orange-500 rounded-full transition-all duration-500 ${
-                      index === currentSlide ? "h-full" : "h-0 group-hover:h-1/3"
-                    }`}
-                  />
+                  {currentSlide === index && (
+                    <motion.div
+                      layoutId="active-slide"
+                      className="absolute inset-0 bg-[#FF1616]"
+                    />
+                  )}
                 </button>
               ))}
             </div>
+
+            <span className="text-[9px] font-semibold tracking-[0.25em] text-white/40 [writing-mode:vertical-rl]">
+              {carSlides[currentSlide].brand}
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Mobile Slide Indicators */}
-      <div
-        className={`lg:hidden absolute bottom-24 sm:bottom-28 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 transition-all duration-700 ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {carSlides.map((_, index) => (
+      {/* MOBILE SLIDE INDICATORS */}
+      <div className="absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 lg:hidden">
+        {carSlides.map((slide, index) => (
           <button
-            key={index}
+            key={slide.brand}
             onClick={() => goToSlide(index)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              index === currentSlide
-                ? "w-8 bg-gradient-to-r from-red-500 to-orange-500"
-                : "w-1.5 bg-white/30 hover:bg-white/50"
-            }`}   
             aria-label={`Go to slide ${index + 1}`}
+            className={`h-[3px] transition-all duration-300 ${
+              currentSlide === index
+                ? "w-9 bg-[#FF1616]"
+                : "w-4 bg-white/40"
+            }`}
           />
         ))}
       </div>
 
+      {/* SCROLL INDICATOR */}
+      <div className="absolute bottom-9 right-8 hidden items-center gap-3 xl:flex">
+        <span className="text-[9px] font-semibold uppercase tracking-[0.25em] text-white/40">
+          Scroll to explore
+        </span>
 
-
-      {/* Corner Accents */}
-      <div className="absolute top-20 left-4 sm:left-8 w-16 sm:w-24 h-16 sm:h-24 border-l-2 border-t-2 border-red-500/20 pointer-events-none" />
-      <div className="absolute bottom-20 right-4 sm:right-8 w-16 sm:w-24 h-16 sm:h-24 border-r-2 border-b-2 border-red-500/20 pointer-events-none" />
+        <div className="h-10 w-[1px] bg-white/20">
+          <motion.div
+            animate={{ height: ["0%", "100%", "0%"] }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="w-full bg-[#FF1616]"
+          />
+        </div>
+      </div>
     </section>
   );
 }

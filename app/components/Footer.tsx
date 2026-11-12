@@ -55,32 +55,28 @@ export default function Footer() {
   const contentRef = useInViewAnimation({ animation: "animate-fadeInUp" });
 
   return (
-    <footer className="relative bg-black border-t border-white/5">
-      {/* Subtle gradient accent at top */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/50 to-transparent" />
+    <footer className="relative border-t border-[#34373D] bg-[#08090B]">
+      <div className="absolute left-0 right-0 top-0 h-px bg-gradient-to-r from-transparent via-[#FF1616]/60 to-transparent" />
 
-      <div className="max-w-6xl mx-auto px-6 py-16">
+      <div className="mx-auto max-w-6xl px-6 py-16">
         <div
           ref={contentRef}
-          className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 opacity-0"
+          className="grid grid-cols-1 gap-12 opacity-0 md:grid-cols-12 md:gap-8"
         >
-          {/* Brand Section */}
           <div className="md:col-span-4">
-            <h3 className="text-2xl font-bold tracking-tight mb-4">
-              <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
+            <h3 className="mb-4 text-2xl font-black tracking-tight text-[#F7F8FD]">
+              <span className="bg-gradient-to-r from-[#FF1616] to-[#F7F8FD] bg-clip-text text-transparent">
                 JN
               </span>
-              <span className="text-white ml-1">Parts & Accessories</span>
+              <span className="ml-1">Parts & Accessories</span>
             </h3>
-            <p className="text-gray-500 text-sm leading-relaxed max-w-xs">
-              Your trusted partner for premium vehicle parts and accessories in
-              Kenya since 2018.
+            <p className="max-w-xs text-sm leading-relaxed text-[#A5A8AE]">
+              Your trusted partner for premium vehicle parts, protection, styling, and installation services in Kenya.
             </p>
           </div>
 
-          {/* Navigation */}
           <div className="md:col-span-2">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#A5A8AE]">
               Navigate
             </h4>
             <nav className="flex flex-col gap-3">
@@ -89,7 +85,7 @@ export default function Footer() {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "text-sm text-gray-500 hover:text-white transition-colors duration-200"
+                    "text-sm text-[#A5A8AE] transition-colors duration-200 hover:text-[#F7F8FD]"
                   )}
                 >
                   {item.name}
@@ -98,36 +94,34 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Contact */}
           <div className="md:col-span-3">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#A5A8AE]">
               Contact
             </h4>
             <div className="space-y-3 text-sm">
               <a
                 href="tel:+254741509156"
-                className="flex items-center gap-3 text-gray-500 hover:text-white transition-colors duration-200"
+                className="flex items-center gap-3 text-[#A5A8AE] transition-colors duration-200 hover:text-[#F7F8FD]"
               >
-                <Phone className="w-4 h-4 text-red-500/70" />
+                <Phone className="h-4 w-4 text-[#FF1616]" />
                 +254 741 509 156
               </a>
               <a
                 href="mailto:jncarparts301@gmail.com"
-                className="flex items-center gap-3 text-gray-500 hover:text-white transition-colors duration-200"
+                className="flex items-center gap-3 text-[#A5A8AE] transition-colors duration-200 hover:text-[#F7F8FD]"
               >
-                <Mail className="w-4 h-4 text-red-500/70" />
-                jncarparts301@gmail.com
+                <Mail className="h-4 w-4 text-[#FF1616]" />
+                jncarparts1@gmail.com
               </a>
-              <p className="flex items-center gap-3 text-gray-500">
-                <MapPin className="w-4 h-4 text-red-500/70" />
+              <p className="flex items-center gap-3 text-[#A5A8AE]">
+                <MapPin className="h-4 w-4 text-[#FF1616]" />
                 Kirinyaga Rd, Nairobi
               </p>
             </div>
           </div>
 
-          {/* Social */}
           <div className="md:col-span-3">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-gray-400 mb-4">
+            <h4 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#A5A8AE]">
               Connect
             </h4>
             <div className="flex gap-3">
@@ -139,9 +133,7 @@ export default function Footer() {
                   rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   aria-label={link.name}
                   className={cn(
-                    "w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center",
-                    "text-gray-500 hover:bg-red-500/20 hover:text-red-400",
-                    "transition-all duration-200"
+                    "flex h-10 w-10 items-center justify-center rounded-lg border border-[#34373D] bg-[#15171B] text-[#A5A8AE] transition-all duration-200 hover:border-[#FF1616]/60 hover:bg-[#FF1616]/10 hover:text-[#FF1616]"
                   )}
                 >
                   {link.icon}
@@ -151,23 +143,16 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <Separator className="mt-16 bg-white/5" />
-        <div className="mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-600 text-xs">
-            © 2025 JN Parts & Accessories. All rights reserved.Developed by Dev_Manase
+        <Separator className="mt-16 bg-[#34373D]" />
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 md:flex-row">
+          <p className="text-xs text-[#A5A8AE]">
+            © 2025 JN Parts & Accessories. All rights reserved. Developed by Dev_Manase
           </p>
-          <div className="flex gap-6 text-xs text-gray-600">
-            <a
-              href="#"
-              className="hover:text-gray-400 transition-colors"
-            >
+          <div className="flex gap-6 text-xs text-[#A5A8AE]">
+            <a href="#" className="transition-colors hover:text-[#F7F8FD]">
               Privacy Policy
             </a>
-            <a
-              href="#"
-              className="hover:text-gray-400 transition-colors"
-            >
+            <a href="#" className="transition-colors hover:text-[#F7F8FD]">
               Terms of Service
             </a>
           </div>
