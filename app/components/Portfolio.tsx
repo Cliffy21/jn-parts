@@ -393,10 +393,10 @@ function PortfolioCard({
         ease: [0.23, 1, 0.32, 1],
       }}
       onClick={onClick}
-      className="group relative w-full text-left rounded-2xl overflow-hidden bg-neutral-950 border border-white/[0.06] hover:border-white/[0.12] transition-all duration-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50"
+      className="group relative w-full overflow-hidden rounded-[1.15rem] border border-white/[0.09] bg-[#191918] text-left transition-all duration-500 hover:-translate-y-1 hover:border-white/20 hover:bg-[#20201f] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#e34e3b]"
     >
       {/* Image */}
-      <div className="relative w-full aspect-[4/3] overflow-hidden bg-neutral-900">
+      <div className="relative w-full aspect-[5/4] overflow-hidden bg-[#242423]">
         <Image
           src={mainImage}
           alt={item.title}
@@ -405,7 +405,7 @@ function PortfolioCard({
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
         {/* Gradient overlay at bottom for text readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/5 to-transparent" />
 
         {/* Image count badge */}
         {validImages.length > 1 && (
@@ -498,7 +498,7 @@ export default function Portfolio() {
       <section
         ref={sectionRef}
         id="portfolio"
-        className="relative py-20 sm:py-28 lg:py-32 px-4 sm:px-6 bg-black overflow-hidden"
+        className="relative overflow-hidden bg-[#10100f] px-5 py-20 text-white sm:px-8 sm:py-28 lg:px-12 lg:py-32"
       >
         {/* Top accent line */}
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
@@ -509,19 +509,19 @@ export default function Portfolio() {
             initial={{ opacity: 0, y: 30 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-center mb-10 sm:mb-14"
+            className="mb-10 flex flex-col items-start gap-5 border-b border-white/10 pb-8 sm:mb-12 sm:flex-row sm:items-end sm:justify-between sm:pb-10"
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 sm:mb-4">
-              Recent{" "}
-              <span className="bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">
-                Transformations
-              </span>
-            </h2>
+            <div>
+              <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-[#e34e3b]">JN Parts · Wrap studio</p>
+              <h2 className="max-w-3xl text-left text-4xl font-semibold leading-[0.98] tracking-[-0.055em] text-[#f2f0eb] sm:text-6xl lg:text-7xl">
+                Made to be <span className="font-serif font-normal italic text-[#e34e3b]">noticed.</span>
+              </h2>
+            </div>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={isVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-              className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto"
+              className="max-w-xs text-left text-sm leading-6 text-[#aaa8a2] sm:ml-auto sm:mr-0 sm:text-right"
             >
               Showcasing our premium wrap and customization projects
             </motion.p>
@@ -532,7 +532,7 @@ export default function Portfolio() {
             initial={{ opacity: 0, y: 20 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-            className="flex flex-wrap justify-center gap-2 sm:gap-2.5 mb-10 sm:mb-14"
+            className="mb-8 flex flex-wrap justify-start gap-2 sm:mb-10 sm:gap-2.5"
           >
             {filters.map((filterOption, idx) => {
               const isActive = filter === filterOption.id;
