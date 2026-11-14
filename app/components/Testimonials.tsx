@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ArrowRight, Star, Quote, CheckCircle2 } from "lucide-react";
@@ -157,7 +157,7 @@ export default function Testimonials() {
               </h2>
               
               <p className="mt-6 max-w-md text-lg leading-relaxed text-[#A5A8AE]">
-                Don't just take our word for it. Read what genuine car owners have to say about our premium parts and installation services.
+                Don&apos;t just take our word for it. Read what genuine car owners have to say about our premium parts and installation services.
               </p>
             </motion.div>
 
@@ -241,7 +241,7 @@ export default function Testimonials() {
                       </div>
 
                       <blockquote className="text-xl font-medium leading-relaxed text-[#F7F8FD] md:text-2xl lg:text-3xl">
-                        "{current.text}"
+                        &ldquo;{current.text}&rdquo;
                       </blockquote>
                     </div>
 

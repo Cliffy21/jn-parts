@@ -12,7 +12,8 @@ export default function ScrollProgressBeam() {
   const { scrollYProgress } = useScroll();
 
   useEffect(() => {
-    setIsMounted(true);
+    const frame = requestAnimationFrame(() => setIsMounted(true));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {

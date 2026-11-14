@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useInViewAnimation } from "@/app/hooks/useInViewAnimation";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
@@ -53,6 +52,9 @@ export default function Services() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -65,14 +67,10 @@ export default function Services() {
       { threshold: 0.1, rootMargin: "50px" }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    observer.observe(node);
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
+      observer.unobserve(node);
     };
   }, []);
 

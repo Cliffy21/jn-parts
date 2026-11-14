@@ -6,7 +6,7 @@ import Products from "./components/Products";
 import Process from "./components/Process";
 import Portfolio from "./components/Portfolio";
 import Testimonials from "./components/Testimonials";
-import FAQ from "./components/FAQ";
+import FaqSection from "./components/FAQ";
 import Benefits from "./components/Benefits";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -80,7 +80,7 @@ export default function HomePage() {
         <Process />
         <Portfolio />
         <Testimonials />
-        <FAQ />
+        <FaqSection />
         <Benefits />
         <Blog />
         <Contact />

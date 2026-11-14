@@ -4,7 +4,6 @@ import {
   motion,
   useTransform,
   useScroll,
-  useVelocity,
   useSpring,
 } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -92,7 +91,7 @@ export const TracingBeam = ({
             transition={{
               duration: 10,
             }}
-          ></motion.path>
+          />
           <motion.path
             d={`M 1 0V -36 l 18 24 V ${svgHeight * 0.8} l -18 24V ${svgHeight}`}
             fill="none"
@@ -102,7 +101,7 @@ export const TracingBeam = ({
             transition={{
               duration: 10,
             }}
-          ></motion.path>
+          />
           <defs>
             <motion.linearGradient
               id="gradient"
@@ -112,10 +111,10 @@ export const TracingBeam = ({
               y1={y1} // set y1 for gradient
               y2={y2} // set y2 for gradient
             >
-              <stop stopColor="#ef4444" stopOpacity="0"></stop>
-              <stop stopColor="#ef4444"></stop>
-              <stop offset="0.5" stopColor="#f97316"></stop>
-              <stop offset="1" stopColor="#f97316" stopOpacity="0"></stop>
+              <stop stopColor="#ef4444" stopOpacity="0" />
+              <stop stopColor="#ef4444" />
+              <stop offset="0.5" stopColor="#f97316" />
+              <stop offset="1" stopColor="#f97316" stopOpacity="0" />
             </motion.linearGradient>
           </defs>
         </svg>

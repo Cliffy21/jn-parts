@@ -134,7 +134,7 @@ export default function About() {
 
             <div ref={contentRef} className="opacity-0 space-y-6 text-gray-300 text-lg md:text-xl font-light">
               <p>
-                JN Parts & Accessories isn't just about spare parts; it's about the <strong className="text-white">heartbeat of your vehicle.</strong> We source components that meet the rigorous demands of modern automotive engineering.
+                JN Parts & Accessories isn&apos;t just about spare parts; it&apos;s about the <strong className="text-white">heartbeat of your vehicle.</strong> We source components that meet the rigorous demands of modern automotive engineering.
               </p>
               <p>
                 Whether you are upgrading for performance or maintaining reliability, our certified inventory ensures your journey never stops.

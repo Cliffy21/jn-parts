@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useInViewAnimation } from "@/app/hooks/useInViewAnimation";
 import { Shield, Target, Zap, Award, Settings, Crown } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const benefits = [
   { title: "Premium Materials", icon: Shield, desc: "3M & Avery Dennison vinyls." },
